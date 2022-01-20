@@ -1,0 +1,10 @@
+.collapsible{
+  height: 0.5em;
+  overflow: hidden;
+}
+.collapsible:target{
+  height: auto;
+}
+pre.highlight{
+  padding: 1em;
+}

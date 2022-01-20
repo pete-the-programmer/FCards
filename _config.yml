@@ -1,0 +1,8 @@
+title: FCards
+description: Learning F# through card games
+
+
+collections:
+  chapters:
+    output: true
+    permalink: /:collection/:name

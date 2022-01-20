@@ -1,0 +1,39 @@
+---
+---
+
+// @import "{{ site.theme }}";
+
+.markdown-body {
+  font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+  font-size: 18px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: 0.05em;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4,.markdown-body h5, .markdown-body h6{
+  font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+}
+
+.footnotes {
+    font-size: 75%;
+    border-top: 1px solid #ccc;
+}
+
+li > img, li > p > img {
+    width: 10%;
+    height: auto;
+    vertical-align: top;
+    float: left;
+    margin-bottom: 1em;
+    margin-right: 1em;
+}
+
+h1, h2, li > p {
+  clear: both;
+}
+
+ul > li {
+  list-style-type: none;
+}
