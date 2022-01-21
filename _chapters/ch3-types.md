@@ -1,5 +1,6 @@
 ---
-title: Types
+title: Describing what a card is
+concept: Types
 layout: default
 ---
 ## Records
@@ -17,7 +18,7 @@ Traditionally, types of things (like a record definition) start with a capital l
 
 
 ## Discriminated Union 
-A _discriminated union_ (DU for short) is a type of thing that can be __either__ of its parts, but only one at a time.
+A _discriminated union_ (DU for short) is a type of thing that can be either of its parts, but __only one at a time__.
 
 For instance a DU for the suits of a deck of cards would be...
 

@@ -1,5 +1,6 @@
 ---
-title: Organisation
+title: Organising your things
+concept: Organisation
 layout: default
 ---
 ## Modules

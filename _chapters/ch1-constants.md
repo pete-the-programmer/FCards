@@ -1,5 +1,6 @@
 ---
-title: Constants
+title: A card
+concept: Constants
 layout: default
 next_chapter: "ch2-organisation"
 ---
