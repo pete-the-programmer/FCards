@@ -1,4 +1,4 @@
-module Fcards.ch5
+module Fcards.ch6
 
 let add a b = a + b
 

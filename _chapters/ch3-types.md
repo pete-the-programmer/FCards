@@ -14,7 +14,7 @@ Traditionally, types of things (like a record definition) start with a capital l
 {% include_relative src/ch3.record.fs %}
 ```
 
-> Note that in __F#__ parts of a type are separated with a semicolon (;) or are put on separate lines at the same level of indentation
+> TIP: __F#__ parts of a type are separated with a semicolon (;) or are put on separate lines at the next level of indentation
 
 
 ## Discriminated Union 

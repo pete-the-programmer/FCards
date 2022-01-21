@@ -1,9 +1,6 @@
 module Fcards.ch5
 open Fcards.ch3
 
-let combineSuitWithNumber (suit, number) =
-  suit number
-
 let newDeck = 
   // Note: this is a 'calculated value' as it takes no inputs.
   //  So, once this value is calculated the first time then it 
@@ -14,4 +11,4 @@ let newDeck =
     Jack; Queen; King; Ace
   ]
   let paired = List.allPairs suits numbers
-  List.map combineSuitWithNumber paired
+  List.map (fun (suit, number) -> suit number) paired
