@@ -1,4 +1,4 @@
-module Fcards.ch5
+module Fcards.ch7
 open Fcards.ch3
 
 let newDeck = 
