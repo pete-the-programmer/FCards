@@ -1,5 +1,5 @@
-module Fcards.ch7
-open Fcards.ch3
+module Fcards.ch07
+open Fcards.ch03
 
 let newDeck = 
   let suits = [Hearts; Diamonds; Clubs; Spades]

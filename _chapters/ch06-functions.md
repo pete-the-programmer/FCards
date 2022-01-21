@@ -17,7 +17,7 @@ let doSomething a b =
 > TIP: the values we pass in could also be functions too
 
 ```fsharp
-{% include_relative src/ch6.functions.fs %}
+{% include_relative src/ch06.functions.fs %}
 ```
 > TIP: there is no _return_ keyword.  The last result calculated is the value that is returned
 
@@ -29,7 +29,7 @@ Define a function that takes the top card from the deck and puts it in our hand.
 
 {:class="collapsible" id="pickup"}
 ```fsharp
-{% include_relative src/ch6.pickup.fs %}
+{% include_relative src/ch06.pickup.fs %}
 
 """
 Note that we can be more specific about the types of the function's inputs as `(label: type)`.  If we don't do this the compiler tries to figure it out.  Most of the time the compiler's pretty good at that.

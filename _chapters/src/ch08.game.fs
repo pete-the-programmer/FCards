@@ -1,5 +1,5 @@
-module Fcards.ch8
-open Fcards.ch7
+module Fcards.ch08
+open Fcards.ch07
 
 type Game = {
   deck: Card list
@@ -14,7 +14,7 @@ let pickupCard (game: Game) =
         hand = game.hand @ [a]
         deck = []
       }
-  | [a::rest] -> 
+  | a::rest -> 
       {
         hand = hand @ [a]
         deck = rest

@@ -1,4 +1,4 @@
-module Fcards.ch6
+module Fcards.ch06
 
 let pickupCard (hand: Card list) (deck: Card list) =
   if deck.Length = 0 then 

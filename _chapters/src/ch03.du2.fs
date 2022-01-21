@@ -1,4 +1,4 @@
-module Fcards.ch3  
+module Fcards.ch03  
 
 type CardNumber =
   | Two 

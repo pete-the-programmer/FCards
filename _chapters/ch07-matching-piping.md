@@ -8,7 +8,7 @@ layout: default
 When picking up a card we used an `if` statement to test if the deck was empty...
 
 ```fsharp
-{% include_relative src/ch6.pickup.fs %}
+{% include_relative src/ch06.pickup.fs %}
 ```
 
 We could instead use a much more readable `match` statement.  A `match` statement is a very clean way of dealing with a set of possible inputs
@@ -16,7 +16,7 @@ that need to be treated in different ways.  It also helps reduce the number of b
 specified a scenario for every possible value of the input.
 
 ```fsharp
-{% include_relative src/ch7.pickup2.fs %}
+{% include_relative src/ch07.pickup2.fs %}
 ```
 Line by line in the `pickupCard` function: 
 1. `match` on the `deck` value.
@@ -35,10 +35,10 @@ i.e `b |> func a` is the same as `func a b`
 
 What this allows us to do is __chain__ functions together to create a bigger _composite_ function.
 ```fsharp
-{% include_relative src/ch7.pipe.fs %}
+{% include_relative src/ch07.pipe.fs %}
 ```
 
 With this knowledge we can slightly improve our `newDeck` calculation to
 ```fsharp
-{% include_relative src/ch7.newdeck2.fs %}
+{% include_relative src/ch07.newdeck2.fs %}
 ```

@@ -28,5 +28,5 @@ So for `List.map` you might do something like this:
 
 {:class="collapsible" id="newdeck"}
 ```fsharp
-{% include_relative src/ch5.newdeck.fs %}
+{% include_relative src/ch05.newdeck.fs %}
 ```

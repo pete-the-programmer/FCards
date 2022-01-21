@@ -2,7 +2,7 @@
 title: A card
 concept: Constants
 layout: default
-next_chapter: "ch2-organisation"
+next_chapter: "ch02-organisation"
 ---
 
 Define values with names using the __let__ keyword
@@ -17,6 +17,6 @@ Define the cards in a deck
 
 {:class="collapsible" id="constants"}
 ```fsharp
-{% include_relative src/ch1.constants.fs %}
+{% include_relative src/ch01.constants.fs %}
 
 ```

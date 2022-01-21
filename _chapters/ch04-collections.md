@@ -16,11 +16,11 @@ We'll generally use a __List__ for our collections of things because it has some
 - __@__ joins two lists - e.g. `[1; 2; 3] @ [8; 9; 10] = [1; 2; 3; 8; 9; 10]`
 - __[]__ is a empty list
 - __[a]__ is a list with one thing in it
-- __[a::b]__ is a list where `a` is the first thing in the list and `b` is all the rest.  Really useful when you're processing each thing in the list in turn.
+- __a::b__ is a list where `a` is the first thing in the list and `b` is all the rest.  Really useful when you're processing each thing in the list in turn.
 
 ## A hand of cards
 
 So a hand of cards is just a list of Card things
 ```fsharp
-{% include_relative src/ch4.collections.fs %}
+{% include_relative src/ch04.collections.fs %}
 ```

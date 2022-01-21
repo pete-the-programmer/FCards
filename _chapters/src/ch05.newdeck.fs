@@ -1,5 +1,5 @@
-module Fcards.ch5
-open Fcards.ch3
+module Fcards.ch05
+open Fcards.ch03
 
 let newDeck = 
   // Note: this is a 'calculated value' as it takes no inputs.
