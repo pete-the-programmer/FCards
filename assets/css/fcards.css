@@ -20,7 +20,7 @@ a:hover {
 }
 pre.highlight{
   padding: 1em;
-  /* max-width: 50em; */
+  white-space: pre-wrap;
 }
 
 footer {

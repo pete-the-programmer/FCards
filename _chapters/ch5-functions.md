@@ -44,4 +44,8 @@ Now that we have a deck, We need to define a function that takes the top card fr
 {:class="collapsible" id="pickup"}
 ```fsharp
 {% include_relative src/ch5.pickup.fs %}
+
+"""
+Note that we can be more specific about the types of the function's inputs by wrapping the input label in round brackets and using a colon.
+"""
 ```
