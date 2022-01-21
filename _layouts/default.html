@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
+    <base href="{{ site.baseurl }} "/>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme" content="{{ site.theme }}" />
     <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
-    <link rel="stylesheet" href="{{ "/assets/css/fcards.css?v=" | append: site.github.build_revision | relative_url }}">
     <link rel="stylesheet" href="{{ "/assets/css/monokai.css?v=" | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/fcards.css?v=" | append: site.github.build_revision | relative_url }}">
     <title>{{ page.title | default: site.title  }}</title>
     
     <!--[if lt IE 9]>
@@ -28,7 +29,7 @@
       </section>
       <footer>
         {% if page.next %}
-          NEXT: <a href="{{ page.next.url }}">{{ page.next.title }}</a>
+          NEXT: <a href="{{ site.baseurl }}{{ page.next.url }}">{{ page.next.title }}</a>
         {% endif %}
       </footer>
     </div>
