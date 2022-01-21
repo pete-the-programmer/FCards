@@ -1,5 +1,5 @@
 ---
-title: "Chapter 2: Organisation"
+title: Organisation
 layout: default
 ---
 ## Modules

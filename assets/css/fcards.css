@@ -1,3 +1,16 @@
+
+.markdown-body {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
 .collapsible{
   height: 0.5em;
   overflow: hidden;
@@ -7,4 +20,10 @@
 }
 pre.highlight{
   padding: 1em;
+  /* max-width: 50em; */
+}
+
+footer {
+  border-top: 1px solid #ccc;
+  padding-top: 1em;
 }

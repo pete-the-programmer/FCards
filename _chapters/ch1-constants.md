@@ -1,5 +1,5 @@
 ---
-title: "Chapter 1: Constants"
+title: Constants
 layout: default
 next_chapter: "ch2-organisation"
 ---
@@ -12,7 +12,7 @@ e.g. `let x = 1 `
 
 Define the cards in a deck
 
-[See the answer](#constants)
+[See an answer]({{ site.baseurl }}{{ page.url }}#constants)
 
 {:class="collapsible" id="constants"}
 ```fsharp
