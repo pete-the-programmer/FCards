@@ -30,4 +30,4 @@ A more complex form of a DU can specify a type for each of the parts.  The types
 ```fsharp
 {% include_relative src/ch3.du2.fs %}
 ```
-Note that the labels for the DU _have_ to start with a capital letter.
+Note that the labels for the DU _have_ to start with a capital letter, so we can't just use the number for the label directly.
