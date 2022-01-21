@@ -17,16 +17,16 @@ Note that the values we pass in could also be functions too
 ```
 Note that there is no _return_ keyword.  The last result calculate is the value that is returned
 
-## Creating a deck of cards to pick up from
-We need to define what a new deck of cards looks like.
-
-There are some useful list functions that are supplied in the base libraries:
-- __List.allPairs list1 list2__ - creates a new list with all the items in list1 combined with all the items in list 2 as a tuple.
-A tuple is two items put together as a small grouping, and is typed as `(a, b)` - with a _comma_.  
-- __List.map function list__ - transforms a list of items by running the function against each item in the list.  You end up with a list the same length of transformed items.
+## Creating a deck of cards
+To pick up a card, we will need a deck of cards to pick from.
 
 ### Exercise:
-Define something that returns all the cards in the deck as a list
+Define a thing that has all the cards in the deck as a list
+
+There are some useful list functions that are supplied in the [base libraries](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-listmodule.html){:target="_blank"} :
+- __List.allPairs list1 list2__ - creates a new list with all the items in list1 combined with all the items in list 2 as a tuple.
+A tuple is two items put together as a small grouping, and is typed as `(a, b)` - with a _comma_.  
+- __List.map function list__ - transforms a list of items by running the function against each item in the list.  You end up with a list with the same length as the initial list, containing  the transformed items.
 
 [See an answer]({{ site.baseurl }}{{ page.url }}#newdeck)
 
@@ -37,7 +37,7 @@ Define something that returns all the cards in the deck as a list
 
 ## How to pick up a card
 
-Now that we have a deck, We need to define a function that takes the top card from the deck and puts it in our hand.
+Now that we have a deck, we need to define a function that takes the top card from the deck and puts it in our hand.
 
 [See an answer]({{ site.baseurl }}{{ page.url }}#pickup)
 
@@ -46,6 +46,6 @@ Now that we have a deck, We need to define a function that takes the top card fr
 {% include_relative src/ch5.pickup.fs %}
 
 """
-Note that we can be more specific about the types of the function's inputs by wrapping the input label in round brackets and using a colon.
+Note that we can be more specific about the types of the function's inputs as `(label: type)`.  If we don't do this the compiler tries to figure it out.  Most of the time the compiler's pretty good at that.
 """
 ```
