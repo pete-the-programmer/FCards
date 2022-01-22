@@ -7,6 +7,6 @@ let rec shuffle deck =
   | [a] -> [a]
   | _ -> // NOTE: `_` means "some value, but I don't care what it is"
       let randomPosition = random.Next(deck.Length)
-      let cardAtPosition = deck.[randomPosition]
+      let cardAtPosition = deck[randomPosition]
       let rest = deck |> List.removeAt randomPosition
       [cardAtPosition] @ (shuffle rest)
