@@ -1,4 +1,4 @@
-module Fcards.ch03  
+module Fcards.ch04
 
 type CardNumber =
   | Two 
@@ -22,6 +22,4 @@ type Card =
   | Spades of CardNumber
   | Joker
 
-
-
-let myCard = Hearts Three
+let hand = [Hearts Three; Diamonds Ten; Clubs King; Joker]

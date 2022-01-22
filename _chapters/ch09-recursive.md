@@ -34,8 +34,16 @@ Write a function that shuffles a list of cards by taking a random card from the 
 
 {:class="collapsible" id="shuffle"}
 ```fsharp
-{% include_relative src/ch09.shuffle.fs %}
-
+let rec shuffle deck = 
+  let random = System.Random()
+  match deck with 
+  | [] -> []
+  | [a] -> [a]
+  | _ -> // NOTE: `_` means "some value, but I don't care what it is"
+      let randomPosition = random.Next(deck.Length)
+      let cardAtPosition = deck[randomPosition]
+      let rest = deck |> List.removeAt randomPosition
+      [cardAtPosition] @ (shuffle rest)
 ```
 
 ## Putting it together

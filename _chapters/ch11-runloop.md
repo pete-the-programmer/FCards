@@ -11,18 +11,15 @@ To interact with a game we would need a simple play loop:
 1. Execute the command
 1. Go back to 1.
 
-<!-- To play a game, we will need a standard play loop:
-1. Print out state of the game
-2. Print out list of commands the player can perform (optional?)
-3. Print out a prompt
-4. Wait for player to type a command
-5. Execute the command
-6. Print out result of command (maybe - depends if the state is obvious enough)
-7. Go back to 1. -->
-
 A simple play loop for the command line would look like this:
 ```fsharp
-{% include_relative src/ch11.runloop.fs %}
+open System
+
+let looper() = 
+  (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant )
+  |> Seq.initInfinite
+  |> Seq.takeWhile (fun x -> x <> 'q')
+  |> Seq.iter (fun x -> printfn "%A" x)
 ```
 In this example it just prints out the player's choice until the player chooses 'q'.  What this does line-by-line is:
 1. Read a key from the keyboard. Note that the key is converted to lower-case so we don't have to deal with someone using capitals

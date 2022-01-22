@@ -8,7 +8,12 @@ layout: default
 When picking up a card we used an `if` statement to test if the deck was empty...
 
 ```fsharp
-{% include_relative src/ch06.pickup.fs %}
+let pickupCard (hand: Card list) (deck: Card list) =
+  if deck.Length = 0 then 
+    failwith "No cards left!!"
+  else
+    let topcard = deck[0]
+    hand @ [topcard]
 ```
 
 We could instead use a much more readable `match` statement.  A `match` statement is a very clean way of dealing with a set of possible inputs
@@ -16,7 +21,11 @@ that need to be treated in different ways.  It also helps reduce the number of b
 specified a scenario for every possible value of the input.
 
 ```fsharp
-{% include_relative src/ch07.pickup2.fs %}
+let pickupCard (hand: Card list) (deck: Card list) =
+  match deck with 
+  | [] -> failwith "No cards left!!!"
+  | [a] -> hand @ [a]
+  | a::rest -> hand @ [a]
 ```
 Line by line in the `pickupCard` function: 
 1. `match` on the `deck` value.
@@ -35,10 +44,35 @@ i.e `b |> func a` is the same as `func a b`
 
 What this allows us to do is __chain__ functions together to create a bigger _composite_ function.
 ```fsharp
-{% include_relative src/ch07.pipe.fs %}
+let add a b = a + b
+
+let multiply a b = a * b
+
+let chained = 
+  7                 // 7
+  |> add 4          // 11
+  |> mutiply 6      // 66
+  |> add 2          // 68 
+
+let rec addAll (numbers: int list) =
+  match numbers with 
+  | [] -> 0
+  | [a] -> a
+  | a::rest -> a + (addAll rest)
+
+addAll [1; 2; 3; 4; 5; 6; 7; 8; 9]  // returns 45
 ```
 
 With this knowledge we can slightly improve our `newDeck` calculation to
 ```fsharp
-{% include_relative src/ch07.newdeck2.fs %}
+let newDeck = 
+  let suits = [Hearts; Diamonds; Clubs; Spades]
+  let numbers = [
+    Two; Three; Four; Five; Six; Seven; Eight; Nine; Ten;
+    Jack; Queen; King; Ace
+  ]
+
+  List.allPairs suits numbers
+  |> List.map (fun (suit, number) -> suit number)
+
 ```

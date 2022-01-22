@@ -28,5 +28,16 @@ So for `List.map` you might do something like this:
 
 {:class="collapsible" id="newdeck"}
 ```fsharp
-{% include_relative src/ch05.newdeck.fs %}
+let newDeck = 
+  // Note: this is a 'calculated value' as it takes no inputs.
+  //  So, once this value is calculated the first time then it 
+  //  just keeps the value forever.
+  let suits = [Hearts; Diamonds; Clubs; Spades]
+  let numbers = [
+    Two; Three; Four; Five; Six; Seven; Eight; Nine; Ten;
+    Jack; Queen; King; Ace
+  ]
+  let paired = List.allPairs suits numbers
+  List.map (fun (suit, number) -> suit number) paired
+
 ```

@@ -11,7 +11,12 @@ Each of these parts has a label and a type, which itself can even be another _re
 Traditionally, types of things (like a record definition) start with a capital letter, and instances of these things (e.g a variable) start with a small letter.
 
 ```fsharp
-{% include_relative src/ch03.record.fs %}
+type Card = {
+  suit: string
+  value: int
+}
+
+let myCard = { suit = "Clubs"; value=3 }
 ```
 
 > TIP: __F#__ parts of a type are separated with a semicolon (;) or are put on separate lines at the next level of indentation
@@ -23,11 +28,46 @@ A _discriminated union_ (DU for short) is a type of thing that can be either of 
 For instance a DU for the suits of a deck of cards would be...
 
 ```fsharp
-{% include_relative src/ch03.du.fs %}
+type Suit = 
+  | Hearts
+  | Diamonds
+  | Clubs 
+  | Spades
+
+type Card = {
+  suit: Suit
+  value: int
+}
+
+let myCard = { suit = Clubs; value=3 }
 ```
 
 A more complex form of a DU can specify a type for each of the parts.  The types of the parts don't have to be the same.
 ```fsharp
-{% include_relative src/ch03.du2.fs %}
+type CardNumber =
+  | Two 
+  | Three
+  | Four
+  | Five
+  | Six
+  | Seven
+  | Eight
+  | Nine
+  | Ten
+  | Jack
+  | Queen
+  | King
+  | Ace
+
+type Card = 
+  | Hearts of CardNumber
+  | Diamonds of CardNumber
+  | Clubs of CardNumber
+  | Spades of CardNumber
+  | Joker
+
+
+
+let myCard = Hearts Three
 ```
 Note that the labels for the DU _have_ to start with a capital letter, so we can't just use the number for the label directly.

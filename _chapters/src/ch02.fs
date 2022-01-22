@@ -1,22 +1,5 @@
----
-title: A card
-concept: Constants
-layout: default
-next_chapter: "ch02-organisation"
----
+module Fcards.ch02
 
-Define values with names using the __let__ keyword
-
-e.g. `let x = 1 `
-
-### Exercise:
-
-Define the cards in a deck
-
-[See an answer]({{ site.baseurl }}{{ page.url }}#constants)
-
-{:class="collapsible" id="constants"}
-```fsharp
 let Spades_2 = "Spades 2"
 let Spades_3 = "Spades 3"
 let Spades_4 = "Spades 4"
@@ -69,4 +52,3 @@ let Hearts_Jack = "Hearts Jack"
 let Hearts_Queen = "Hearts Queen"
 let Hearts_King = "Hearts King"
 let Hearts_Ace = "Hearts Ace"
-```

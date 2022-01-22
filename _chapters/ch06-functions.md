@@ -17,7 +17,16 @@ let doSomething a b =
 > TIP: the values we pass in could also be functions too
 
 ```fsharp
-{% include_relative src/ch06.functions.fs %}
+let add a b = a + b
+
+let multiply a b = a * b
+
+let combine combiner a b =
+  combiner (a + 1) (b * 2)
+
+// to use it...
+let added = combine add 3 4  // should equal 12
+let multiplied = combine multiply 3 4  // should equal 32
 ```
 > TIP: there is no _return_ keyword.  The last result calculated is the value that is returned
 
@@ -29,7 +38,15 @@ Define a function that takes the top card from the deck and puts it in our hand.
 
 {:class="collapsible" id="pickup"}
 ```fsharp
-{% include_relative src/ch06.pickup.fs %}
+let pickupCard (hand: Card list) (deck: Card list) =
+  if deck.Length = 0 then 
+    failwith "No cards left!!"
+  else
+    let topcard = deck[0]
+    hand @ [topcard]
+
+let hand = [Hearts Three; Diamonds Ten; Clubs King]
+let updatedHand = pickupCard hand aNewDeck
 
 """
 Note that we can be more specific about the types of the function's inputs as `(label: type)`.  If we don't do this the compiler tries to figure it out.  Most of the time the compiler's pretty good at that.

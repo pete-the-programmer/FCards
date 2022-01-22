@@ -22,5 +22,5 @@ We'll generally use a __List__ for our collections of things because it has some
 
 So a hand of cards is just a list of Card things
 ```fsharp
-{% include_relative src/ch04.collections.fs %}
+let hand = [Hearts Three; Diamonds Ten; Clubs King; Joker]
 ```

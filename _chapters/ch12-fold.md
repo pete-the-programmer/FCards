@@ -1,0 +1,80 @@
+---
+title: Interacting with a player - making a move
+concept: Fold
+layout: default
+---
+
+## Listening to the player
+To play a game, we can expand to a standard play loop:
+1. Print out state of the game
+2. Print out list of commands the player can perform (optional?)
+3. Print out a prompt
+4. Wait for player to type a command
+5. Execute the command
+6. Print out result of command (maybe - depends if the state is obvious enough)
+7. Go back to 1.
+
+So that means within our play loop we need to include a function that updates the game according to the command.
+```fsharp
+open System
+
+type Game = {
+  deck: Card list
+  hand: Card list
+} with
+    override this.ToString() =
+      $"[xx] - {this.deck.Length}\n" + (printOut this.hand)
+
+let printer = printfn "\n\n===FCARDS===\n%O\n\n<p>ickup card <q>uit"
+
+let combineUpdaterAndPrinter updater game command= 
+  let updated = updater game command
+  printer updated
+  updated 
+
+let looper (updater: Game -> char -> Game) (initialGame: Game) = 
+  printer initialGame
+  (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant)
+  |> Seq.initInfinite
+  |> Seq.takeWhile (fun x -> x <> 'q')
+  |> Seq.fold (combineUpdaterAndPrinter updater) initialGame
+```
+
+Here we use a new standard function called `fold`.  This loops through the collection of things (in this case the keystrokes) and applies them to an _accumulator_ (in our case the Game), but in each step in the loop is uses the updated Game from the previous step.  It's a way of doing the following but with a collection of things that you may not know the value of yet (e.g. the player's chosen keystrokes):
+```fsharp
+game
+|> updater 'p'
+|> updater 'p'
+|> updater 'r'
+|> updater 'a'
+|> updater '?'
+|> updater 'q'  //yay we quit!
+```
+
+### Exercise:
+
+Design the `updater` function.  It takes the parameters of a `Game` and a `Char` and returns a newly updated `Game`.
+
+We want it to pickup a card only if the player presses 'p', otherwise return the Game unchanged.
+
+[See an answer]({{ site.baseurl }}{{ page.url }}#fold)
+
+{:class="collapsible" id="fold"}
+```fsharp
+let updateGame game command = 
+  match command with 
+  | 'p' -> game |> pickupCard
+  | _ -> game
+```
+
+Now we can play a simple game of "pick up the cards"!
+
+```fsharp
+let play() =
+  let startingpoint = 
+    {
+      deck = newDeck |> shuffle
+      hand = []
+    }
+  looper updateGame startingpoint
+```

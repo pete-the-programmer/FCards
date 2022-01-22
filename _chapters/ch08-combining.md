@@ -16,7 +16,40 @@ Modify the `pickupCard` function to use a combined `Game` thing, including defin
 
 {:class="collapsible" id="game"}
 ```fsharp
-{% include_relative src/ch08.game.fs %}
+type Game = {
+  deck: Card list
+  hand: Card list
+}
+
+let pickupCard (game: Game) =
+  match game.deck with 
+  | [] -> failwith "No cards left!!!"
+  | [a] -> 
+      {
+        hand = game.hand @ [a]
+        deck = []
+      }
+  | a::rest -> 
+      {
+        hand = game.hand @ [a]
+        deck = rest
+      }
+
+let after3Pickups = 
+  {
+    hand = []
+    deck = newDeck
+  }
+  |> pickupCard
+  |> pickupCard
+  |> pickupCard
+
+
+//  result
+  {
+    hand = [ Hearts Two; Hearts Three; Hearts Four ]
+    deck = [ Hearts Five; .... ]
+  }
 
 ```
 > TIP: Prefer creating a record over a tuple, so that you can add names/labels to the parts for clarity - even if it is only two things.
