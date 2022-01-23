@@ -6,8 +6,25 @@ baseurl: /FCards
 collections:
   chapters:
     output: true
-    permalink: :collection/:name
+    permalink: :title
 
 relative_links:
   enabled:     true
   collections: true
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: "chapters"
+    values:
+      layout: "chapter"
+  - scope:
+      path: ""
+      type: "src"
+    values:
+      layout: "source"

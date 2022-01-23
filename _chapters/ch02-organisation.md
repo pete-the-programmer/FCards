@@ -1,7 +1,7 @@
 ---
-title: Organising your things
+slug: Organising your things
 concept: Organisation
-layout: default
+chapter: "02"
 ---
 ## Modules
 You can organise your code into "modules".
@@ -48,3 +48,5 @@ open Fcards.ch01
 
 printfn "%s" Spades_2
 ```
+
+{% include sofar.md %}

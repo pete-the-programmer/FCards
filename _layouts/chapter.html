@@ -19,6 +19,9 @@
     <div class="container-lg px-3 my-5 markdown-body">
       <header>
         <h1>
+          {%if page.url != "/" %}
+            <a href="{{ site.baseurl}}\">FCards</a> -
+          {% endif %}
           {{ page.slug | default: site.title }}
         </h1>
         <p class="tagline">{{ page.description }}</p>
@@ -30,7 +33,17 @@
 
       </section>
       <footer>
-      </footer>
+        {% if page.previous %}
+          <a href="{{ site.baseurl }}{{ page.previous.url }}">[&lt;&lt; {{ page.previous.slug }}]</a>
+        {% else %}
+          <a href="{{ site.baseurl }}/">[HOME]</a>
+        {% endif %}
+        {% if page.next %}
+          <a style="float:right" href="{{ site.baseurl }}{{ page.next.url }}">[{{ page.next.slug }} &gt;&gt;]</a>
+        {% else %}
+          <a  style="float:right" href="{{ site.baseurl }}/">[HOME]</a>          
+        {% endif %}
+    </footer>
     </div>
   </body>
 </html>

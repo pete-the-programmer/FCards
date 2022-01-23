@@ -1,7 +1,7 @@
 ---
-title: A hand of cards
+slug: A hand of cards
 concept: Collections
-layout: default
+chapter: "04"
 ---
 ## Lists, sets, sequences, and arrays
 There are a bunch of different kinds of thing that can hold a collection of other things.
@@ -24,3 +24,6 @@ So a hand of cards is just a list of Card things
 ```fsharp
 let hand = [Hearts Three; Diamonds Ten; Clubs King; Joker]
 ```
+
+
+{% include sofar.md %}

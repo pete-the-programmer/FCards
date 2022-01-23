@@ -1,5 +1,3 @@
-module Fcards.ch06
-
 type CardNumber =
   | Two 
   | Three

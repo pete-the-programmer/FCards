@@ -1,7 +1,7 @@
 ---
-title: Shuffling
+slug: Shuffling
 concept: Recursive functions
-layout: default
+chapter: "09"
 ---
 ## Shuffling the deck
 So far we have been using a deck that is always in the same predictable order.  It's time we mixed things up a bit and shuffled the cards.
@@ -61,3 +61,6 @@ So now we can create a new game with a shuffled deck and pickup some cards!
 |> pickupCard
 |> pickupCard
 ```
+
+
+{% include sofar.md %}

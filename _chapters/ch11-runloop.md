@@ -1,7 +1,7 @@
 ---
-title: Interacting with a player - listening
+slug: Interacting with a player - listening
 concept: I/O
-layout: default
+chapter: "11"
 ---
 
 ## Listening to the player
@@ -26,3 +26,6 @@ In this example it just prints out the player's choice until the player chooses 
 1. Initialise an infinite sequence of key-reads.  We won't use them all, but we are saying we don't care how many there are as long as they don't run out.  The key-read is only _actually_ performed when a further line asks for one (i.e. lazy evaluation)
 1. Keep taking keystrokes (and pass them on as a new sequence) while the key isn't a 'q'
 1. Iterate (i.e. loop) though all of the keystrokes and run the function on them.  In this case the function just prints out the key.  The format string `%A` is a catch-all format where the compiler chooses the "best" format for the value.
+
+
+{% include sofar.md %}

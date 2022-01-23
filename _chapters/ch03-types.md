@@ -1,7 +1,7 @@
 ---
-title: Describing what a card is
+slug: Describing what a card is
 concept: Types
-layout: default
+chapter: "03"
 ---
 ## Records
 A _record_ is a type of thing that has multiple parts to its value, like a name, or id, or a number.
@@ -71,3 +71,6 @@ type Card =
 let myCard = Hearts Three
 ```
 Note that the labels for the DU _have_ to start with a capital letter, so we can't just use the number for the label directly.
+
+
+{% include sofar.md %}

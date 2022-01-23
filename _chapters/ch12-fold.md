@@ -1,7 +1,7 @@
 ---
-title: Interacting with a player - making a move
+slug: Interacting with a player - making a move
 concept: Fold
-layout: default
+chapter: "12"
 ---
 
 ## Listening to the player
@@ -83,3 +83,5 @@ let play() =
     }
   looper updateGame startingpoint
 ```
+
+{% include sofar.md %}

@@ -1,5 +1,3 @@
-module Fcards.ch08
-
 type CardNumber =
   | Two 
   | Three
@@ -22,6 +20,8 @@ type Card =
   | Spades of CardNumber
   | Joker
 
+let hand = [Hearts Three; Diamonds Ten; Clubs King; Joker]
+
 let newDeck = 
   let suits = [Hearts; Diamonds; Clubs; Spades]
   let numbers = [
@@ -31,13 +31,8 @@ let newDeck =
   List.allPairs suits numbers
   |> List.map (fun (suit, number) -> suit number)
 
-type Game = {
-  deck: Card list
-  hand: Card list
-}
-
-let pickupCard (game: Game) =
-  match game.deck with 
+let pickupCard (hand: Card list) (deck: Card list) =
+  match deck with 
   | [] -> failwith "No cards left!!!"
-  | [a] -> { hand = game.hand @ [a]; deck = [] }
-  | a::rest -> { hand = game.hand @ [a]; deck = rest }
+  | [a] -> hand @ [a]
+  | a::rest -> hand @ [a]

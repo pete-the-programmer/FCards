@@ -1,5 +1,3 @@
-module Fcards.ch04
-
 type CardNumber =
   | Two 
   | Three
@@ -21,5 +19,3 @@ type Card =
   | Clubs of CardNumber
   | Spades of CardNumber
   | Joker
-
-let hand = [Hearts Three; Diamonds Ten; Clubs King; Joker]

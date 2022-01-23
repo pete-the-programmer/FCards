@@ -1,7 +1,7 @@
 ---
-title: Taking from the deck
+slug: Taking from the deck
 concept: Combining into world view
-layout: default
+chapter: "08"
 ---
 ## Taking card from the deck when picking up a card
 You may have noticed in [chapter 6]({% link _chapters/ch06-functions.md %}) that when we took a card, that top card was still in the deck.  The function returned a new updated hand but nothing else changed.
@@ -53,3 +53,6 @@ let after3Pickups =
 
 ```
 > TIP: Prefer creating a record over a tuple, so that you can add names/labels to the parts for clarity - even if it is only two things.
+
+
+{% include sofar.md %}

@@ -1,8 +1,7 @@
 ---
-title: A card
+slug: A card
 concept: Constants
-layout: default
-next_chapter: "ch02-organisation"
+chapter: "01"
 ---
 
 Define values with names using the __let__ keyword
@@ -70,3 +69,5 @@ let Hearts_Queen = "Hearts Queen"
 let Hearts_King = "Hearts King"
 let Hearts_Ace = "Hearts Ace"
 ```
+
+{% include sofar.md %}

@@ -1,5 +1,3 @@
-module Fcards.ch05
-
 type CardNumber =
   | Two 
   | Three
@@ -22,16 +20,22 @@ type Card =
   | Spades of CardNumber
   | Joker
 
-let hand = [Hearts Three; Diamonds Ten; Clubs King; Joker]
-
 let newDeck = 
-  // Note: this is a 'calculated value' as it takes no inputs.
-  //  So, once this value is calculated the first time then it 
-  //  just keeps the value forever.
   let suits = [Hearts; Diamonds; Clubs; Spades]
   let numbers = [
     Two; Three; Four; Five; Six; Seven; Eight; Nine; Ten;
     Jack; Queen; King; Ace
   ]
-  let paired = List.allPairs suits numbers
-  List.map (fun (suit, number) -> suit number) paired
+  List.allPairs suits numbers
+  |> List.map (fun (suit, number) -> suit number)
+
+type Game = {
+  deck: Card list
+  hand: Card list
+}
+
+let pickupCard (game: Game) =
+  match game.deck with 
+  | [] -> failwith "No cards left!!!"
+  | [a] -> { hand = game.hand @ [a]; deck = [] }
+  | a::rest -> { hand = game.hand @ [a]; deck = rest }

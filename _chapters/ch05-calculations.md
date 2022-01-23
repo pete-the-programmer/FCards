@@ -1,7 +1,7 @@
 ---
-title: A deck of cards
+slug: A deck of cards
 concept: Calculations
-layout: default
+chapter: "05"
 ---
 
 ## Creating a deck of cards
@@ -41,3 +41,5 @@ let newDeck =
   List.map (fun (suit, number) -> suit number) paired
 
 ```
+
+{% include sofar.md %}

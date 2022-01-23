@@ -1,7 +1,7 @@
 ---
-title: Improving readability using matching and piping
+slug: Improving readability using matching and piping
 concept: "Matching & Piping"
-layout: default
+chapter: "07"
 ---
 ## Matching
 
@@ -76,3 +76,5 @@ let newDeck =
   |> List.map (fun (suit, number) -> suit number)
 
 ```
+
+{% include sofar.md %}

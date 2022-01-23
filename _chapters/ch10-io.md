@@ -1,7 +1,7 @@
 ---
-title: Interacting with a player - game state
+slug: Interacting with a player - game state
 concept: I/O
-layout: default
+chapter: "10"
 ---
 ## Giving the player a way to _do_ things
 So far we've been talking about modelling how the data can work and fit together, but that's no fun until a person 
@@ -82,3 +82,6 @@ With this change our output will now look like
 ```fsharp
 "[♥8] [♦10] [♣Q] [♠2] [Jok]"
 ```
+
+
+{% include sofar.md %}

@@ -1,7 +1,7 @@
 ---
-title: Picking up a card
+slug: Picking up a card
 concept: Functions
-layout: default
+chapter: "06"
 ---
 ## Picking up a card
 
@@ -52,3 +52,5 @@ let updatedHand = pickupCard hand aNewDeck
 Note that we can be more specific about the types of the function's inputs as `(label: type)`.  If we don't do this the compiler tries to figure it out.  Most of the time the compiler's pretty good at that.
 """
 ```
+
+{% include sofar.md %}
