@@ -8,7 +8,6 @@ layout: default
 To play a game, we can expand to a standard play loop:
 1. Print out state of the game
 2. Print out list of commands the player can perform (optional?)
-3. Print out a prompt
 4. Wait for player to type a command
 5. Execute the command
 6. Print out result of command (maybe - depends if the state is obvious enough)
@@ -25,22 +24,28 @@ type Game = {
     override this.ToString() =
       $"[xx] - {this.deck.Length}\n" + (printOut this.hand)
 
-let printer = printfn "\n\n===FCARDS===\n%O\n\n<p>ickup card <q>uit"
+
+let moveUpLines n = printfn "\x1B[%dA" n  //moves the cursor up "n" lines
+let printScreen game =
+  printfn "===FCARDS==="
+  printfn "%O" game
+  printfn "<p>ickup card <q>uit"
 
 let combineUpdaterAndPrinter updater game command= 
   let updated = updater game command
-  printer updated
+  moveUpLines 5
+  printScreen updated
   updated 
 
 let looper (updater: Game -> char -> Game) (initialGame: Game) = 
-  printer initialGame
+  printScreen initialGame
   (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant)
   |> Seq.initInfinite
   |> Seq.takeWhile (fun x -> x <> 'q')
   |> Seq.fold (combineUpdaterAndPrinter updater) initialGame
 ```
 
-Here we use a new standard function called `fold`.  This loops through the collection of things (in this case the keystrokes) and applies them to an _accumulator_ (in our case the Game), but in each step in the loop is uses the updated Game from the previous step.  It's a way of doing the following but with a collection of things that you may not know the value of yet (e.g. the player's chosen keystrokes):
+Here we use a new standard function called `fold`.  This loops through the collection of things (in this case the keystrokes) and applies them to an _accumulator_ (in our case the initial Game), but in each step in the loop it uses the updated Game from the previous step.  It's a way of doing the following but with a collection of things that you may not know the value of yet (e.g. the player's chosen keystrokes):
 ```fsharp
 game
 |> updater 'p'

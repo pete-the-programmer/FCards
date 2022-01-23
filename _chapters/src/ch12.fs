@@ -1,4 +1,3 @@
-module Fcards.ch12
 open System
 
 type CardNumber =
@@ -83,15 +82,20 @@ let rec shuffle deck =
       let rest = deck |> List.removeAt randomPosition
       [cardAtPosition] @ (shuffle rest)
 
-let printer = printfn "\n\n===FCARDS===\n%O\n\n<p>ickup card <q>uit"
+let moveUpLines n = printfn "\x1B[%dA" n  //moves the cursor up "n" lines
+let printScreen game =
+  printfn "===FCARDS==="
+  printfn "%O" game
+  printfn "<p>ickup card <q>uit"
 
 let combineUpdaterAndPrinter updater game command= 
   let updated = updater game command
-  printer updated
+  moveUpLines 5
+  printScreen updated
   updated 
 
 let looper (updater: Game -> char -> Game) (initialGame: Game) = 
-  printer initialGame
+  printScreen initialGame
   (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant)
   |> Seq.initInfinite
   |> Seq.takeWhile (fun x -> x <> 'q')
