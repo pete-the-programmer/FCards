@@ -32,7 +32,7 @@ let printOut (hand: 'a seq) =  "[" + String.Join("] [", hand) + "]"
 ### Extending our types
 > We can add new properties, methods, and functions to any types in __F#__ using the keyword `with`.  We can also _override_ any built-in functions that are alreday defined on the type.
 
-So we can override how the value is converted into a string by overriding the `ToString()` method on our DU types.
+So we can override how the value is converted into a string by overriding the `ToString()` method on our DU types, and our `Game`.
 
 ```fsharp
 type CardNumber =
@@ -64,6 +64,12 @@ type Card =
       | Clubs x -> "\u2663" + x.ToString()
       | Spades x -> "\u2660" + x.ToString()
       | Joker -> "Jok"
+
+type Game = {
+  ...
+} with
+    override this.ToString() =
+      $"[xx] - {this.deck.Length}\n" + (printOut this.hand)
 ```
 > TIP:  The funny looking `/u1234` values are unicode codes (in hexadecimal) for the suit symbols from [here](https://www.alt-codes.net/suit-cards.php){:target="_blank"}
 

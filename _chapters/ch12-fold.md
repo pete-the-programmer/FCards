@@ -16,17 +16,8 @@ To play a game, we can expand to a standard play loop:
 
 So that means within our play loop we need to include a function that updates the game according to the command.
 ```fsharp
-open System
-
-type Game = {
-  deck: Card list
-  hand: Card list
-} with
-    override this.ToString() =
-      $"[xx] - {this.deck.Length}\n" + (printOut this.hand)
-
-
 let moveUpLines n = printfn "\x1B[%dA" n  //moves the cursor up "n" lines
+
 let printScreen game =
   printfn "===FCARDS==="
   printfn "%O" game

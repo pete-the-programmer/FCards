@@ -59,7 +59,9 @@ let newDeck =
 type Game = {
   deck: Card list
   hand: Card list
-}
+} with
+    override this.ToString() =
+      $"[xx] - {this.deck.Length}\n" + (printOut this.hand)
 
 let pickupCard (game: Game) =
   match game.deck with 
