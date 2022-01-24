@@ -4,11 +4,13 @@ concept: Types
 chapter: "03"
 ---
 ## Records
-A _record_ is a type of thing that has multiple parts to its value, like a name, or id, or a number.
+> A _record_ is a type of thing that has multiple parts to its value, like a name, or id, or a number.
+> 
+> Each of these parts has a label and a type, which itself can even be another _record_ type.  Traditionally, types of things (like a record definition) start with a capital letter, and instances of these things (e.g a variable) start with a small letter.
+>
+> Parts of a type are separated with a semicolon (;) or are put on separate lines at the next level of indentation
 
-Each of these parts has a label and a type, which itself can even be another _record_ type.
-
-Traditionally, types of things (like a record definition) start with a capital letter, and instances of these things (e.g a variable) start with a small letter.
+So, we can define a playing Card as having a couple of parts - the suit and the number value
 
 ```fsharp
 type Card = {
@@ -19,12 +21,11 @@ type Card = {
 let myCard = { suit = "Clubs"; value=3 }
 ```
 
-> TIP: __F#__ parts of a type are separated with a semicolon (;) or are put on separate lines at the next level of indentation
 
 
 ## Discriminated Union 
-A _discriminated union_ (DU for short) is a type of thing that can be either of its parts, but __only one at a time__.
-
+> A _discriminated union_ (DU for short) is a type of thing that can be either of its parts, but __only one at a time__.
+ 
 For instance a DU for the suits of a deck of cards would be...
 
 ```fsharp
@@ -70,7 +71,7 @@ type Card =
 
 let myCard = Hearts Three
 ```
-Note that the labels for the DU _have_ to start with a capital letter, so we can't just use the number for the label directly.
+> TIP: The labels for a DU _have_ to start with a capital letter, so we can't just use the number for the label directly.
 
 
 {% include sofar.md %}

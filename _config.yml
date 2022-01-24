@@ -23,6 +23,7 @@ defaults:
       type: "chapters"
     values:
       layout: "chapter"
+      part: 1
   - scope:
       path: ""
       type: "src"

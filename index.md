@@ -1,10 +1,11 @@
 ---
 ---
 
-<ol class="articles-list">
-  {% for post in site.chapters %}
-    <li>
-      <a href="{{ site.baseurl }}{{ post.url }}">{{ post.slug }}</a>
-    </li>
-  {% endfor %}
-</ol>
+{% assign parts = site.chapters | group_by: "part" %}
+{% for part in parts %}
+## {{ site.data.parts[part.name] }}
+{% for post in part.items %}
+  [{{ post.slug }}]({{ site.baseurl }}{{ post.url }})
+{% endfor %}
+
+{% endfor %}

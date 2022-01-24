@@ -5,22 +5,24 @@ chapter: "07"
 ---
 ## Matching
 
-When picking up a card we used an `if` statement to test if the deck was empty...
+> A `match` statement is a very clean way of dealing with a set of possible inputs 
+> that need to be treated in different ways.  It also helps reduce the number of bugs because the compiler will complain if we haven't 
+> specified a scenario for every possible value of the input.
+
+When picking up a card we used an `if` statement to test if the deck was empty.  We could instead use a much more readable `match` statement.  
 
 ```fsharp
+// ORIGINAL
+
 let pickupCard (hand: Card list) (deck: Card list) =
   if deck.Length = 0 then 
     failwith "No cards left!!"
   else
     let topcard = deck[0]
     hand @ [topcard]
-```
 
-We could instead use a much more readable `match` statement.  A `match` statement is a very clean way of dealing with a set of possible inputs
-that need to be treated in different ways.  It also helps reduce the number of bugs because the compiler will complain if we haven't 
-specified a scenario for every possible value of the input.
+// WITH ~~ MATCH ~~
 
-```fsharp
 let pickupCard (hand: Card list) (deck: Card list) =
   match deck with 
   | [] -> failwith "No cards left!!!"
@@ -39,29 +41,21 @@ Line by line in the `pickupCard` function:
 
 The most useful "special" operator that I use in F# is the pipe operator `|>`
 
-This operator takes whatever is on the left and "pipes" it into the function on the right as the _last_ parameter value.  
-i.e `b |> func a` is the same as `func a b`
-
-What this allows us to do is __chain__ functions together to create a bigger _composite_ function.
-```fsharp
-let add a b = a + b
-
-let multiply a b = a * b
-
-let chained = 
-  7                 // 7
-  |> add 4          // 11
-  |> mutiply 6      // 66
-  |> add 2          // 68 
-
-let rec addAll (numbers: int list) =
-  match numbers with 
-  | [] -> 0
-  | [a] -> a
-  | a::rest -> a + (addAll rest)
-
-addAll [1; 2; 3; 4; 5; 6; 7; 8; 9]  // returns 45
-```
+> The pipe operator takes whatever is on the left and "pipes" it into the function on the right as the _last_ parameter value.
+> i.e `b |> func a` is the same as `func a b`
+> 
+> What this allows us to do is __chain__ functions together to create a bigger _composite_ function.
+> ```fsharp
+> let add a b = a + b
+> 
+> let multiply a b = a * b
+> 
+> let chained = 
+>   7                 // 7
+>   |> add 4          // 11
+>   |> mutiply 6      // 66
+>   |> add 2          // 68 
+> ```
 
 With this knowledge we can slightly improve our `newDeck` calculation to
 ```fsharp

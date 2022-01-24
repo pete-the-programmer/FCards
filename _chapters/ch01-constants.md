@@ -4,9 +4,9 @@ concept: Constants
 chapter: "01"
 ---
 
-Define values with names using the __let__ keyword
-
-e.g. `let x = 1 `
+> Define values with names using the __let__ keyword
+> 
+> e.g. `let x = 1 `
 
 ### Exercise:
 

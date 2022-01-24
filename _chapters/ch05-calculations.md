@@ -15,14 +15,14 @@ There are some useful list functions that are supplied in the [base libraries](h
 A tuple is two items put together as a small grouping, and is typed as `(a, b)` - with a _comma_.  
 - __List.map function list__ - transforms a list of items by running the function against each item in the list.  You end up with a list with the same length as the initial list, containing  the transformed items.
 
-For `List.map` you will need to define an inline function.  This takes the form  
-`(fun x -> [calculate something here using x])`. 
-
-So for `List.map` you might do something like this:
-```fsharp
-  let listOfTuples = [(1,2); (3,4)]
-  List.map (fun (a,b) -> a + b) listOfTuples
-```
+> For `List.map` you will need to define an inline function.  This takes the form  
+> `(fun x -> [calculate something here using x])`. 
+> 
+> So for `List.map` you might do something like this:
+> ```fsharp
+>   let listOfTuples = [ (1,2) ; (3,4) ]
+>   List.map (fun (a,b) -> a + b) listOfTuples
+> ```
 
 [See an answer]({{ site.baseurl }}{{ page.url }}#newdeck)
 

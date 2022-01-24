@@ -10,7 +10,15 @@ The problem is that functions only return _one_ thing, but the action of picking
 So, rather than passing in a hand and a deck separately, we should combine these two things into a single _Game_ thing.
 
 ### Exercise:
-Modify the `pickupCard` function to use a combined `Game` thing, including defining the `Game` thing.
+
+
+Modify the `pickupCard` function to use a combined `Game` thing, including defining the `Game` thing
+[(hint)]({{ site.baseurl }}{{ page.url }}#hint)
+
+{:class="collapsible" id="hint"}
+> HINT: Define the Game as a record with a hand and a deck
+
+> TIP: I generally Prefer creating a record over a tuple, so that you can add names/labels to the parts for clarity - even if it is only two things.
 
 [See an answer]({{ site.baseurl }}{{ page.url }}#game)
 
@@ -52,7 +60,6 @@ let after3Pickups =
   }
 
 ```
-> TIP: Prefer creating a record over a tuple, so that you can add names/labels to the parts for clarity - even if it is only two things.
 
 
 {% include sofar.md %}

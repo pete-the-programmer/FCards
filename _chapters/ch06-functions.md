@@ -8,13 +8,7 @@ chapter: "06"
 Now that we have a deck, we can pick a card up and add it to our hand
 
 ## Defining a function
-In __F#__ a function is just another kind of variable, but one that is _derived_ from another value(s), so we use the `let` keyword.
-
-```fsharp
-let doSomething a b = 
-  a + b
-```
-> TIP: the values we pass in could also be functions too
+In __F#__ a function is just another kind of variable, but one that is _derived_ from another value(s), so we use the `let` keyword.  Also, as it's just a kind of value, they can be passed into other functions too.
 
 ```fsharp
 let add a b = a + b

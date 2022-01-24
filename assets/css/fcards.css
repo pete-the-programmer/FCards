@@ -33,3 +33,7 @@ blockquote {
   border-left: 3px solid #9999FF;
   padding-left: 1em;
 }
+table {
+  margin: auto;
+  border-collapse: collapse;
+}

@@ -87,10 +87,10 @@ let printScreen game =
   printfn "===FCARDS==="
   printfn "%O" game
   printfn "<p>ickup card <q>uit"
-
+  moveUpLines 5
+  
 let combineUpdaterAndPrinter updater game command= 
   let updated = updater game command
-  moveUpLines 5
   printScreen updated
   updated 
 
