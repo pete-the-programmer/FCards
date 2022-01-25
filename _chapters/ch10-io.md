@@ -2,15 +2,15 @@
 slug: Interacting with a player - game state
 concept: I/O
 chapter: "10"
+part: "Defining Cards"
 ---
-## Giving the player a way to _do_ things
+### Giving the player a way to _do_ things
 So far we've been talking about modelling how the data can work and fit together, but that's no fun until a person 
 can interact with the game.  To do this we need two things:
 1. a way of displaying the state of the game (i.e. who has what cards, and where)
 1. a way of commanding the game to make a move
 
-## Making our types more human-friendly
-### Strings
+### Making our types more human-friendly
 > All types in F# have a built-in method `ToString()`, which converts the value into a string that we can use to print out the value. 
 > Some functions that deal with strings will automatically call `ToString()` on values to get the string representation.
 

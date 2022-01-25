@@ -2,11 +2,12 @@
 slug: Shuffling
 concept: Recursive functions
 chapter: "09"
+part: "Defining Cards"
 ---
-## Shuffling the deck
+### Shuffling the deck
 So far we have been using a deck that is always in the same predictable order.  It's time we mixed things up a bit and shuffled the cards.
 
-## Recursive functions
+### Recursive functions
 > A _recursive_ function is a special kind of function that can call itself.
 > This is useful for when we want to dive down into a collection of items and get to an end of some sort and bubble back up to the beginning.
 > 
@@ -25,7 +26,7 @@ So far we have been using a deck that is always in the same predictable order.  
 > addAll [1; 2; 3; 4; 5; 6; 7; 8; 9]  // returns 45
 > ```
 
-## Exercise: Shuffle a deck
+### Exercise: Shuffle a deck
 Write a function that shuffles a list of cards by taking a random card from the list and joining that to a list of random cards from the rest of the list.
 
 > TIP: To get a random number you create a randomiser using `let rrr = System.Random()`  
@@ -47,7 +48,7 @@ let rec shuffle deck =
       [cardAtPosition] @ (shuffle rest)
 ```
 
-## Putting it together
+### Putting it together
 
 So now we can create a new game with a shuffled deck and pickup some cards!
 

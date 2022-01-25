@@ -2,6 +2,7 @@
 slug: A card
 concept: Constants
 chapter: "01"
+part: "Defining Cards"
 ---
 
 > Define values with names using the __let__ keyword

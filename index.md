@@ -3,7 +3,7 @@
 
 {% assign parts = site.chapters | group_by: "part" %}
 {% for part in parts %}
-## {{ site.data.parts[part.name] }}
+### {{ part.name }}
 {% for post in part.items %}
   [{{ post.slug }}]({{ site.baseurl }}{{ post.url }})
 {% endfor %}

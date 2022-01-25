@@ -2,8 +2,9 @@
 slug: Improving readability using matching and piping
 concept: "Matching & Piping"
 chapter: "07"
+part: "Defining Cards"
 ---
-## Matching
+### Matching
 
 > A `match` statement is a very clean way of dealing with a set of possible inputs 
 > that need to be treated in different ways.  It also helps reduce the number of bugs because the compiler will complain if we haven't 
@@ -37,7 +38,7 @@ Line by line in the `pickupCard` function:
 
 > TIP: the compiler takes the first matching test from top to bottom. Something you need to be mindful of if you have two tests that could both possibly be true.
 
-## Piping
+### Piping
 
 The most useful "special" operator that I use in F# is the pipe operator `|>`
 

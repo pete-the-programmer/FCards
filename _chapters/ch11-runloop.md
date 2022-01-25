@@ -2,9 +2,10 @@
 slug: Interacting with a player - listening
 concept: I/O
 chapter: "11"
+part: "Defining Cards"
 ---
 
-## Listening to the player
+### Listening to the player
 To interact with a game we would need a simple play loop:
 1. Prompt the user
 1. Listen for a command

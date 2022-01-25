@@ -2,8 +2,9 @@
 slug: Describing what a card is
 concept: Types
 chapter: "03"
+part: "Defining Cards"
 ---
-## Records
+### Records
 > A _record_ is a type of thing that has multiple parts to its value, like a name, or id, or a number.
 > 
 > Each of these parts has a label and a type, which itself can even be another _record_ type.  Traditionally, types of things (like a record definition) start with a capital letter, and instances of these things (e.g a variable) start with a small letter.
@@ -23,7 +24,7 @@ let myCard = { suit = "Clubs"; value=3 }
 
 
 
-## Discriminated Union 
+### Discriminated Union 
 > A _discriminated union_ (DU for short) is a type of thing that can be either of its parts, but __only one at a time__.
  
 For instance a DU for the suits of a deck of cards would be...

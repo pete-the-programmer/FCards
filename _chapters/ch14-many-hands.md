@@ -1,8 +1,8 @@
 ---
-slug: Separation of core and our game
-concept: Modules
-chapter: "13"
-part: "Simple Pickup Game"
+slug: Solitaire
+concept: Many Hands
+chapter: "14"
+part: "Solitaire"
 ---
 
 ### What's part of "pickup" and what is just generally Cards?

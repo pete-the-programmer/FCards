@@ -2,12 +2,13 @@
 slug: Picking up a card
 concept: Functions
 chapter: "06"
+part: "Defining Cards"
 ---
-## Picking up a card
+### Picking up a card
 
 Now that we have a deck, we can pick a card up and add it to our hand
 
-## Defining a function
+### Defining a function
 In __F#__ a function is just another kind of variable, but one that is _derived_ from another value(s), so we use the `let` keyword.  Also, as it's just a kind of value, they can be passed into other functions too.
 
 ```fsharp

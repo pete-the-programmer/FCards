@@ -2,10 +2,10 @@
 slug: Interacting with a player - making a move
 concept: Fold
 chapter: "12"
-part: 2
+part: "Simple Pickup Game"
 ---
 
-## Listening to the player
+### Listening to the player
 To play a game, we can expand to a standard play loop:
 1. Print out state of the game
 2. Print out list of commands the player can perform (optional?)

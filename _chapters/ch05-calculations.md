@@ -2,9 +2,10 @@
 slug: A deck of cards
 concept: Calculations
 chapter: "05"
+part: "Defining Cards"
 ---
 
-## Creating a deck of cards
+### Creating a deck of cards
 To pick up a card, we will need a deck of cards to pick from.
 
 ### Exercise:

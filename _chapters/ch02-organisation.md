@@ -2,8 +2,9 @@
 slug: Organising your things
 concept: Organisation
 chapter: "02"
+part: "Defining Cards"
 ---
-## Modules
+### Modules
 You can organise your code into "modules".
 
 E.g. a simple module in a file
@@ -27,7 +28,7 @@ module another =
   let Spades_3 = "3\u9824"
 ```
 
-## Using Modules
+### Using Modules
 From another file/module you can reference the contents as a name-space, or you can also include a module/name-space using the keyword __open__
 ```fsharp
 module Fcards.ch01  
