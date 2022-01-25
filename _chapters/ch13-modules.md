@@ -9,20 +9,20 @@ part: 2
 
 In the next part we want to make a more complex game.  In light of this, we can ask ourselves "What parts of our code are re-useable across different card games?"
 
-| Thing         | Re-usable | vs. Just for our Game |
-|:--------------|:---------:|:-----------------|
-| CardNumber    | Y         |                   |
-| Card          | Y         |                   |
-| printOut(hand)| Y         |                   |
-| newDeck       | Y         |                   |
-| Game          |           |  other games may have many hands or face up cards               |
-| pickupCard    |           |  only work for our definition of Game                |
-| shuffle       | Y         |                   |
-| moveUpLines   | Y         |                   |
-| printScreen   |           |  only prints our game                |
-| looper        | Y*        |  (looper will need to be tweaked to make it more general)                 |
-| updateGame    |           |  this is our specific game logic                |
-| play          |           |  runs our game only                |
+| | |
+|:--------------|---------:|
+| CardNumber    | _Re-usable_                            |
+| Card          | _Re-usable_                            |
+| printOut(hand)| _Re-usable_                            |
+| newDeck       | _Re-usable_                            |
+| Game          |             other games may have many hands or face up cards               |
+| pickupCard    |             only work for our definition of Game                |
+| shuffle       | _Re-usable_                            |
+| moveUpLines   | _Re-usable_                            |
+| printScreen   |             only prints our game                |
+| looper        | (looper will need to be tweaked to make it more general) _Re-usable_                           |
+| updateGame    |             this is our specific game logic                |
+| play          |             runs our game only                |
 
 ## Generics - Specifying a type like a variable
 
@@ -50,7 +50,7 @@ We also identified that the `printScreen` function is specific to our game, so w
 ```fsharp
 let looper<'G> (printScreen: 'G -> unit) (updater: 'G -> char -> 'G) (initialGame: 'G) = 
 ```
-> TIP: __F#__ uses the type `unit` to mean a _nothing_.  Other languages can use the work _void_ or _null_.
+> TIP: __F#__ uses the type `unit` to mean a _nothing_.  Other languages can use the word _void_ or _null_.
 
 ### Excercise: 
 
