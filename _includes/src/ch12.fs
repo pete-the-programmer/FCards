@@ -113,3 +113,8 @@ let play() =
       hand = []
     }
   looper updateGame startingpoint
+
+
+;;
+// DO IT!
+play()

@@ -40,3 +40,7 @@ let pickupCard (hand: Card list) (deck: Card list) =
   else
     let topcard = deck[0]
     hand @ [topcard]
+
+;;
+// DO IT!
+pickupCard hand newDeck

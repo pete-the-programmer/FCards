@@ -25,5 +25,6 @@ let deal shuffledDeck =
       
       ) emptyGame
 
-//  Let do a deal!
+;;
+// DO IT!
 newDeck |> shuffle |> deal

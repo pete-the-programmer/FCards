@@ -36,3 +36,7 @@ let pickupCard (hand: Card list) (deck: Card list) =
   | [] -> failwith "No cards left!!!"
   | [a] -> hand @ [a]
   | a::rest -> hand @ [a]
+
+;;
+// DO IT!
+pickupCard hand newDeck

@@ -33,3 +33,7 @@ let newDeck =
   ]
   let paired = List.allPairs suits numbers
   List.map (fun (suit, number) -> suit number) paired
+
+;;
+// DO IT!
+newDeck

@@ -1,3 +1,5 @@
+open System
+
 type CardNumber =
   | Two 
   | Three
@@ -85,3 +87,8 @@ let looper() =
   |> Seq.initInfinite
   |> Seq.takeWhile (fun x -> x <> 'q')
   |> Seq.iter (fun x -> printfn "%A" x)
+
+
+;;
+// DO IT!
+looper()

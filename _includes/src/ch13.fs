@@ -125,3 +125,8 @@ module Pickup =
         hand = []
       }
     looper printPickupScreen updateGame startingpoint
+
+
+;;
+// DO IT!
+play()

@@ -50,3 +50,16 @@ let rec shuffle deck =
       let cardAtPosition = deck[randomPosition]
       let rest = deck |> List.removeAt randomPosition
       [cardAtPosition] @ (shuffle rest)
+
+
+;;
+// DO IT!
+{ 
+  deck = newDeck |> shuffle;
+  hand = [] 
+}
+|> pickupCard
+|> pickupCard
+|> pickupCard
+|> pickupCard
+|> pickupCard

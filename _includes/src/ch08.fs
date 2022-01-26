@@ -39,3 +39,12 @@ let pickupCard (game: Game) =
   | [] -> failwith "No cards left!!!"
   | [a] -> { hand = game.hand @ [a]; deck = [] }
   | a::rest -> { hand = game.hand @ [a]; deck = rest }
+
+
+;;
+// DO IT!
+{ 
+  deck = newDeck; 
+  hand = [Hearts Three; Diamonds Ten; Clubs King; Joker] 
+}
+|> pickupCard 

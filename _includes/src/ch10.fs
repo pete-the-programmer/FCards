@@ -1,3 +1,5 @@
+open System
+
 type CardNumber =
   | Two 
   | Three
@@ -79,3 +81,19 @@ let rec shuffle deck =
       let cardAtPosition = deck[randomPosition]
       let rest = deck |> List.removeAt randomPosition
       [cardAtPosition] @ (shuffle rest)
+
+
+;;
+// DO IT!
+let game = 
+  { 
+    deck = newDeck |> shuffle;
+    hand = [] 
+  }
+  |> pickupCard
+  |> pickupCard
+  |> pickupCard
+  |> pickupCard
+  |> pickupCard
+
+printfn "%O" game
