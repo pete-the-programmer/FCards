@@ -69,7 +69,7 @@ type Game = {
   ...
 } with
     override this.ToString() =
-      $"[xx] - {this.deck.Length}\n" + (printOut this.hand)
+      $"[###] - {this.deck.Length}\n" + (printOut this.hand)
 ```
 > TIP:  The funny looking `/u1234` values are unicode codes (in hexadecimal) for the suit symbols from [here](https://www.alt-codes.net/suit-cards.php){:target="_blank"}
 

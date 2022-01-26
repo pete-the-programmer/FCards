@@ -17,19 +17,19 @@ type CardNumber =
   with 
     override this.ToString() = 
       match this with 
-      | Two -> "2"
-      | Three -> "3"
-      | Four -> "4"
-      | Five -> "5"
-      | Six -> "6"
-      | Seven -> "7"
-      | Eight -> "8"
-      | Nine -> "9"
+      | Two -> "2 "
+      | Three -> "3 "
+      | Four -> "4 "
+      | Five -> "5 "
+      | Six -> "6 "
+      | Seven -> "7 "
+      | Eight -> "8 "
+      | Nine -> "9 "
       | Ten -> "10"
-      | Jack -> "J"
-      | Queen -> "Q"
-      | King -> "K"
-      | Ace -> "A"
+      | Jack -> "J "
+      | Queen -> "Q "
+      | King -> "K "
+      | Ace -> "A "
 
 type Card = 
   | Hearts of CardNumber
@@ -63,7 +63,7 @@ type Game = {
   hand: Card list
 } with
     override this.ToString() =
-      $"[xx] - {this.deck.Length}\n" + (printOut this.hand)
+      $"[###] - {this.deck.Length}\n" + (printOut this.hand)
 
 let pickupCard (game: Game) =
   match game.deck with 

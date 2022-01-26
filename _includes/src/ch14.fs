@@ -1,30 +1,35 @@
-module Solitaire
-open System
-open Core
+#load "_includes/src/ch13.fsx"
+open Ch13.Core
 
-type Game = {
-  deck: Card list
-  table: Card list
-  stacks: Card list list
-}
+module Solitaire =
 
-let deal shuffledDeck = 
-  let emptyGame = {
-    deck = shuffledDeck
-    table = []
-    stacks = []
+  open System
+
+  type Game = {
+    deck: Card list
+    table: Card list
+    stacks: Card list list
   }
-              // a list of numbers from 6 to 1 (inclusive)
-  [6..-1..1]  // stepping at -1 intervals (i.e. counting down)
-  |>  List.fold (fun game i -> 
-        {
-          stacks = game.stacks @ [ game.deck |> List.take i ]
-          deck = game.deck |> List.skip i
-          table = []
-        }
-      
-      ) emptyGame
+
+  let deal shuffledDeck = 
+    let emptyGame = {
+      deck = shuffledDeck
+      table = []
+      stacks = []
+    }
+                // a list of numbers from 6 to 1 (inclusive)
+    [6..-1..1]  // stepping at -1 intervals (i.e. counting down)
+    |>  List.fold (fun game i -> 
+          {
+            stacks = game.stacks @ [ game.deck |> List.take i ]
+            deck = game.deck |> List.skip i
+            table = []
+          }
+        
+        ) emptyGame
 
 ;;
 // DO IT!
-newDeck |> shuffle |> deal
+newDeck 
+|> shuffle 
+|> Solitaire.deal
