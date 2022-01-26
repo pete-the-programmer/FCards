@@ -71,4 +71,15 @@ let Hearts_King = "Hearts King"
 let Hearts_Ace = "Hearts Ace"
 ```
 
+### Running your code
+
+You can run any code sample fairly simply using the [__F#__ interactive tool `fsi`](https://docs.microsoft.com/en-us/dotnet/fsharp/tools/fsharp-interactive/).
+
+On your command line (assuming you have the [dotnet cli](https://docs.microsoft.com/en-us/dotnet/core/install/) installed)
+1. type `dotnet fsi`
+2. copy and paste the code sample into the prompt that appears
+3. and voila!
+
+> TIP: the FSI uses double semi-colons (;;) to finish and execute code.  You may need to type _;;_ and _enter_ to execute the code sample.
+
 {% include sofar.md %}

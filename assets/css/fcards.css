@@ -6,6 +6,9 @@
   --col-border: #ccc;
   --col-highlight: #4a72df;
   --col-text: #101010;
+  --col-link: #101080;
+  --col-hd: #105010;
+  --col-hdlink: #105080;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +20,9 @@
     --col-border: #444;
     --col-highlight: #6f96ff;
     --col-text: #f0f0f0;
+    --col-link: #101050;
+    --col-hd: #105010;
+    --col-hdlink: #105050;
   }
 }
 
@@ -34,7 +40,7 @@ html, body{
 
 a {
   text-decoration: none;
-  color:var(--col-neutral)
+  color:var(--col-link)
 }
 a:hover {
   text-decoration: underline;
@@ -73,5 +79,8 @@ th,td{
 
 h1, h2, h3 {
   margin-left: -0.5em;
-  color: var(--col-text);
+  color: var(--col-hd);
+}
+h1 a, h2 a, h3 a, h4 a{
+  color: var(--col-hdlink);
 }
