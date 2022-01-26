@@ -2,5 +2,5 @@
 
 {:class="collapsible" id="code"}
 ```fsharp
-{% include src/ch{{page.chapter}}.fs %}
+{% include src/ch{{page.chapter}}.fsx %}
 ```

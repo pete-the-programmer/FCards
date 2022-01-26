@@ -1,5 +1,5 @@
-#load "_includes/src/ch13.fsx"
-open Ch13.Core
+#load "_includes/src/ch13_core.fsx"
+open Ch13_core.Core
 
 module Solitaire =
 
