@@ -1,9 +1,8 @@
-#load "_includes/src/ch13_core.fsx"
+#load "ch13_core.fsx"
 open Ch13_core.Core
 
 module Solitaire =
   open System
-  open Ch13.Core
 
   type Game = {
     deck: Card list
@@ -17,8 +16,7 @@ module Solitaire =
       table = []
       stacks = []
     }
-                // a list of numbers from 6 to 1 (inclusive)
-    [6..-1..1]  // stepping at -1 intervals (i.e. counting down)
+    [6..-1..1] 
     |>  List.fold (fun game i -> 
           {
             stacks = game.stacks @ [ game.deck |> List.take i ]
@@ -48,13 +46,13 @@ module Solitaire =
               "[###]"
             | _ -> 
               // the stack is out of cards
-              "    "            
+              "     "            
         )
         |> fun strings -> String.Join (" ", strings)
         |> printfn "%s"
     )
     //also print the remaining deck
-    game.deck.Length |> printfn "\nDeck:  [###] - %d cards remaining"
+    String.init game.deck.Length (fun _ -> "[")  |> printfn "\nDeck:  %s###]"
 
 
 

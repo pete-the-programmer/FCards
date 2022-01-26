@@ -1,8 +1,9 @@
-#load "_includes/src/ch13_core.fsx"
+// Load the contents of another file
+#load "ch13_core.fsx"
+// ... and then open the file's module (automatically prefixed with filename)
 open Ch13_core.Core
 
 module Solitaire =
-
   open System
 
   type Game = {

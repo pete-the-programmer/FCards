@@ -45,7 +45,7 @@ let printScreen game =
             "[###]"
           | _ -> 
             // Everything else (the stack is out of cards)
-            "    "            
+            "     "            
       )
       |> fun strings -> String.Join (" ", strings)
       |> printfn "%s"
@@ -64,7 +64,7 @@ __Play loop__:
   - Player may also choose to move a subset of the top-most face-up cards in a `stack` to the top of another `stack`.  If this reveals a face-down card on a `stack`, then it is turned face-up.
 
 ```
-========= Solitaire ==========
+============ Solitaire =============
 | 1 |  2 |  3 |  4 |  5 |  6 |
 [##] [##] [##] [##] [##] [♠9]
 [##] [##] [##] [##] [♣Q]
@@ -77,13 +77,4 @@ Table: [##][##][♦5]
 Deck : [##] - 32 Cards remaining
 <t>able cards, <1-6> put on stack, <q>uit
 ```
-
-So that means we have more "rows" to display for our game:
-- Header - _1_
-- Stack number - _1_
-- Stacks - _6_
-- A spacer - _1_
-- Table  - _1_
-- Deck - _1_
-- Prompt - _1_
-- __Total: 12__ -->
+-->
