@@ -4,10 +4,20 @@ open Ch13_core.Core
 module Solitaire =
   open System
 
+  type StackCard = {
+    card: Card
+    isFaceUp: bool
+  } with 
+      override this.ToString() =
+        if this.isFaceUp then
+          this.card.ToString()
+        else 
+          "###"
+
   type Game = {
     deck: Card list
     table: Card list
-    stacks: Card list list
+    stacks: StackCard list list
   }
 
   let deal shuffledDeck = 
@@ -16,10 +26,14 @@ module Solitaire =
       table = []
       stacks = []
     }
-    [6..-1..1]
+    [6..-1..1] 
     |>  List.fold (fun game i -> 
+          let newStack = 
+            game.deck 
+            |> List.take i                        // flip the last card
+            |> List.mapi (fun n card -> { isFaceUp = (n = i - 1); card=card}) 
           {
-            stacks = game.stacks @ [ game.deck |> List.take i ]
+            stacks = game.stacks @ [ newStack ]
             deck = game.deck |> List.skip i
             table = []
           }
@@ -42,14 +56,12 @@ module Solitaire =
       |> List.iter (fun cardNum ->
         [0..5]
         |> List.map (fun stackNum ->
-            match game.stacks[stackNum].Length - cardNum with 
-            | 1 -> 
+            if game.stacks[stackNum].Length > cardNum then 
               game.stacks[stackNum][cardNum]
               |> sprintf "[%O]"
-            | x when x > 1 -> 
-              "[###]"
-            | _ -> 
-              "     "            
+            else
+              // the stack is out of cards
+              "     "         
         )
         |> fun strings -> String.Join (" ", strings)
         |> printfn "%s%s" clearLine
@@ -130,8 +142,8 @@ module Solitaire =
   
   
   // a helper to add a card to a numbered stack
-  let addToStack (stackNum:int) (card:Card) (stacks: Card list list) =
-    let updatedStack = stacks[stackNum] @ [card]
+  let addToStack (stackNum:int) (card:Card) (stacks: StackCard list list) =
+    let updatedStack = stacks[stackNum] @ [ { isFaceUp=true; card=card} ]
     stacks |> List.updateAt stackNum updatedStack
   
   let tableToStack stackNum game =

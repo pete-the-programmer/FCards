@@ -76,22 +76,20 @@ _Also_, write the `drawCards` and `tableToStack` functions to update the `Game` 
       game.stacks 
       |> List.map (fun stack -> stack.Length )
       |> List.max
-    printfn "| 1  |  2  |  3  |  4  |  5  |  6  |"
+    printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |" clearLine
     [0..maxCardInAnyStack - 1]
       |> List.iter (fun cardNum ->
         [0..5]
         |> List.map (fun stackNum ->
-            match game.stacks[stackNum].Length - cardNum with 
-            | 1 -> 
+            if game.stacks[stackNum].Length > cardNum then 
               game.stacks[stackNum][cardNum]
               |> sprintf "[%O]"
-            | x when x > 1 -> 
-              "[###]"
-            | _ -> 
-              "    "            
+            else
+              // the stack is out of cards
+              "     "         
         )
         |> fun strings -> String.Join (" ", strings)
-        |> printfn "%s"
+        |> printfn "%s%s" clearLine
     )
     game //pass it on to the next function
   
@@ -168,8 +166,8 @@ let drawCards game =
 
 
 // a helper to add a card to a numbered stack
-let addToStack (stackNum:int) (card:Card) (stacks: Card list list) =
-  let updatedStack = stacks[stackNum] @ [card]
+let addToStack (stackNum:int) (card:Card) (stacks: StackCard list list) =
+  let updatedStack = stacks[stackNum] @ [ stackCard true card ]
   stacks |> List.updateAt stackNum updatedStack
 
 let tableToStack stackNum game =

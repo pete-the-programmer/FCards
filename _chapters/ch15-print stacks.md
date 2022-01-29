@@ -15,7 +15,7 @@ Now that we have some stacks of cards, we can show them to the player.  From las
 [###] [♠Q ]                    
 [♠10]                         
 
-Deck:  [###] - 31 cards remaining
+Deck:  [[[[[[[[[[[[[[[[[[[[[###]
 ```
 
 ### Exercise: 
@@ -35,23 +35,19 @@ let printScreen game =
     |> List.iter (fun cardNum ->
       [0..5]
       |> List.map (fun stackNum ->
-          match game.stacks[stackNum].Length - cardNum with 
-          | 1 -> 
-            // the top-most card
+          if game.stacks[stackNum].Length > cardNum then 
             game.stacks[stackNum][cardNum]
-            |> sprintf "[%O]"  // prints to a string
-          | x when x > 1 -> 
-            // a card in the stack, but not the top one
-            "[###]"
-          | _ -> 
-            // Everything else (the stack is out of cards)
+            |> sprintf "[%O]"
+          else
+            // the stack is out of cards
             "     "            
       )
       |> fun strings -> String.Join (" ", strings)
       |> printfn "%s"
   )
   //also print the remaining deck
-  game.deck.Length |> printfn "\nDeck:  [###] - %d cards remaining"
+  String.init game.deck.Length (fun _ -> "[")  
+  |> printfn "\nDeck:  %s###]"
 ```
 
 {% include sofar.md %}

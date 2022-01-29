@@ -33,8 +33,23 @@ It may look something like:
 [###] [♠Q ]                    
 [♠10]                         
 
-Deck:  [###] - 31 cards remaining
+Deck:  [[[[[[[[[[[[[[[[[[[[[[[[[###]
 ```
+### Card have two sides
+
+Note that now our model for a card in a stack is a bit more complex.  Sometimes the card is face-up and sometimes it is face-down.  We should incorporate that into our model (and make it easier for our future selves to print-out)
+```fsharp
+type StackCard = {
+  card: Card
+  isFaceUp: bool
+} with 
+    override this.ToString() =
+      if this.isFaceUp then
+        this.card.ToString()
+      else 
+        "###"
+```
+
 
 ### Exercise: Deal the cards out
 
@@ -43,7 +58,7 @@ Given that the model for our game would look like:
 let Game = {
   deck: Card list
   table: Card list
-  stacks: Card list list
+  stacks: StackCard list list
 }
 ```
 
@@ -53,17 +68,24 @@ Write the dealing function that populates the deck and the stacks, leaving the t
 
 {:class="collapsible" id="deal"}
 ```fsharp
+// a helper method to convert a card to a stack-card
+let stackCard isFaceUp (card: Card) = 
+  { card = card; isFaceUp = isFaceUp }
+
 let deal shuffledDeck = 
   let emptyGame = {
     deck = shuffledDeck
     table = []
     stacks = []
   }
-              // a list of numbers from 6 to 1 (inclusive)
-  [6..-1..1]  // stepping at -1 intervals (i.e. counting down)
+  [6..-1..1] // a sequence of numbers from 6 to 1 in steps of -1 (i.e. backwards)
   |>  List.fold (fun game i -> 
+        let newStack = 
+          game.deck 
+          |> List.take i                        // flip the last card
+          |> List.mapi (fun n card -> stackCard (n = i - 1) card) 
         {
-          stacks = game.stacks @ [ game.deck |> List.take i ]
+          stacks = game.stacks @ [ newStack ]
           deck = game.deck |> List.skip i
           table = []
         }

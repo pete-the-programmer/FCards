@@ -5,11 +5,20 @@ open Ch13_core.Core
 
 module Solitaire =
   open System
+  type StackCard = {
+    card: Card
+    isFaceUp: bool
+  } with 
+      override this.ToString() =
+        if this.isFaceUp then
+          this.card.ToString()
+        else 
+          "###"
 
   type Game = {
     deck: Card list
     table: Card list
-    stacks: Card list list
+    stacks: StackCard list list
   }
 
   let deal shuffledDeck = 
@@ -18,11 +27,14 @@ module Solitaire =
       table = []
       stacks = []
     }
-                // a list of numbers from 6 to 1 (inclusive)
-    [6..-1..1]  // stepping at -1 intervals (i.e. counting down)
+    [6..-1..1] 
     |>  List.fold (fun game i -> 
+          let newStack = 
+            game.deck 
+            |> List.take i                        // flip the last card
+            |> List.mapi (fun n card -> { isFaceUp = (n = i - 1); card=card}) 
           {
-            stacks = game.stacks @ [ game.deck |> List.take i ]
+            stacks = game.stacks @ [ newStack ]
             deck = game.deck |> List.skip i
             table = []
           }
