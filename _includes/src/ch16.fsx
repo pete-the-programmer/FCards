@@ -60,12 +60,12 @@ module Solitaire =
     let tableLine = 
       match game.table with 
       | []  -> ""
-      | [a] -> game.table.Head.ToString()
-      | more -> 
-        String.init (game.table.Length - 1) (fun _ -> "[")
-        + game.table.Head.ToString()
+      | a -> 
+        String.init a.Length (fun _ -> "[")
+        + a.Head.ToString()
+        + "]"
     printfn "%s" clearLine //spacer
-    printfn "%sTable: [%s]" clearLine tableLine
+    printfn "%sTable: %s" clearLine tableLine
     game
 
   let printDeck game =
