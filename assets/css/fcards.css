@@ -55,7 +55,7 @@ a:hover {
 }
 pre.highlight{
   padding: 1em;
-  white-space: pre-wrap;
+  overflow-x: auto;
 }
 
 footer {

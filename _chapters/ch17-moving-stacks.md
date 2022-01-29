@@ -151,22 +151,22 @@ We also need to print out the commands that are acceptable for the command _phas
 let printCommands game =
   match game.phase with
   | General -> 
-      printfn 
-        "%s<d>raw cards, <1-6> put on stack, <m>ove between stacks, <q>uit" 
-        clearLine
+    printfn 
+      "%s<d>raw cards, <1-6> put on stack, <m>ove between stacks, <q>uit" 
+      clearLine
   | SelectingSourceStack -> 
-      printfn 
-        "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" 
-        clearLine
+    printfn 
+      "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" 
+      clearLine
   | SelectingSourceCard stack-> 
-      let numCardsInStack = game.stacks[stack - 1].Length
-      printfn 
-        "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit"
-        clearLine
-        stack
-        numCardsInStack
+    let numCardsInStack = game.stacks[stack - 1].Length
+    printfn 
+      "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit"
+      clearLine
+      stack
+      numCardsInStack
   | SelectingTargetStack (stack, card) -> 
-      printfn 
+    printfn 
       "%sMove from stack %d at card %d to stack __, <esc> Go back, <q>uit"
       clearLine 
       stack 

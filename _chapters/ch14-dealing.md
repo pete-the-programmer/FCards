@@ -35,7 +35,7 @@ It may look something like:
 
 Deck:  [[[[[[[[[[[[[[[[[[[[[[[[[###]
 ```
-### Card have two sides
+### Cards have two sides
 
 Note that now our model for a card in a stack is a bit more complex.  Sometimes the card is face-up and sometimes it is face-down.  We should incorporate that into our model (and make it easier for our future selves to print-out)
 ```fsharp
@@ -68,22 +68,19 @@ Write the dealing function that populates the deck and the stacks, leaving the t
 
 {:class="collapsible" id="deal"}
 ```fsharp
-// a helper method to convert a card to a stack-card
-let stackCard isFaceUp (card: Card) = 
-  { card = card; isFaceUp = isFaceUp }
-
 let deal shuffledDeck = 
   let emptyGame = {
     deck = shuffledDeck
     table = []
     stacks = []
   }
-  [6..-1..1] // a sequence of numbers from 6 to 1 in steps of -1 (i.e. backwards)
+  [6..-1..1]  // a sequence of numbers from 6 to 1 in steps of -1 (i.e. backwards)
   |>  List.fold (fun game i -> 
         let newStack = 
           game.deck 
-          |> List.take i                        // flip the last card
-          |> List.mapi (fun n card -> stackCard (n = i - 1) card) 
+          |> List.take i                        
+          |> List.mapi           // flip the last card
+            (fun n card -> { isFaceUp = (n = i - 1); card=card}) 
         {
           stacks = game.stacks @ [ newStack ]
           deck = game.deck |> List.skip i
@@ -91,6 +88,7 @@ let deal shuffledDeck =
         }
       
       ) emptyGame
+
 ``` 
 
 {% include sofar.md %}

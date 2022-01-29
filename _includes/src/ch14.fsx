@@ -27,7 +27,7 @@ module Solitaire =
       table = []
       stacks = []
     }
-    [6..-1..1] 
+    [6..-1..1]  // a sequence of numbers from 6 to 1 in steps of -1 (i.e. backwards)
     |>  List.fold (fun game i -> 
           let newStack = 
             game.deck 

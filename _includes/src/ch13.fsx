@@ -1,6 +1,10 @@
 open System
 
 module Core =
+  //COLOR CODES
+  let COLOR_DEFAULT = "\x1B[0m"
+  let COLOR_RED = "\x1B[91m"
+  let COLOR_BLACK = "\x1B[90m"
 
   type CardNumber =
     | Two 
@@ -42,10 +46,10 @@ module Core =
     with  
       override this.ToString() = 
         match this with 
-        | Hearts x -> "\u2665" + x.ToString()
-        | Diamonds x -> "\u2666" + x.ToString()
-        | Clubs x -> "\u2663" + x.ToString()
-        | Spades x -> "\u2660" + x.ToString()
+        | Hearts x -> $"{COLOR_RED}\u2665{x}{COLOR_DEFAULT}"
+        | Diamonds x -> $"{COLOR_RED}\u2666{x}{COLOR_DEFAULT}"
+        | Clubs x ->  $"{COLOR_BLACK}\u2663{x}{COLOR_DEFAULT}"
+        | Spades x ->  $"{COLOR_BLACK}\u2660{x}{COLOR_DEFAULT}"
         | Joker -> "Jok"
 
   let printOut (hand: 'a seq) =  
