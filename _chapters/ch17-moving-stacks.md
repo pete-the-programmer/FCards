@@ -144,7 +144,7 @@ let moveCardsBetweenStacks sourceStack sourceCard targetStack game =
 
 We also need to print out the commands that are acceptable for the command _phase_.  Try doing this also using a match on the game's _phase_.
 
-[See an answer for moving the cards]({{ site.baseurl }}{{ page.url }}#printing)
+[See an answer for showing the appropriate commands for the phase]({{ site.baseurl }}{{ page.url }}#printing)
 
 {:class="collapsible" id="printing"}
 ```fsharp
