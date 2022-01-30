@@ -152,25 +152,19 @@ let printCommands game =
   match game.phase with
   | General -> 
     printfn 
-      "%s<d>raw cards, <1-6> put on stack, <m>ove between stacks, <q>uit" 
-      clearLine
+      "%s<d>raw cards, <1-6> put on stack, <m>ove between stacks, <q>uit" clearLine
   | SelectingSourceStack -> 
     printfn 
-      "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" 
-      clearLine
+      "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" clearLine
   | SelectingSourceCard stack-> 
     let numCardsInStack = game.stacks[stack - 1].Length
     printfn 
-      "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit"
-      clearLine
-      stack
-      numCardsInStack
+      "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit" 
+      clearLine stack numCardsInStack
   | SelectingTargetStack (stack, card) -> 
     printfn 
       "%sMove from stack %d at card %d to stack __, <esc> Go back, <q>uit"
-      clearLine 
-      stack 
-      card
+      clearLine stack card
   // return the game for the next in line
   game
   ```

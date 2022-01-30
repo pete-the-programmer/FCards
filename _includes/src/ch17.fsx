@@ -96,12 +96,23 @@ module Solitaire =
 
   let printCommands game =
     match game.phase with
-    | General -> printfn "%s<d>raw cards, <1-6> put on stack, <m>ove cards between stacks <q>uit" clearLine
-    | SelectingSourceStack -> printfn "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" clearLine
+    | General -> 
+        printfn 
+          "%s<d>raw cards, <1-6> put on stack, <m>ove cards between stacks <q>uit" 
+          clearLine
+    | SelectingSourceStack -> 
+        printfn 
+          "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" 
+          clearLine
     | SelectingSourceCard stack-> 
         let numCardsInStack = game.stacks[stack - 1].Length
-        printfn "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit" clearLine stack numCardsInStack
-    | SelectingTargetStack (stack, card) -> printfn "%sMove from stack %d at card %d to stack ___, <esc> Go back, <q>uit" clearLine stack card
+        printfn 
+          "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit" 
+          clearLine stack numCardsInStack
+    | SelectingTargetStack (stack, card) -> 
+        printfn 
+          "%sMove from stack %d at card %d to stack ___, <esc> Go back, <q>uit" 
+          clearLine stack card
     game
 
   let printMoveToTop game =
