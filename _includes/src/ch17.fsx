@@ -17,7 +17,7 @@ module Solitaire =
   type Phase = 
     | General
     | SelectingSourceStack
-    | SelectingSourceCard of int
+    | SelectingNumCards of int
     | SelectingTargetStack of int * int
 
   type Game = {
@@ -104,8 +104,11 @@ module Solitaire =
         printfn 
           "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" 
           clearLine
-    | SelectingSourceCard stack-> 
-        let numCardsInStack = game.stacks[stack - 1].Length
+    | SelectingNumCards stack-> 
+        let numCardsInStack = 
+          game.stacks[stack - 1] 
+          |> List.filter (fun a -> a.isFaceUp ) 
+          |> List.length
         printfn 
           "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit" 
           clearLine stack numCardsInStack
@@ -182,15 +185,33 @@ module Solitaire =
         stacks = game.stacks |> addToStack stackNum a 
       }
 
-  let moveCardsBetweenStacks sourceStack sourceCard targetStack game =
+  let moveCardsBetweenStacks sourceStack numCards targetStack game =
     // remember - on screen we start at one, but lists start at zero
-    let moving = game.stacks[sourceStack - 1] |> List.skip (sourceCard - 1)
-    let source = game.stacks[sourceStack - 1] |> List.take (sourceCard - 1)
+    let numCardsInStack = game.stacks[sourceStack - 1].Length
+    // do the move
+    let moving = game.stacks[sourceStack - 1] |> List.skip ( numCardsInStack - numCards )
+    let source = game.stacks[sourceStack - 1] |> List.take ( numCardsInStack - numCards )
     let target = game.stacks[targetStack - 1] @ moving
+    let numFaceUp =
+      source 
+      |> List.filter (fun a -> a.isFaceUp)
+      |> List.length
+    // flip next card?
+    let sourceFlipped =
+      match source.Length, numFaceUp with 
+      | 0, _ -> source // no cards to flip
+      | n, 0 -> // none face up
+        source
+        |> List.updateAt 
+            (n - 1) 
+            {source[n - 1] with isFaceUp=true}
+      | _, _ -> source //anything else
+
+    //reconstruct the game
     { game with 
         stacks = 
           game.stacks 
-          |> List.updateAt (sourceStack - 1) source 
+          |> List.updateAt (sourceStack - 1) sourceFlipped 
           |> List.updateAt (targetStack - 1) target 
     }
 
@@ -208,7 +229,7 @@ module Solitaire =
     match command with 
     | Number stack when (stack >= 1 && stack <= 6) -> 
         { game with 
-            phase = SelectingSourceCard stack
+            phase = SelectingNumCards stack
         }
     | '\x1B' -> // [esc] key
         { game with 
@@ -216,8 +237,11 @@ module Solitaire =
         }    
     | _ -> game
 
-  let updateGameSourceCard sourceStack game command =
-    let numCardsInStack = game.stacks[sourceStack - 1].Length
+  let updateGameNumCards sourceStack game command =
+    let numCardsInStack = 
+      game.stacks[sourceStack - 1] 
+      |> List.filter (fun a -> a.isFaceUp ) 
+      |> List.length
     match command with 
     | Number card when (card >= 1 && card <= numCardsInStack) -> 
         { game with 
@@ -229,17 +253,17 @@ module Solitaire =
         }    
     | _ -> game
 
-  let updateGameTargetStack sourceStack sourceCard game command =
+  let updateGameTargetStack sourceStack numCards game command =
     match command with 
     | Number targetStack when (targetStack >= 1 && targetStack <= 6) -> 
         let updatedGame = 
-          moveCardsBetweenStacks sourceStack sourceCard targetStack game
+          moveCardsBetweenStacks sourceStack numCards targetStack game
         { updatedGame with 
             phase = General
         }
     | '\x1B' -> // [esc] key
         { game with 
-            phase = SelectingTargetStack (sourceStack, sourceCard)
+            phase = SelectingTargetStack (sourceStack, numCards)
         }    
     | _ -> game  
 
@@ -249,10 +273,10 @@ module Solitaire =
         updateGameGeneral game command
     | SelectingSourceStack -> 
         updateGameSourceStack game command
-    | SelectingSourceCard sourceStack -> 
-        updateGameSourceCard sourceStack game command
-    | SelectingTargetStack (sourceStack, sourceCard) -> 
-        updateGameTargetStack sourceStack sourceCard game command
+    | SelectingNumCards sourceStack -> 
+        updateGameNumCards sourceStack game command
+    | SelectingTargetStack (sourceStack, numCards) -> 
+        updateGameTargetStack sourceStack numCards game command
 
 ;;
 // DO IT!

@@ -23,21 +23,21 @@ We can now make our stacks grow - let's look at what we've achieved and have yet
 So far, all of our moves have been a single keystroke command. But when we move cards from one stack to another we need to tell the game a few things:
 1. That we want to move a stack
 2. Which stack to move
-3. How many cards to move
+3. How many face-up cards to move
 4. Which stack to move the card into
 
 This complicates our update loop, as now we will expect the input and gameplay to come in multiple command _phases_.
 We will need to remember which _phase_ the gameplay is up to, _and_ the values that the player has entered so far.
 
-To do this we can add a another part to the `Game`.
+To do this we can add another part to the `Game`.
 
 ```fsharp
 type Phase = 
   | General
   | SelectingSourceStack
                         //remember the source stack number
-  | SelectingSourceCard of int  
-                         // remember the source stack and card
+  | SelectingNumCards of int  
+                         // remember the source stack and number of cards
                          // (this is a tuple of two numbers)
   | SelectingTargetStack of (int * int) 
 
@@ -67,15 +67,17 @@ let updateGame game command =
       updateGameGeneral game command
   | SelectingSourceStack -> 
       updateGameSourceStack game command
-  | SelectingSourceCard sourceStack -> 
-      updateGameSourceCard sourceStack game command
-  | SelectingTargetStack (sourceStack, sourceCard) -> 
-      updateGameTargetStack sourceStack sourceCard game command
+  | SelectingNumCards sourceStack -> 
+      updateGameNumCards sourceStack game command
+  | SelectingTargetStack (sourceStack, numCards) -> 
+      updateGameTargetStack sourceStack numCards game command
 ```
 
 ### Exercise: Updating the game in different phases
 
 Implement the movement through the phases by updating the phase value of our game, and then actually doing the movement of the cards from one stack to another.
+
+Don't forget that if we move the last face-up card in the stack, then we need to flip over the next face-down card (if there is one).
 
 [See an answer for moving through the phases]({{ site.baseurl }}{{ page.url }}#movePhases)
 
@@ -85,7 +87,7 @@ let updateGameSourceStack game command =
   match command with 
   | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) -> 
       { game with 
-          phase = SelectingSourceCard sourceStack
+          phase = SelectingNumCards sourceStack
       }
   | '\x1B' -> // [esc] key
       { game with 
@@ -93,8 +95,11 @@ let updateGameSourceStack game command =
       }    
   | _ -> game
 
-let updateGameSourceCard sourceStack game command =
-  let numCardsInStack = game.stacks[sourceStack - 1].Length
+let updateGameNumCards sourceStack game command =
+  let numCardsInStack = 
+    game.stacks[sourceStack - 1] 
+    |> List.filter (fun a -> a.isFaceUp ) 
+    |> List.length
   match command with 
   | Number card when (card >= 1 && card <= numCardsInStack) -> 
       { game with 
@@ -106,13 +111,13 @@ let updateGameSourceCard sourceStack game command =
       }    
   | _ -> game
 
-let updateGameTargetStack sourceStack sourceCard game command =
+let updateGameTargetStack sourceStack numCards game command =
   match command with 
   | Number targetStack when (targetStack >= 1 && targetStack <= 6) -> 
       let updatedGame = 
         moveCardsBetweenStacks 
           sourceStack 
-          sourceCard 
+          numCards 
           targetStack 
           game
       { updatedGame with 
@@ -120,7 +125,7 @@ let updateGameTargetStack sourceStack sourceCard game command =
       }
   | '\x1B' -> // [esc] key
       { game with 
-          phase = SelectingTargetStack (sourceStack, sourceCard)
+          phase = SelectingTargetStack (sourceStack, numCards)
       }    
   | _ -> game  
 ```
@@ -129,15 +134,33 @@ let updateGameTargetStack sourceStack sourceCard game command =
 
 {:class="collapsible" id="moveCards"}
 ```fsharp
-let moveCardsBetweenStacks sourceStack sourceCard targetStack game =
+let moveCardsBetweenStacks sourceStack numCards targetStack game =
   // remember - on screen we start at one, but lists start at zero
-  let moving = game.stacks[sourceStack - 1] |> List.skip (sourceCard - 1)
-  let source = game.stacks[sourceStack - 1] |> List.take (sourceCard - 1)
+  let numCardsInStack = game.stacks[sourceStack - 1].Length
+  // do the move
+  let moving = game.stacks[sourceStack - 1] |> List.skip ( numCardsInStack - numCards )
+  let source = game.stacks[sourceStack - 1] |> List.take ( numCardsInStack - numCards )
   let target = game.stacks[targetStack - 1] @ moving
+  let numFaceUp =
+    source 
+    |> List.filter (fun a -> a.isFaceUp)
+    |> List.length
+  // flip next card?
+  let sourceFlipped =
+    match source.Length, numFaceUp with 
+    | 0, _ -> source // no cards to flip
+    | n, 0 -> // none face up
+      source
+      |> List.updateAt 
+          (n - 1) 
+          {source[n - 1] with isFaceUp=true}
+    | _, _ -> source //anything else
+
+  //reconstruct the game
   { game with 
       stacks = 
         game.stacks 
-        |> List.updateAt (sourceStack - 1) source 
+        |> List.updateAt (sourceStack - 1) sourceFlipped 
         |> List.updateAt (targetStack - 1) target 
   }
 ```
@@ -152,12 +175,17 @@ let printCommands game =
   match game.phase with
   | General -> 
     printfn 
-      "%s<d>raw cards, <1-6> put on stack, <m>ove between stacks, <q>uit" clearLine
+      "%s<d>raw cards, <1-6> put on stack, <m>ove between stacks, <q>uit"
+      clearLine
   | SelectingSourceStack -> 
     printfn 
-      "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" clearLine
-  | SelectingSourceCard stack-> 
-    let numCardsInStack = game.stacks[stack - 1].Length
+      "%s<1-6> select source stack to move from, <esc> Go back, <q>uit"
+      clearLine
+  | SelectingNumCards stack-> 
+    let numCardsInStack = 
+      game.stacks[stack - 1] 
+      |> List.filter (fun a -> a.isFaceUp ) 
+      |> List.length
     printfn 
       "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit" 
       clearLine stack numCardsInStack
