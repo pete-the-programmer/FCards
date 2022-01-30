@@ -6,6 +6,11 @@ module Core =
   let COLOR_RED = "\x1B[91m"
   let COLOR_BLACK = "\x1B[90m"
 
+  let SYMBOL_HEART = "\u2665"
+  let SYMBOL_DIAMOND = "\u2666"
+  let SYMBOL_CLUB = "\u2663"
+  let SYMBOL_SPADE = "\u2660"
+
   type CardNumber =
     | Two 
     | Three
@@ -46,10 +51,10 @@ module Core =
     with  
       override this.ToString() = 
         match this with 
-        | Hearts x -> $"{COLOR_RED}\u2665{x}{COLOR_DEFAULT}"
-        | Diamonds x -> $"{COLOR_RED}\u2666{x}{COLOR_DEFAULT}"
-        | Clubs x ->  $"{COLOR_BLACK}\u2663{x}{COLOR_DEFAULT}"
-        | Spades x ->  $"{COLOR_BLACK}\u2660{x}{COLOR_DEFAULT}"
+        | Hearts x -> $"{COLOR_RED}{SYMBOL_HEART}{x}{COLOR_DEFAULT}"
+        | Diamonds x -> $"{COLOR_RED}{SYMBOL_DIAMOND}{x}{COLOR_DEFAULT}"
+        | Clubs x ->  $"{COLOR_BLACK}{SYMBOL_CLUB}{x}{COLOR_DEFAULT}"
+        | Spades x ->  $"{COLOR_BLACK}{SYMBOL_SPADE}{x}{COLOR_DEFAULT}"
         | Joker -> "Jok"
 
   let printOut (hand: 'a seq) =  
