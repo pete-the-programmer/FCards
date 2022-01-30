@@ -49,7 +49,7 @@ module Solitaire =
         
         ) emptyGame
 
-  let clearLine = "\x1B[L"
+  let clearLine = "\x1B[K"
 
   let printHeader game =
     printfn "%s============ Solitaire =============" clearLine

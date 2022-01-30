@@ -58,7 +58,7 @@ Include the extra parts of the `printScreen` function, and don't forget to move 
 
 > TIP: You may need to clear a line that has gotten shorter.  Here's a value to print to do that:
 >
->  `let clearLine = "\x1B[L"`
+>  `let clearLine = "\x1B[K"`
  
 
 _Also_, write the `drawCards` and `tableToStack` functions to update the `Game` object.
