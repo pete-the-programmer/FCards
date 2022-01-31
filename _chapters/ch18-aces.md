@@ -14,8 +14,8 @@ We can now make our stacks grow - let's look at what we've achieved and have yet
 - [x] Place cards from table to deck
 - [x] Move cards from stack to stack
 - [ ] Ace stacks
-- [ ] King special move (start new stack)
 - [ ] Rules about which card can go on another
+- [ ] King special move (start new stack)
 - [ ] End game and winning!
 
 ### Ace Stacks
@@ -76,6 +76,36 @@ Change the code that prints the screen to include the Ace Stacks
 
 {:class="collapsible" id="showingAces"}
 ```fsharp
+let printStacks game = 
+  printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |===|  %s  |  %s  |  %s  |  %s  |" 
+    clearLine SYMBOL_HEART SYMBOL_DIAMOND SYMBOL_CLUB SYMBOL_SPADE
+  [0..(maxCardInAnyStack game) - 1]
+    |> List.iter (fun cardNum ->
+      let stackline =                                      //
+        [0..5]                                             //|
+        |> List.map (fun stackNum ->                       //| original
+            if game.stacks[stackNum].Length > cardNum then //|  line
+              game.stacks[stackNum][cardNum]               //|  by 
+              |> sprintf "[%O]"                            //|  line
+            else                                           //| 
+              "     "                                      //|
+        )                                                  //|
+        |> fun strings -> String.Join (" ", strings)       //
+
+      let aceline =                                       //
+        [0..3]                                            //|
+        |> List.map (fun stackNum ->                      //|
+            if game.aces[stackNum].Length > cardNum then  //| Create
+              game.aces[stackNum][cardNum]                //|  Ace
+              |> sprintf "[%O]"                           //|  line
+            else                                          //|  part
+              "     "                                     //|
+        )                                                 //|
+        |> fun strings -> String.Join (" ", strings)      //  
+
+      printfn "%s%s     %s" clearLine stackline aceline   // print one after the other
+  )
+  game
 ```
 
 
@@ -100,17 +130,93 @@ Also, include a change to the `printCommands` functions to keep the player infor
 >   Math.Max(maxCardInAces, maxCardInStacks)
 > ```
 
-[See an answer]({{ site.baseurl }}{{ page.url }}#movingAces)
+[See an answer for printing commands]({{ site.baseurl }}{{ page.url }}#printingAces)
 
-{:class="collapsible" id="movingAces"}
+{:class="collapsible" id="printingAces"}
 ```fsharp
 let printCommands game =
   match game.phase with
+  | General -> 
+      printfn 
+        "%s<d>raw cards, <1-6> put on stack, <m>ove cards between stacks, <a>ce cards, <q>uit" 
+        clearLine  
   ...
   | SelectingAceSource ->
       printfn 
-        "%s<1-6> select source stack to move from, <t>abled card to ace stack, <esc> Go back, <q>uit" 
+        "%sMove to ACE stack from stack ___(1-6) or <t>able, <esc> Go back, <q>uit" 
         clearLine    
+```
+
+[See an answer doe moving to Ace stacks]({{ site.baseurl }}{{ page.url }}#movingAces)
+
+{:class="collapsible" id="movingAces"}
+```fsharp
+let addToAce card game =
+  let acesStackNum =
+    match card with 
+    | Hearts _ -> 0
+    | Diamonds _ -> 1
+    | Clubs _ -> 2
+    | Spades _ -> 3
+    | Joker _ -> failwith "AAAAH! A Joker!?!?"
+  let target = game.aces[acesStackNum] @ [card]
+  {game with 
+    aces =
+      game.aces
+      |> List.updateAt acesStackNum target
+  }
+
+let moveToAceFromStack sourceStack game =
+  match game.stacks[sourceStack - 1] with 
+  | [] -> game
+  | [a] -> 
+    let addedToAce = addToAce a.card game
+    {addedToAce with 
+      stacks = 
+        game.stacks 
+        |> List.updateAt (sourceStack - 1) [] 
+    }
+  | a ->
+    //we need the last card, not the first
+    let source, moving = 
+      a 
+      |> List.splitAt ( a.Length - 1 )
+    let sourceFlipped = flipNext source
+    let addedToAce = addToAce moving.Head.card game
+    {addedToAce with 
+      stacks = 
+        game.stacks 
+        |> List.updateAt (sourceStack - 1) sourceFlipped 
+    }
+
+let moveToAceFromTable game =
+  match game.table with 
+  | [] -> game
+  | [a] -> 
+    let addedToAce = addToAce a game
+    {addedToAce with table = [] }
+  | a::rest -> 
+    let addedToAce = addToAce a game
+    {addedToAce with table = rest }
+
+let updateAceSourceStack game command =
+  match command with 
+  | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) -> 
+      let updatedGame = moveToAceFromStack sourceStack game
+      { updatedGame with 
+          phase = General
+      }
+  | 't' ->
+      let updatedGame = moveToAceFromTable game
+      { updatedGame with 
+          phase = General
+      }
+  | '\x1B' -> // [esc] key
+      { game with 
+          phase = General
+      }    
+  | _ -> game  
+
 ```
 
 {% include sofar.md %}

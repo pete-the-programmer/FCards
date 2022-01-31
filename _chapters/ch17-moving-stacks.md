@@ -14,8 +14,8 @@ We can now make our stacks grow - let's look at what we've achieved and have yet
 - [x] Place cards from table to deck
 - [ ] Move cards from stack to stack
 - [ ] Ace stacks
-- [ ] King special move (start new stack)
 - [ ] Rules about which card can go on another
+- [ ] King special move (start new stack)
 - [ ] End game and winning!
 
 ### Moving cards from one stack to another

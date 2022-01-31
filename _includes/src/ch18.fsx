@@ -139,7 +139,7 @@ module Solitaire =
           clearLine stack card
     | SelectingAceSource ->
         printfn 
-          "%s<1-6> select source stack to move from, <t>abled card to ace stack, <esc> Go back, <q>uit" 
+          "%sMove to ACE stack from stack ___(1-6) or <t>able, <esc> Go back, <q>uit" 
           clearLine          
     game
 
@@ -291,25 +291,17 @@ module Solitaire =
     | 'd' -> drawCards game
     | Number a when (a >= 1 && a <= 6) -> tableToStack (a - 1) game
     | 'm' -> 
-        { game with 
-            phase = SelectingSourceStack
-        }
+        { game with phase = SelectingSourceStack }
     | 'a' -> 
-        { game with 
-            phase = SelectingAceSource
-        }        
+        { game with phase = SelectingAceSource }        
     | _ -> game
 
   let updateGameSourceStack game command =
     match command with 
     | Number stack when (stack >= 1 && stack <= 6) -> 
-        { game with 
-            phase = SelectingNumCards stack
-        }
+        { game with phase = SelectingNumCards stack }
     | '\x1B' -> // [esc] key
-        { game with 
-            phase = General
-        }    
+        { game with phase = General }    
     | _ -> game
 
   let updateGameNumCards sourceStack game command =
@@ -319,13 +311,9 @@ module Solitaire =
       |> List.length
     match command with 
     | Number card when (card >= 1 && card <= numCardsInStack) -> 
-        { game with 
-            phase = SelectingTargetStack (sourceStack, card)
-        }
+        { game with phase = SelectingTargetStack (sourceStack, card) }
     | '\x1B' -> // [esc] key
-        { game with 
-            phase = SelectingSourceStack
-        }    
+        { game with phase = SelectingSourceStack }    
     | _ -> game
 
   let updateGameTargetStack sourceStack numCards game command =
@@ -333,33 +321,21 @@ module Solitaire =
     | Number targetStack when (targetStack >= 1 && targetStack <= 6) -> 
         let updatedGame = 
           moveCardsBetweenStacks sourceStack numCards targetStack game
-        { updatedGame with 
-            phase = General
-        }
+        { updatedGame with phase = General }
     | '\x1B' -> // [esc] key
-        { game with 
-            phase = SelectingTargetStack (sourceStack, numCards)
-        }    
+        { game with phase = SelectingTargetStack (sourceStack, numCards) }    
     | _ -> game  
 
   let updateAceSourceStack game command =
     match command with 
-    | Number targetStack when (targetStack >= 1 && targetStack <= 6) -> 
-        let updatedGame = 
-          moveToAceFromStack targetStack game
-        { updatedGame with 
-            phase = General
-        }
+    | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) -> 
+        let updatedGame = moveToAceFromStack sourceStack game
+        { updatedGame with phase = General }
     | 't' ->
-        let updatedGame = 
-          moveToAceFromTable game
-        { updatedGame with 
-            phase = General
-        }
+        let updatedGame = moveToAceFromTable game
+        { updatedGame with phase = General }
     | '\x1B' -> // [esc] key
-        { game with 
-            phase = General
-        }    
+        { game with phase = General }    
     | _ -> game  
 
   let updateGame game command =
