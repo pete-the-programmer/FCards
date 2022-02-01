@@ -29,28 +29,10 @@ module Solitaire =
     phase: Phase
   }
 
-  let deal shuffledDeck = 
-    let emptyGame = {
-      deck = shuffledDeck
-      table = []
-      stacks = []
-      aces = List.init 6 (fun _ -> [])
-      phase = General
-    }
-    [6..-1..1] 
-    |>  List.fold (fun game i -> 
-          let newStack = 
-            game.deck 
-            |> List.take i                        // flip the last card
-            |> List.mapi (fun n card -> { isFaceUp = (n = i - 1); card=card}) 
-          {game with
-            stacks = game.stacks @ [ newStack ]
-            deck = game.deck |> List.skip i
-          }
-        
-        ) emptyGame
+  ///////////////////////// PRINTING //////////////////////////////////
 
   let clearLine = "\x1B[K"
+  let bell = "\x07"
 
   let printHeader game =
     printfn "%s========================== Solitaire ===========================" clearLine
@@ -164,10 +146,33 @@ module Solitaire =
     |> printCommands
     |> printMoveToTop
 
+  ///////////////////////// ACTIONS //////////////////////////////////
+
   let (|Number|_|) (ch:Char) =
     match Char.GetNumericValue(ch) with
     | -1.0 -> None
     | a -> a |> int |> Some
+
+  let deal shuffledDeck = 
+    let emptyGame = {
+      deck = shuffledDeck |> List.except [Joker]
+      table = []
+      stacks = []
+      aces = List.init 6 (fun _ -> [])
+      phase = General
+    }
+    [6..-1..1] 
+    |>  List.fold (fun game i -> 
+          let newStack = 
+            game.deck 
+            |> List.take i                        // flip the last card
+            |> List.mapi (fun n card -> { isFaceUp = (n = i - 1); card=card}) 
+          {game with
+            stacks = game.stacks @ [ newStack ]
+            deck = game.deck |> List.skip i
+          }
+        
+        ) emptyGame
 
   let drawCards game =
     let withEnoughCardsToDraw =
@@ -187,15 +192,74 @@ module Solitaire =
       deck = withEnoughCardsToDraw.deck |> List.skip cardsToTake
     }
 
-  // a helper to add a card to a numbered stack
+  type Card with 
+    member this.Number =
+      match this with 
+      | Hearts a    
+      | Diamonds a  
+      | Clubs a     
+      | Spades a   -> a
+      | Joker      -> failwith "Joker?!?!?"
+  
+  type CardNumber with 
+    member this.Ordinal =
+      match this with 
+      | Ace   -> 1 
+      | Two   -> 2
+      | Three -> 3 
+      | Four  -> 4 
+      | Five  -> 5 
+      | Six   -> 6 
+      | Seven -> 7 
+      | Eight -> 8 
+      | Nine  -> 9 
+      | Ten   -> 10
+      | Jack  -> 11
+      | Queen -> 12 
+      | King  -> 13
+
+  let (|IsRed|_|) (card:Card) =
+    match card with 
+    | Hearts _
+    | Diamonds _ -> Some card
+    | _ -> None
+
+  let (|IsBlack|_|) (card:Card) =
+    match card with 
+    | IsRed _ -> None
+    | _ -> Some card
+
+  let canAddToStack (stack: StackCard list) (card:Card) =
+    if stack = [] && card.Number = King then 
+      true
+    else
+      let bottomCard = stack |> List.last
+      match bottomCard.card, card with 
+      | IsRed a, IsBlack b
+      | IsBlack a, IsRed b 
+          when a.Number.Ordinal = b.Number.Ordinal + 1
+              -> true
+      | _, _  -> false
+
+  let canMoveCardsBetweenStacks sourceStack numCards targetStack game =
+    // make things a bit easier to call the above function
+    //  by making the arguments the same as the move...() function
+    let stack = game.stacks[targetStack - 1]
+    let card = 
+      game.stacks[sourceStack - 1] 
+      |> List.skip ( game.stacks[sourceStack - 1].Length - numCards )
+      |> List.head
+    canAddToStack stack card.card
+
   let addToStack (stackNum:int) (card:Card) (stacks: StackCard list list) =
     let updatedStack = stacks[stackNum] @ [ { isFaceUp=true; card=card} ]
     stacks |> List.updateAt stackNum updatedStack
 
   let tableToStack stackNum game =
+    let stack = game.stacks[stackNum]
     match game.table with 
     | [] -> game // do nothing
-    | [a] -> 
+    | [a]-> 
       {game with 
         table = []; 
         stacks = game.stacks |> addToStack stackNum a 
@@ -237,19 +301,44 @@ module Solitaire =
           |> List.updateAt (targetStack - 1) target 
     }
 
+  let acesStackNum card =
+    match card with 
+    | Hearts _ -> 0
+    | Diamonds _ -> 1
+    | Clubs _ -> 2
+    | Spades _ -> 3
+    | Joker _ -> failwith "AAAAH! A Joker!?!?"
+
+  let canAddToAce cards game =
+    match cards with 
+    | [] -> false
+    | [card]
+    | card::_ ->
+      let stackNum = acesStackNum card
+      let target = game.aces[stackNum] |> List.rev // (so we can easily see the last card as the "head") 
+      match target, card with 
+      | [], c when c.Number = Ace -> true
+      | [a], c 
+      | a::_, c 
+          when a.Number.Ordinal = c.Number.Ordinal - 1 
+          -> true
+      | _ -> false
+
+  let canAddToAceFromStack sourceStack game =
+    // Make it easier to call the above function for stacks
+    let cards = 
+      game.stacks[sourceStack - 1] 
+      |> List.map (fun a -> a.card)
+      |> List.rev
+    canAddToAce cards game
+
   let addToAce card game =
-    let acesStackNum =
-      match card with 
-      | Hearts _ -> 0
-      | Diamonds _ -> 1
-      | Clubs _ -> 2
-      | Spades _ -> 3
-      | Joker _ -> failwith "AAAAH! A Joker!?!?"
-    let target = game.aces[acesStackNum] @ [card]
+    let stackNum = acesStackNum card
+    let target = game.aces[stackNum] @ [card]
     {game with 
       aces =
         game.aces
-        |> List.updateAt acesStackNum target
+        |> List.updateAt stackNum target
     }
 
   let moveToAceFromStack sourceStack game =
@@ -289,12 +378,18 @@ module Solitaire =
   let updateGameGeneral game command =
     match command with 
     | 'd' -> drawCards game
-    | Number a when (a >= 1 && a <= 6) -> tableToStack (a - 1) game
+    | Number a 
+        when (a >= 1 && a <= 6) 
+        &&   canAddToStack (game.stacks[a - 1]) (game.table.Head)
+        -> 
+          tableToStack (a - 1) game
     | 'm' -> 
         { game with phase = SelectingSourceStack }
     | 'a' -> 
         { game with phase = SelectingAceSource }        
-    | _ -> game
+    | _ -> 
+      printf "%s" bell // make a noise for an unacceptable input
+      game
 
   let updateGameSourceStack game command =
     match command with 
@@ -302,7 +397,9 @@ module Solitaire =
         { game with phase = SelectingNumCards stack }
     | '\x1B' -> // [esc] key
         { game with phase = General }    
-    | _ -> game
+    | _ -> 
+      printf "%s" bell // make a noise for an unacceptable input
+      game
 
   let updateGameNumCards sourceStack game command =
     let numCardsInStack = 
@@ -314,29 +411,41 @@ module Solitaire =
         { game with phase = SelectingTargetStack (sourceStack, card) }
     | '\x1B' -> // [esc] key
         { game with phase = SelectingSourceStack }    
-    | _ -> game
+    | _ -> 
+      printf "%s" bell // make a noise for an unacceptable input
+      game
 
   let updateGameTargetStack sourceStack numCards game command =
     match command with 
-    | Number targetStack when (targetStack >= 1 && targetStack <= 6) -> 
-        let updatedGame = 
-          moveCardsBetweenStacks sourceStack numCards targetStack game
-        { updatedGame with phase = General }
+    | Number targetStack 
+        when (targetStack >= 1 && targetStack <= 6) 
+        &&   canMoveCardsBetweenStacks sourceStack numCards targetStack game
+        -> 
+          let updatedGame = 
+            moveCardsBetweenStacks sourceStack numCards targetStack game
+          { updatedGame with phase = General }
     | '\x1B' -> // [esc] key
         { game with phase = SelectingTargetStack (sourceStack, numCards) }    
-    | _ -> game  
+    | _ -> 
+      printf "%s" bell // make a noise for an unacceptable input
+      game
 
   let updateAceSourceStack game command =
     match command with 
-    | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) -> 
-        let updatedGame = moveToAceFromStack sourceStack game
-        { updatedGame with phase = General }
-    | 't' ->
+    | Number sourceStack 
+        when (sourceStack >= 1 && sourceStack <= 6) 
+        &&   canAddToAceFromStack sourceStack game
+        -> 
+          let updatedGame = moveToAceFromStack sourceStack game
+          { updatedGame with phase = General }
+    | 't' when canAddToAce game.table game ->
         let updatedGame = moveToAceFromTable game
         { updatedGame with phase = General }
     | '\x1B' -> // [esc] key
         { game with phase = General }    
-    | _ -> game  
+    | _ -> 
+      printf "%s" bell // make a noise for an unacceptable input
+      game
 
   let updateGame game command =
     match game.phase with 

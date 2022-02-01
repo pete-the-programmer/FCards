@@ -24,8 +24,4 @@ defaults:
     values:
       layout: "chapter"
       part: 1
-  - scope:
-      path: ""
-      type: "src"
-    values:
-      layout: "source"
+

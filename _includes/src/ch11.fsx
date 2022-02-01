@@ -86,7 +86,7 @@ let rec shuffle deck =
       let rest = deck |> List.removeAt randomPosition
       [cardAtPosition] @ (shuffle rest)
 
-let looper() = 
+let loopGame() = 
   (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant )
   |> Seq.initInfinite
   |> Seq.takeWhile (fun x -> x <> 'q')
@@ -95,4 +95,4 @@ let looper() =
 
 ;;
 // DO IT!
-// type "looper();;"
+// type "loopGame();;"

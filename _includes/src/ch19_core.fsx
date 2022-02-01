@@ -11,6 +11,11 @@ module Core =
   let SYMBOL_CLUB = "\u2663"
   let SYMBOL_SPADE = "\u2660"
 
+  let (|Number|_|) (ch:Char) =
+    match Char.GetNumericValue(ch) with
+    | -1.0 -> None
+    | a -> a |> int |> Some  
+
   type CardNumber =
     | Two 
     | Three
@@ -41,6 +46,21 @@ module Core =
         | Queen -> "Q "
         | King -> "K "
         | Ace -> "A "
+      member this.Ordinal =
+        match this with 
+        | Ace   -> 1 
+        | Two   -> 2
+        | Three -> 3 
+        | Four  -> 4 
+        | Five  -> 5 
+        | Six   -> 6 
+        | Seven -> 7 
+        | Eight -> 8 
+        | Nine  -> 9 
+        | Ten   -> 10
+        | Jack  -> 11
+        | Queen -> 12 
+        | King  -> 13
 
   type Card = 
     | Hearts of CardNumber
@@ -56,6 +76,25 @@ module Core =
         | Clubs x ->  $"{COLOR_BLACK}{SYMBOL_CLUB}{x}{COLOR_DEFAULT}"
         | Spades x ->  $"{COLOR_BLACK}{SYMBOL_SPADE}{x}{COLOR_DEFAULT}"
         | Joker -> "Jok"
+      member this.Number =
+        match this with 
+        | Hearts a    
+        | Diamonds a  
+        | Clubs a     
+        | Spades a   -> a
+        | Joker      -> failwith "Joker has no number"
+
+  let (|IsRed|_|) (card:Card) =
+    match card with 
+    | Hearts _
+    | Diamonds _ -> Some card
+    | _ -> None
+
+  let (|IsBlack|_|) (card:Card) =
+    match card with 
+    | IsRed _ -> None
+    | _ -> Some card
+
 
   let printOut (hand: 'a seq) =  
     "[" + String.Join("] [", hand) + "]"

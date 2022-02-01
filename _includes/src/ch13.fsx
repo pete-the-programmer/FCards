@@ -84,7 +84,7 @@ module Core =
     printScreen updated
     updated 
 
-  let looper<'G> 
+  let loopGame<'G> 
       (printScreen: 'G -> unit) 
       (updater: 'G -> char -> 'G) 
       (initialGame: 'G) = 
@@ -128,7 +128,7 @@ module Pickup =
         deck = newDeck |> shuffle
         hand = []
       }
-    looper printPickupScreen updateGame startingpoint
+    loopGame printPickupScreen updateGame startingpoint
 
 
 ;;

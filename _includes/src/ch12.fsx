@@ -98,7 +98,7 @@ let combineUpdaterAndPrinter updater game command=
   printScreen updated
   updated 
 
-let looper (updater: Game -> char -> Game) (initialGame: Game) = 
+let loopGame (updater: Game -> char -> Game) (initialGame: Game) = 
   printScreen initialGame
   (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant)
   |> Seq.initInfinite
@@ -116,7 +116,7 @@ let play() =
       deck = newDeck |> shuffle
       hand = []
     }
-  looper updateGame startingpoint
+  loopGame updateGame startingpoint
 
 
 ;;

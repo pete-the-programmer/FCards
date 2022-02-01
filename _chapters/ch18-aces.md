@@ -5,7 +5,7 @@ chapter: "18"
 part: "Solitaire"
 ---
 
-We can now make our stacks grow - let's look at what we've achieved and have yet to do:
+We can now move cards around - let's look at what we've achieved and have yet to do:
 
 {:class="naked"}
 - [x] Print Screen

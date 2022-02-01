@@ -172,4 +172,4 @@ let play() =
   newDeck 
   |> shuffle 
   |> Solitaire.deal 
-  |> looper Solitaire.printScreen Solitaire.updateGame
+  |> loopGame Solitaire.printScreen Solitaire.updateGame

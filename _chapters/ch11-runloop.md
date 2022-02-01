@@ -16,7 +16,7 @@ A simple play loop for the command line would look like this:
 ```fsharp
 open System
 
-let looper() = 
+let loopGame() = 
   (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant )
   |> Seq.initInfinite
   |> Seq.takeWhile (fun x -> x <> 'q')
