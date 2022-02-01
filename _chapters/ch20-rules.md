@@ -1,7 +1,7 @@
 ---
 slug: Making some rules
 concept: happy path rejection
-chapter: "19"
+chapter: "20"
 part: "Solitaire"
 ---
 
@@ -209,4 +209,4 @@ let canAddToAceFromStack sourceStack game =
   canAddToAce cards game  
 ```
 
-{% include sofar.md %}
+{% include project-so-far.md %}

@@ -1,7 +1,7 @@
 ---
 slug: Aces
 concept: more phases
-chapter: "18"
+chapter: "19"
 part: "Solitaire"
 ---
 
@@ -219,4 +219,4 @@ let updateAceSourceStack game command =
 
 ```
 
-{% include sofar.md %}
+{% include project-so-far.md %}

@@ -1,7 +1,7 @@
 ---
 slug: Moving Stacks
 concept: 2-phase moves
-chapter: "17"
+chapter: "18"
 part: "Solitaire"
 ---
 
@@ -197,4 +197,4 @@ let printCommands game =
   game
   ```
 
-{% include sofar.md %}
+{% include project-so-far.md %}
