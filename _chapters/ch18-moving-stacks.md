@@ -105,6 +105,10 @@ let updateGameNumCards sourceStack game command =
       { game with 
           phase = SelectingTargetStack (sourceStack, card)
       }
+  | 'a' ->  // all the face-up cards
+      { game with 
+          phase = SelectingTargetStack (sourceStack, numCardsInStack) 
+      }
   | '\x1B' -> // [esc] key
       { game with 
           phase = SelectingSourceStack
@@ -174,27 +178,26 @@ We also need to print out the commands that are acceptable for the command _phas
 let printCommands game =
   match game.phase with
   | General -> 
-    printfn 
-      "%s<d>raw cards, <1-6> put on stack, <m>ove between stacks, <q>uit"
-      clearLine
+      printfn 
+        "%s<d>raw cards, <1-6> put on stack, <m>ove cards between stacks <q>uit" 
+        clearLine
   | SelectingSourceStack -> 
-    printfn 
-      "%s<1-6> select source stack to move from, <esc> Go back, <q>uit"
-      clearLine
+      printfn 
+        "%sMove cards from stack ___(1-6), <esc> Go back, <q>uit" 
+        clearLine
   | SelectingNumCards stack-> 
-    let numCardsInStack = 
-      game.stacks[stack - 1] 
-      |> List.filter (fun a -> a.isFaceUp ) 
-      |> List.length
-    printfn 
-      "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit" 
-      clearLine stack numCardsInStack
+      let numCardsInStack = 
+        game.stacks[stack - 1] 
+        |> List.filter (fun a -> a.isFaceUp ) 
+        |> List.length
+      printfn 
+        "%sMove ___(1-%d, or <a>ll) cards from stack %d, <esc> Go back, <q>uit" 
+        clearLine numCardsInStack stack
   | SelectingTargetStack (stack, card) -> 
-    printfn 
-      "%sMove from stack %d at card %d to stack __, <esc> Go back, <q>uit"
-      clearLine stack card
-  // return the game for the next in line
+      printfn 
+        "%sMove %d cards from stack %d to stack ___, <esc> Go back, <q>uit" 
+        clearLine card stack
   game
-  ```
+```
 
 {% include project-so-far.md %}

@@ -267,6 +267,8 @@ let updateGameNumCards sourceStack game command =
   match command with 
   | Number card when (card >= 1 && card <= numCardsInStack) -> 
       { game with phase = SelectingTargetStack (sourceStack, card) }
+  | 'a' ->
+      { game with phase = SelectingTargetStack (sourceStack, numCardsInStack) }
   | '\x1B' -> // [esc] key
       { game with phase = SelectingSourceStack }    
   | _ -> 

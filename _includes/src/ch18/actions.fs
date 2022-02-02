@@ -130,6 +130,8 @@ let updateGameNumCards sourceStack game command =
       { game with 
           phase = SelectingTargetStack (sourceStack, card)
       }
+  | 'a' ->
+      { game with phase = SelectingTargetStack (sourceStack, numCardsInStack) }
   | '\x1B' -> // [esc] key
       { game with 
           phase = SelectingSourceStack
