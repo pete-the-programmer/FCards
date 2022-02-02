@@ -63,7 +63,7 @@ let printCommands game =
         clearLine
   | SelectingSourceStack -> 
       printfn 
-        "%s<1-6> select source stack to move from, <esc> Go back, <q>uit" 
+        "%sMove cards from stack ___(1-6), <esc> Go back, <q>uit" 
         clearLine
   | SelectingNumCards stack-> 
       let numCardsInStack = 
@@ -71,12 +71,12 @@ let printCommands game =
         |> List.filter (fun a -> a.isFaceUp ) 
         |> List.length
       printfn 
-        "%sMove from stack %d at card ___(1-%d), <esc> Go back, <q>uit" 
-        clearLine stack numCardsInStack
+        "%sMove ___(1-%d, or <a>ll) cards from stack %d, <esc> Go back, <q>uit" 
+        clearLine numCardsInStack stack
   | SelectingTargetStack (stack, card) -> 
       printfn 
-        "%sMove from stack %d at card %d to stack ___, <esc> Go back, <q>uit" 
-        clearLine stack card
+        "%sMove %d cards from stack %d to stack ___, <esc> Go back, <q>uit" 
+        clearLine card stack
   | SelectingAceSource ->
       printfn 
         "%sMove to ACE stack from stack ___(1-6) or <t>able, <esc> Go back, <q>uit" 
