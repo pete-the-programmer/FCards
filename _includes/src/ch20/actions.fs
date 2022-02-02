@@ -283,7 +283,7 @@ let updateGameTargetStack sourceStack numCards game command =
           moveCardsBetweenStacks sourceStack numCards targetStack game
         { updatedGame with phase = General }
   | '\x1B' -> // [esc] key
-      { game with phase = SelectingTargetStack (sourceStack, numCards) }    
+      { game with phase = SelectingNumCards sourceStack }    
   | _ -> 
     printf "%s" bell // make a noise for an unacceptable input
     game

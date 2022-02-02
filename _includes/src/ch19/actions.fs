@@ -184,7 +184,7 @@ let updateGameTargetStack sourceStack numCards game command =
         moveCardsBetweenStacks sourceStack numCards targetStack game
       { updatedGame with phase = General }
   | '\x1B' -> // [esc] key
-      { game with phase = SelectingTargetStack (sourceStack, numCards) }    
+      { game with phase = SelectingNumCards sourceStack }    
   | _ -> game  
 
 let updateAceSourceStack game command =
