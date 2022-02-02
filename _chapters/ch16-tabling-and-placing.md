@@ -23,6 +23,12 @@ So now our print screen includes the commands and the tabled cards:
 [##] [♦K]
 [♦4]
 --space--
+... Maximum is 
+...  5 face-down 
+...  + a full count of 13 face-up
+...  + 1 space before the table's printed
+...  = 19 lines between top of stack and table
+--space--
 Table: [[[♦5]
 Deck : [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[##]
 <d>raw cards, <1-6> put on stack, <q>uit
@@ -72,24 +78,18 @@ _Also_, write the `drawCards` and `tableToStack` functions to update the `Game` 
     game
 
   let printStacks game = 
-    let maxCardInAnyStack = 
-      game.stacks 
-      |> List.map (fun stack -> stack.Length )
-      |> List.max
     printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |" clearLine
-    [0..maxCardInAnyStack - 1]
-      |> List.iter (fun cardNum ->
-        [0..5]
-        |> List.map (fun stackNum ->
-            if game.stacks[stackNum].Length > cardNum then 
-              game.stacks[stackNum][cardNum]
-              |> sprintf "[%O]"
-            else
-              // the stack is out of cards
-              "     "         
-        )
-        |> fun strings -> String.Join (" ", strings)
-        |> printfn "%s%s" clearLine
+    [0..19] |> List.iter (fun cardNum ->
+      [0..5] |> List.map (fun stackNum ->
+        if game.stacks[stackNum].Length > cardNum then 
+          game.stacks[stackNum][cardNum]
+          |> sprintf "[%O]"
+        else
+          // the stack is out of cards
+            "     "         
+      )
+      |> fun strings -> String.Join (" ", strings)
+      |> printfn "%s%s" clearLine
     )
     game //pass it on to the next function
   

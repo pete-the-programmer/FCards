@@ -47,24 +47,18 @@ module Solitaire =
     game
 
   let printStacks game = 
-    let maxCardInAnyStack = 
-      game.stacks 
-      |> List.map (fun stack -> stack.Length )
-      |> List.max
     printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |" clearLine
-    [0..maxCardInAnyStack - 1]
-      |> List.iter (fun cardNum ->
-        [0..5]
-        |> List.map (fun stackNum ->
-            if game.stacks[stackNum].Length > cardNum then 
-              game.stacks[stackNum][cardNum]
-              |> sprintf "[%O]"
-            else
-              // the stack is out of cards
-              "     "         
-        )
-        |> fun strings -> String.Join (" ", strings)
-        |> printfn "%s%s" clearLine
+    [0..19] |> List.iter (fun cardNum ->
+      [0..5] |> List.map (fun stackNum ->
+        if game.stacks[stackNum].Length > cardNum then 
+          game.stacks[stackNum][cardNum]
+          |> sprintf "[%O]"
+        else
+          // the stack is out of cards
+            "     "         
+      )
+      |> fun strings -> String.Join (" ", strings)
+      |> printfn "%s%s" clearLine
     )
     game //pass it on to the next function
   
@@ -90,15 +84,10 @@ module Solitaire =
     game
 
   let printMoveToTop game =
-    let maxCardInAnyStack = 
-      game.stacks 
-      |> List.map (fun stack -> stack.Length )
-      |> List.max
     let n = 
       1 //header
       + 1 //stack numbers
-      + maxCardInAnyStack //stacks
-      + 1 //spacer
+      + 21 //stacks
       + 1 //table
       + 1 //deck
       + 1 //commands

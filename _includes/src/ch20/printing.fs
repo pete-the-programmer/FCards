@@ -24,33 +24,30 @@ let maxCardInAnyStack game =
 let printStacks game = 
   printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |===|  %s  |  %s  |  %s  |  %s  |" 
     clearLine SYMBOL_HEART SYMBOL_DIAMOND SYMBOL_CLUB SYMBOL_SPADE
-  [0..(maxCardInAnyStack game) - 1]
-    |> List.iter (fun cardNum ->
-      let stackline = 
-        [0..5]
-        |> List.map (fun stackNum ->
-            if game.stacks[stackNum].Length > cardNum then 
-              game.stacks[stackNum][cardNum]
-              |> sprintf "[%O]"
-            else
-              // the stack is out of cards
-              "     "         
-        )
-        |> fun strings -> String.Join (" ", strings)
-      let aceline =
-        [0..3]
-        |> List.map (fun stackNum ->
-            if game.aces[stackNum].Length > cardNum then 
-              game.aces[stackNum][cardNum]
-              |> sprintf "[%O]"
-            else
-              // the ace stack is out of cards
-              "     "         
+  [0..19] |> List.iter (fun cardNum ->
+    let stackline = 
+      [0..5] |> List.map (fun stackNum ->
+        if game.stacks[stackNum].Length > cardNum then 
+          game.stacks[stackNum][cardNum]
+          |> sprintf "[%O]"
+        else
+          // the stack is out of cards
+            "     "         
+      )
+      |> fun strings -> String.Join (" ", strings)
+    let aceline =
+      [0..3] |> List.map (fun stackNum ->
+        if game.aces[stackNum].Length > cardNum then 
+          game.aces[stackNum][cardNum]
+          |> sprintf "[%O]"
+        else
+          // the ace stack is out of cards
+          "     "         
         )
         |> fun strings -> String.Join (" ", strings)          
-      printfn "%s%s     %s" clearLine stackline aceline
+    printfn "%s%s     %s" clearLine stackline aceline
   )
-  game
+  game //pass it on to the next function
 
 let printTable game =
   let tableLine = 
@@ -101,8 +98,7 @@ let printMoveToTop game =
   let n = 
     1 //header
     + 1 //stack numbers
-    + (maxCardInAnyStack game) //stacks & aces
-    + 1 //spacer
+    + 21 //stacks & aces
     + 1 //table
     + 1 //deck
     + 1 //commands

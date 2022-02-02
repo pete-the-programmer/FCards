@@ -24,3 +24,8 @@ defaults:
     values:
       layout: "chapter"
       part: 1
+
+exclude:
+  - .ionide/
+  - .vscode/
+  - makefile
