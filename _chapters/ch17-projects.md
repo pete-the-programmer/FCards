@@ -3,6 +3,9 @@ slug: Organising Projects
 concept: projects
 chapter: "17"
 part: "Solitaire"
+feature: 
+  - Modules
+  - Projects
 ---
 
 We now have code for print stuff, code for change the game, the game itself, and more. There is quite a bit of code!

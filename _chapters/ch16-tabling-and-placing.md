@@ -3,6 +3,11 @@ slug: Tabling/Placing cards
 concept: 
 chapter: "16"
 part: "Solitaire"
+feature: 
+  - Active patterns
+  - I/O
+  - Records
+  - Updating state
 ---
 
 Now that we can see the cards let's give the player some actions.
@@ -121,8 +126,7 @@ _Also_, write the `drawCards` and `tableToStack` functions to update the `Game` 
     let n = 
       1 //header
       + 1 //stack numbers
-      + maxCardInAnyStack //stacks
-      + 1 //spacer
+      + 21 //stacks
       + 1 //table
       + 1 //deck
       + 1 //commands

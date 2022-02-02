@@ -3,6 +3,9 @@ slug: Shuffling
 concept: Recursive functions
 chapter: "09"
 part: "Defining Cards"
+feature: 
+  - Recursion (rec)
+  - Random numbers
 ---
 ### Shuffling the deck
 So far we have been using a deck that is always in the same predictable order.  It's time we mixed things up a bit and shuffled the cards.

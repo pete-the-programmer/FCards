@@ -3,6 +3,9 @@ slug: Moving Stacks
 concept: 2-phase moves
 chapter: "18"
 part: "Solitaire"
+feature: 
+  - Discriminated Union (DU)
+  - Updating state
 ---
 
 We can now make our stacks grow - let's look at what we've achieved and have yet to do:

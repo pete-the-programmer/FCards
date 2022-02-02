@@ -3,6 +3,11 @@ slug: Making some rules
 concept: happy path rejection
 chapter: "20"
 part: "Solitaire"
+feature: 
+  - match
+  - when
+  - Type extension
+  - Active patterns
 ---
 
 So far we've concentrated on the mechanics of enabling the player interaction.

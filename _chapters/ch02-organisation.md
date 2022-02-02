@@ -3,6 +3,7 @@ slug: Organising your things
 concept: Organisation
 chapter: "02"
 part: "Defining Cards"
+feature: Modules
 ---
 ### Modules
 You can organise your code into "modules".

@@ -3,6 +3,11 @@ slug: Separation of core and our game
 concept: Modules
 chapter: "13"
 part: "Simple Pickup Game"
+feature: 
+  - Modules
+  - Type Parameters
+  - Generics
+  - unit (null or nil or nothing)
 ---
 
 ### What's part of "pickup" and what is just generally Cards?

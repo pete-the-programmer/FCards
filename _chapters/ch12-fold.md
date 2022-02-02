@@ -3,6 +3,11 @@ slug: Interacting with a player - making a move
 concept: Fold
 chapter: "12"
 part: "Simple Pickup Game"
+feature: 
+  - fold
+  - I/O
+  - Character codes
+  - Updating state
 ---
 
 ### Listening to the player

@@ -3,6 +3,9 @@ slug: A card
 concept: Constants
 chapter: "01"
 part: "Defining Cards"
+feature: 
+  - let
+  - Constants
 ---
 
 > Define values with names using the __let__ keyword

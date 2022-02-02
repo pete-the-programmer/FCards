@@ -3,6 +3,12 @@ slug: A hand of cards
 concept: Collections
 chapter: "04"
 part: "Defining Cards"
+feature: 
+  - Collections
+  - List
+  - Sequence
+  - Array
+  - Set
 ---
 ### Lists, sets, sequences, and arrays
 There are a bunch of different kinds of thing that can hold a collection of other things.

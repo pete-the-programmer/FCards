@@ -3,6 +3,8 @@ slug: Displaying the stacks
 concept: complex printing
 chapter: "15"
 part: "Solitaire"
+feature: 
+  - I/O
 ---
 
 Now that we have some stacks of cards, we can show them to the player.  From last chapter we want it to look something like:

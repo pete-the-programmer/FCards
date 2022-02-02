@@ -3,6 +3,9 @@ slug: Describing what a card is
 concept: Types
 chapter: "03"
 part: "Defining Cards"
+feature:
+  - Record
+  - Discriminated Union (DU)
 ---
 ### Records
 > A _record_ is a type of thing that has multiple parts to its value, like a name, or id, or a number.

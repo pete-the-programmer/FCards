@@ -3,6 +3,9 @@ slug: A deck of cards
 concept: Calculations
 chapter: "05"
 part: "Defining Cards"
+feature: 
+  - Collections
+  - map
 ---
 
 ### Creating a deck of cards

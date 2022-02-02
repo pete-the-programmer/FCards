@@ -3,7 +3,11 @@ slug: Improving readability using matching and piping
 concept: "Matching & Piping"
 chapter: "07"
 part: "Defining Cards"
+feature: 
+  - match
+  - Piping (|>)
 ---
+
 ### Matching
 
 > A `match` statement is a very clean way of dealing with a set of possible inputs 

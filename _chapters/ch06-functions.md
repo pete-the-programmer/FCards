@@ -3,6 +3,8 @@ slug: Picking up a card
 concept: Functions
 chapter: "06"
 part: "Defining Cards"
+feature: 
+  - Functions
 ---
 ### Picking up a card
 

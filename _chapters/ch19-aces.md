@@ -3,6 +3,8 @@ slug: Aces
 concept: more phases
 chapter: "19"
 part: "Solitaire"
+feature: 
+  - Discriminated Union (DU)
 ---
 
 We can now move cards around - let's look at what we've achieved and have yet to do:
@@ -115,20 +117,6 @@ let printStacks game =
 Add the update function `updateGameAceSource` to move cards to the Ace stacks. 
 
 Also, include a change to the `printCommands` functions to keep the player informed.  
-
-> TIP: The ace stacks may be long and should change the spacing.  Extract a helper method to calculate the height:
-> ```fsharp
-> let maxCardInAnyStack game = 
->   let maxCardInStacks = 
->     game.stacks 
->     |> List.map (fun stack -> stack.Length )
->     |> List.max
->   let maxCardInAces = 
->     game.aces 
->     |> List.map (fun stack -> stack.Length )
->     |> List.max
->   Math.Max(maxCardInAces, maxCardInStacks)
-> ```
 
 [See an answer for printing commands]({{ site.baseurl }}{{ page.url }}#printingAces)
 

@@ -3,6 +3,10 @@ slug: Interacting with a player - listening
 concept: I/O
 chapter: "11"
 part: "Defining Cards"
+feature: 
+  - Infinity
+  - Sequence
+  - I/O
 ---
 
 ### Listening to the player

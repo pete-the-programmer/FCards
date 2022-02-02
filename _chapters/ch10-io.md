@@ -3,6 +3,12 @@ slug: Interacting with a player - game state
 concept: I/O
 chapter: "10"
 part: "Defining Cards"
+feature: 
+  - I/O
+  - printfn
+  - Character codes
+  - override
+  - Type extension
 ---
 ### Giving the player a way to _do_ things
 So far we've been talking about modelling how the data can work and fit together, but that's no fun until a person 

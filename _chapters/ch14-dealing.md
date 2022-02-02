@@ -3,6 +3,9 @@ slug: A simple one-player game
 concept: Many Hands
 chapter: "14"
 part: "Solitaire"
+feature: 
+  - override
+  - Sequence
 ---
 
 ### Let's play a real game!
