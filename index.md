@@ -1,5 +1,6 @@
 ---
 ---
+`Playing card games with F#`
 
 {% assign parts = site.chapters | group_by: "part" %}
 {% for part in parts %}

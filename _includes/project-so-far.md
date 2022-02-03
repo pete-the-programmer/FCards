@@ -1,4 +1,4 @@
-#### Code so far
+### Code so far
 
 {% assign parts = 'cards,model,printing,actions,Program' | split: ',' %}
 

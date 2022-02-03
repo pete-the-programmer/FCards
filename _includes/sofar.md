@@ -1,4 +1,4 @@
-#### [Code so far]({{ site.baseurl }}{{ page.url }}#code)
+### [Code so far]({{ site.baseurl }}{{ page.url }}#code)
 
 {:class="collapsible" id="code"}
 ```fsharp
