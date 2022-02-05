@@ -35,7 +35,8 @@ html, body{
   max-width: 1100px;
   margin: 0 auto;
   background-color: var(--col-base);
-  padding-left: 1em;;
+  padding-left: 1em;
+  position: relative;
 }
 
 a {
@@ -63,6 +64,11 @@ footer {
   padding-top: 1em;
 }
 
+header {
+  border-bottom: 1px solid  var(--col-border);
+}
+
+
 blockquote {
   font-size: 90%;
   border-left: 3px solid var(--col-highlight);
@@ -83,4 +89,21 @@ h1, h2, h3 {
 }
 h1 a, h2 a, h3 a, h4 a{
   color: var(--col-hdlink);
+}
+
+ul.menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+}
+ul.menu li {
+  display: inline-block;
+  list-style: none;
+  top: 0;
+  vertical-align: top;
+  padding: 0.25em 1em;
+  font-family: sans-serif;
+  font-size: 88%;
 }

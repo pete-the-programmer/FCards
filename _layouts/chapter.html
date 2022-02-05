@@ -26,6 +26,7 @@
           {{ page.chapter }}. {{ page.slug | default: site.title }}
         </h2>
         <p class="tagline">{{ page.description }}</p>
+        {% include menu.html %}
 
       </header>
       <section>
@@ -44,6 +45,7 @@
         {% else %}
           <a  style="float:right" href="{{ site.baseurl }}/">[HOME]</a>          
         {% endif %}
+        {% include copyright.html %}
     </footer>
     </div>
   </body>
