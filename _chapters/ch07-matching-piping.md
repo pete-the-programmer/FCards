@@ -4,8 +4,10 @@ concept: "Matching & Piping"
 chapter: "07"
 part: "Defining Cards"
 feature: 
+  - Piping 
+keyword:
+  - "|>"
   - match
-  - Piping (|>)
 ---
 
 ### Matching

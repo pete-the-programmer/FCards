@@ -5,6 +5,7 @@ chapter: "19"
 part: "Solitaire"
 feature: 
   - Discriminated Union (DU)
+keyword: sprintf()
 ---
 
 We can now move cards around - let's look at what we've achieved and have yet to do:

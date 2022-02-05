@@ -4,8 +4,9 @@ concept: Many Hands
 chapter: "14"
 part: "Solitaire"
 feature: 
-  - override
   - Sequence
+keyword:
+  - override
 ---
 
 ### Let's play a real game!

@@ -3,8 +3,10 @@ slug: Picking up a card
 concept: Functions
 chapter: "06"
 part: "Defining Cards"
-feature: 
-  - Functions
+feature: Functions
+keyword: 
+  - let
+  - if / else
 ---
 ### Picking up a card
 

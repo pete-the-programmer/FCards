@@ -5,7 +5,9 @@ chapter: "05"
 part: "Defining Cards"
 feature: 
   - Collections
-  - map
+  - Tuples
+keyword:
+  - map()
 ---
 
 ### Creating a deck of cards

@@ -9,6 +9,12 @@ feature:
   - Sequence
   - Array
   - Set
+keyword:
+  - list
+  - seq
+  - "[ ]"
+  - "a::b"
+  - "@"
 ---
 ### Lists, sets, sequences, and arrays
 There are a bunch of different kinds of thing that can hold a collection of other things.

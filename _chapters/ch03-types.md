@@ -6,6 +6,7 @@ part: "Defining Cards"
 feature:
   - Record
   - Discriminated Union (DU)
+keyword: type
 ---
 ### Records
 > A _record_ is a type of thing that has multiple parts to its value, like a name, or id, or a number.

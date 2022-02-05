@@ -5,6 +5,8 @@ chapter: "15"
 part: "Solitaire"
 feature: 
   - I/O
+keyword:
+  - sprintf()
 ---
 
 Now that we have some stacks of cards, we can show them to the player.  From last chapter we want it to look something like:
@@ -39,7 +41,7 @@ let printScreen game =
       |> List.map (fun stackNum ->
           if game.stacks[stackNum].Length > cardNum then 
             game.stacks[stackNum][cardNum]
-            |> sprintf "[%O]"
+            |> sprintf "[%O]"  // like printf, but to a string rather than the console
           else
             // the stack is out of cards
             "     "            

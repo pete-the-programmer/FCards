@@ -6,6 +6,8 @@ part: "Solitaire"
 feature: 
   - Modules
   - Projects
+keyword:
+  - dotnet
 ---
 
 We now have code for print stuff, code for change the game, the game itself, and more. There is quite a bit of code!

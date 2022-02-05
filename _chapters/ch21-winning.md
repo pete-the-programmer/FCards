@@ -4,7 +4,9 @@ concept: End state detection
 chapter: "21"
 part: "Solitaire"
 feature: 
-  - 
+  - Piping
+keyword:
+  - "|>"
 ---
 
 That's it - we're finished!

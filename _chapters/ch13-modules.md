@@ -7,7 +7,9 @@ feature:
   - Modules
   - Type Parameters
   - Generics
+keyword:
   - unit (null or nil or nothing)
+  - "< 'A >"
 ---
 
 ### What's part of "pickup" and what is just generally Cards?

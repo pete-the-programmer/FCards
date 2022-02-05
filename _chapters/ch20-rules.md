@@ -4,10 +4,11 @@ concept: happy path rejection
 chapter: "20"
 part: "Solitaire"
 feature: 
-  - match
-  - when
   - Type extension
   - Active patterns
+keyword:
+  - match
+  - when
 ---
 
 So far we've concentrated on the mechanics of enabling the player interaction.

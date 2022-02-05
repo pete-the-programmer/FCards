@@ -8,6 +8,8 @@ feature:
   - I/O
   - Records
   - Updating state
+keyword:
+  - "(| ... |_|)"
 ---
 
 Now that we can see the cards let's give the player some actions.

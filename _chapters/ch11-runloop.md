@@ -7,6 +7,9 @@ feature:
   - Infinity
   - Sequence
   - I/O
+keyword:
+  - take() / takeWhile()
+  - initInfinite()
 ---
 
 ### Listening to the player

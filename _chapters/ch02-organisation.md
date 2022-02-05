@@ -4,6 +4,7 @@ concept: Organisation
 chapter: "02"
 part: "Defining Cards"
 feature: Modules
+keyword: module
 ---
 ### Modules
 You can organise your code into "modules".
