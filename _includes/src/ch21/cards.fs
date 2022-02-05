@@ -85,15 +85,14 @@ let moveUpLines n =
   printfn "\x1B[%dA" n
 
 let combineUpdate printScreen updater game command = 
-  let updated = updater game command
-  printScreen updated
-  updated 
+  updater game command
+  |> printScreen
 
 let loopGame<'G> 
-    (printScreen: 'G -> unit) 
+    (printScreen: 'G -> 'G) 
     (updater: 'G -> char -> 'G) 
     (initialGame: 'G) = 
-  printScreen initialGame
+  printScreen initialGame |> ignore
   (fun _ -> Console.ReadKey().KeyChar |> Char.ToLowerInvariant)
   |> Seq.initInfinite
   |> Seq.takeWhile (fun x -> x <> 'q')

@@ -55,7 +55,7 @@ let loopGame<'G> (updater: 'G -> char -> 'G) (initialGame: 'G) =
 
 We also identified that the `printScreen` function is specific to our game, so we will need to supply it to the `loopGame`...
 ```fsharp
-let loopGame<'G> (printScreen: 'G -> unit) (updater: 'G -> char -> 'G) (initialGame: 'G) = 
+let loopGame<'G> (printScreen: 'G -> 'G) (updater: 'G -> char -> 'G) (initialGame: 'G) = 
 ```
 > TIP: __F#__ uses the type `unit` to mean a _nothing_.  Other languages can use the word _void_ or _null_.
 

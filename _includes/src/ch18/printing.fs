@@ -81,12 +81,14 @@ let printMoveToTop game =
     + 1 //commands
     + 1 //current line
   moveUpLines n
+  game
 
 let printScreen game = 
   game 
+  |> printMoveToTop
   |> printHeader
   |> printStacks
   |> printTable
   |> printDeck
   |> printCommands
-  |> printMoveToTop
+

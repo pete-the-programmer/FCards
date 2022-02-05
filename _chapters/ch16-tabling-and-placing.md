@@ -134,15 +134,16 @@ _Also_, write the `drawCards` and `tableToStack` functions to update the `Game` 
       + 1 //commands
       + 1 //current line
     moveUpLines n
+    game
 
   let printScreen game = 
     game 
+    |> printMoveToTop
     |> printHeader
     |> printStacks
     |> printTable
     |> printDeck
     |> printCommands
-    |> printMoveToTop
 ```
 
 [See an answer for updating the game]({{ site.baseurl }}{{ page.url }}#game)
