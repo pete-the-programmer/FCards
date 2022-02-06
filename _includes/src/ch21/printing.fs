@@ -5,6 +5,23 @@ open Cards
 open Solitaire.Model
 
 let clearLine = "\x1B[K"
+let COLOR_DEFAULT = "\x1B[0m"
+let COLOR_RED = "\x1B[91m"
+let COLOR_BLACK = "\x1B[90m"
+
+let colouredCard card =
+  match card with 
+  | Hearts _ -> $"{COLOR_RED}{card}{COLOR_DEFAULT}"
+  | Diamonds _ -> $"{COLOR_RED}{card}{COLOR_DEFAULT}"
+  | Clubs _ ->  $"{COLOR_BLACK}{card}{COLOR_DEFAULT}"
+  | Spades _ ->  $"{COLOR_BLACK}{card}{COLOR_DEFAULT}"
+  | Joker -> "Jok"
+
+let colouredStackCard stackcard = 
+  if stackcard.isFaceUp then
+    colouredCard stackcard.card
+  else
+    stackcard.ToString()
 
 let printHeader game =
   printfn "%s========================== Solitaire ===========================" clearLine
@@ -29,6 +46,7 @@ let printStacks game =
       [0..5] |> List.map (fun stackNum ->
         if game.stacks[stackNum].Length > cardNum then 
           game.stacks[stackNum][cardNum]
+          |> colouredStackCard
           |> sprintf "[%O]"
         else
           // the stack is out of cards
@@ -39,6 +57,7 @@ let printStacks game =
       [0..3] |> List.map (fun stackNum ->
         if game.aces[stackNum].Length > cardNum then 
           game.aces[stackNum][cardNum]
+          |> colouredCard
           |> sprintf "[%O]"
         else
           // the ace stack is out of cards
@@ -55,7 +74,7 @@ let printTable game =
     | []  -> ""
     | a -> 
       String.init a.Length (fun _ -> "[")
-      + a.Head.ToString()
+      + (colouredCard a.Head)
       + "]"
   printfn "%s" clearLine //spacer
   printfn "%sTable: %s" clearLine tableLine

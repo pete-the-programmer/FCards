@@ -6,17 +6,12 @@ open Solitaire.Model
 
 let bell = "\x07"
 
-let (|Number|_|) (ch:Char) =
-  match Char.GetNumericValue(ch) with
-  | -1.0 -> None
-  | a -> a |> int |> Some
-
 let deal shuffledDeck = 
   let emptyGame = {
     deck = shuffledDeck |> List.except [Joker]
     table = []
     stacks = []
-    aces = List.init 6 (fun _ -> [])
+    aces = List.init 4 (fun _ -> [])
     phase = General
   }
   [6..-1..1] 
@@ -49,43 +44,6 @@ let drawCards game =
       @ withEnoughCardsToDraw.table
     deck = withEnoughCardsToDraw.deck |> List.skip cardsToTake
   }
-
-type Card with 
-  member this.Number =
-    match this with 
-    | Hearts a    
-    | Diamonds a  
-    | Clubs a     
-    | Spades a   -> a
-    | Joker      -> failwith "Joker?!?!?"
-
-type CardNumber with 
-  member this.Ordinal =
-    match this with 
-    | Ace   -> 1 
-    | Two   -> 2
-    | Three -> 3 
-    | Four  -> 4 
-    | Five  -> 5 
-    | Six   -> 6 
-    | Seven -> 7 
-    | Eight -> 8 
-    | Nine  -> 9 
-    | Ten   -> 10
-    | Jack  -> 11
-    | Queen -> 12 
-    | King  -> 13
-
-let (|IsRed|_|) (card:Card) =
-  match card with 
-  | Hearts _
-  | Diamonds _ -> Some card
-  | _ -> None
-
-let (|IsBlack|_|) (card:Card) =
-  match card with 
-  | IsRed _ -> None
-  | _ -> Some card
 
 let canAddToStack (stack: StackCard list) (card:Card) =
   if stack = [] && card.Number = King then 
@@ -221,7 +179,6 @@ let moveToAceFromStack sourceStack game =
         game.stacks 
         |> List.updateAt (sourceStack - 1) sourceFlipped 
     }
-
 
 let moveToAceFromTable game =
   match game.table with 

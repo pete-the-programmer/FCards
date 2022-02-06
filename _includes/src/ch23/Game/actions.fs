@@ -16,7 +16,7 @@ let deal shuffledDeck =
     deck = shuffledDeck |> List.except [Joker]
     table = []
     stacks = []
-    aces = List.init 6 (fun _ -> [])
+    aces = List.init 4 (fun _ -> [])
     phase = General
   }
   [6..-1..1] 

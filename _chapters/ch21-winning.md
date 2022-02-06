@@ -62,6 +62,13 @@ let hasWon game =
               //  and the piped value as the second input
 ```
 
+### Tidying up
+
+I'm going to move some of the extensions we added to make the rules work into the `Cards` module, such as `IsRed/Black` and the type extensions that 
+got us a number etc.  I'm doing this because in my mind they feel like common "Card" things, rather than something particular to do with Solitaire.
+
+The other thing I'm going to tidy up is the special codes for printing in colour.  This is specific to printing on a terminal, so I will move this work into `printing.fs` as a function that transforms a printed card into a coloured, printed card.
+
 ### Celebration
 
 How would you change the code to celebrate the player's success.  A message on the playing surface / fireworks / even an animation!
