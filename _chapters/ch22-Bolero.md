@@ -124,10 +124,11 @@ We also need a starting web page.  Create a sub-folder in the Website folder cal
 ```html
 <html>
   <head>
-
+    <title>Solitaire</title>
   </head>
   <body>
-    Hello Solitaire!
+    <h1>Solitaire</h1>
+
   </body>
 </html>
 ```
