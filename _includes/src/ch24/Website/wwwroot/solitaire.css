@@ -1,0 +1,51 @@
+h2, h3, h4 {
+  color: #777;
+}
+ul{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style-type: none;
+}
+
+.game{
+  display: flex;
+  flex-direction: column;
+  color: #777;
+}
+.topHalf{
+  display: flex;
+  align-content: space-between;
+
+}
+.stacks, .aces{
+  display: flex;
+  margin: 1em;
+  align-content: space-between;
+  flex-grow: 1;
+}
+.stacks > *, .aces > * {
+  flex-grow: 1;
+}
+
+.table ul, .deck ul {
+  display: flex;
+  flex-direction: row;
+}
+
+.deck ul {
+  margin-left: 1.2em;
+}
+.deck li {
+  margin-left: -1.2em;
+  background: white;
+}
+
+
+.red {
+  color: red;
+}
+.black {
+  color: black;
+}
