@@ -107,3 +107,12 @@ ul.menu li {
   font-family: sans-serif;
   font-size: 88%;
 }
+
+.markdown-body img {
+  max-width: 100%;
+  border: 1px solid var(--col-border);
+  box-shadow: 0.2em 0.2em 0.5em var(--col-border);
+}
+.center {
+  text-align: center !important;
+}

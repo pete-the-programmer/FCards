@@ -34,10 +34,10 @@ li{
   flex-direction: row;
 }
 
-.deck ul {
+.deck ul, .table ul{
   margin-left: 1.2em;
 }
-.deck li {
+.deck li, .table li {
   margin-left: -1.2em;
   background: white;
 }

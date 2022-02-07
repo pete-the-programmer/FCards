@@ -9,3 +9,6 @@ web:
 
 publish:
 	cd _includes/src/ch$(ch); dotnet publish Website/Website.fsproj -o ./ -c Release --nologo; mv wwwroot docs
+
+s:
+	cd _includes/src/ch$(ch)/docs; python3 -m http.server
