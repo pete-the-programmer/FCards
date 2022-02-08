@@ -24,6 +24,7 @@ li{
   margin: 1em;
   align-content: space-between;
   flex-grow: 1;
+  text-align: center;
 }
 .stacks > *, .aces > * {
   flex-grow: 1;
