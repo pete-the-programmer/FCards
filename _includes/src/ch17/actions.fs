@@ -70,9 +70,17 @@ let tableToStack stackNum game =
       stacks = game.stacks |> addToStack stackNum a 
     }
 
+type SolitaireCommands = 
+  | DrawCards
+  | TableToStack of int
+
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
+  | DrawCards -> game |> drawCards
+  | TableToStack a -> game |> tableToStack (a - 1)
+
 let updateGame game command =
   match command with 
-  | 'd' -> drawCards game
-  | Number a when (a >= 1 && a <= 6) -> tableToStack (a - 1) game
+  | 'd' -> game |> applyCommand DrawCards
+  | Number a when (a >= 1 && a <= 6) -> game |> applyCommand (TableToStack a)
   | _ -> game
-

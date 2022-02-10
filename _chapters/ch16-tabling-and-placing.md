@@ -41,6 +41,31 @@ Deck : [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[##]
 <d>raw cards, <1-6> put on stack, <q>uit
 ```
 
+### More than one thing
+
+We now can do more than one thing.  As this game gets more complicated we're going to want to keep track of what those things are.  
+
+So let's be intentional about that, and create a DU for the _commands_ the player has available:
+```fsharp
+type SolitaireCommands = 
+  | DrawCards
+  | TableToStack of int
+```
+
+And while we're at it, this _should_ be the only interface the world of players (and coders) use to interact with the game.  We don't want any back doors here!
+```fsharp
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
+  | DrawCards -> game |> drawCards
+  | TableToStack a -> game // coming up below!
+
+let updateGame game keystroke =
+  match keystroke with 
+  | 'd' -> game |> applyCommand DrawCards
+  | _ -> game
+```
+
+
 ### Matching a stack number
 In order to match the input of the stack we not only have to check that the character typed is a valid number, but also that it is in the range of 1 to 6.
 
@@ -58,11 +83,17 @@ __F#__ has a very useful tool called [__Active Patterns__](https://fsharpforfuna
 
 We can use the above active pattern to make our `updateGame` function:
 ```fsharp
-  let updateGame game command =
-    match command with 
-    | 'd' -> drawCards game
-    | Number a when (a >= 1 && a <= 6) -> tableToStack a game
-    | _ -> game
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
+  | DrawCards -> game |> drawCards
+  | TableToStack a when (a >= 1 && a <= 6) -> game |> tableToStack (a - 1)
+  | _ -> game
+
+let updateGame game keystroke =
+  match keystroke with 
+  | 'd' -> game |> applyCommand DrawCards
+  | Number a -> game |> applyCommand (TableToStack a)
+  | _ -> game
 ```
 Note how we can specify a range in our matcher using the `when` keyword.
 

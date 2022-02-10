@@ -151,12 +151,21 @@ module Solitaire =
         stacks = game.stacks |> addToStack stackNum a 
       }
 
-  let updateGame game command =
-    match command with 
-    | 'd' -> drawCards game
-    | Number a when (a >= 1 && a <= 6) -> tableToStack (a - 1) game
+  type SolitaireCommands = 
+    | DrawCards
+    | TableToStack of int
+
+  let applyCommand (cmd: SolitaireCommands) (game: Game) =
+    match cmd with 
+    | DrawCards -> game |> drawCards
+    | TableToStack a when (a >= 1 && a <= 6) -> game |> tableToStack (a - 1)
     | _ -> game
 
+  let updateGame game keystroke =
+    match keystroke with 
+    | 'd' -> game |> applyCommand DrawCards
+    | Number a -> game |> applyCommand (TableToStack a)
+    | _ -> game
 ;;
 // DO IT!
 let play() =

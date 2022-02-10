@@ -14,8 +14,8 @@ let printStacks game =
   printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |" clearLine
   [0..19] |> List.iter (fun cardNum ->
     [0..5] |> List.map (fun stackNum ->
-      if game.stacks[stackNum].Length > cardNum then 
-        game.stacks[stackNum][cardNum]
+      if game.game.stacks[stackNum].Length > cardNum then 
+        game.game.stacks[stackNum][cardNum]
         |> sprintf "[%O]"
       else
         // the stack is out of cards
@@ -28,7 +28,7 @@ let printStacks game =
 
 let printTable game =
   let tableLine = 
-    match game.table with 
+    match game.game.table with 
     | []  -> ""
     | a -> 
       String.init a.Length (fun _ -> "[")
@@ -39,7 +39,7 @@ let printTable game =
   game
 
 let printDeck game =
-  let deckLine = String.init game.deck.Length (fun _ -> "[") 
+  let deckLine = String.init game.game.deck.Length (fun _ -> "[") 
   printfn "%sDeck:  %s###]" clearLine deckLine
   game
 
@@ -55,7 +55,7 @@ let printCommands game =
         clearLine
   | SelectingNumCards stack-> 
       let numCardsInStack = 
-        game.stacks[stack - 1] 
+        game.game.stacks[stack - 1] 
         |> List.filter (fun a -> a.isFaceUp ) 
         |> List.length
       printfn 
@@ -69,7 +69,7 @@ let printCommands game =
 
 let printMoveToTop game =
   let maxCardInAnyStack = 
-    game.stacks 
+    game.game.stacks 
     |> List.map (fun stack -> stack.Length )
     |> List.max
   let n = 
