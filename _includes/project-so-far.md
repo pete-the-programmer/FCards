@@ -1,6 +1,6 @@
 ### Code so far {{page.chapter}}
 
-{% assign parts = include.parts | default: 'cards.fs,model.fs,printing.fs,actions.fs,Program.fs' | split: ',' %}
+{% assign parts = include.parts | default: 'cards.fs,model.fs,printing.fs,actions.fs,update.fs,Program.fs' | split: ',' %}
 
 {% for part in parts %}
 {% assign ext = part | split: '.' %}

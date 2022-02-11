@@ -16,7 +16,7 @@ let initialise args =
   newDeck 
   |> shuffle 
   |> deal
-  |> drawCards
+  |> applyCommand DrawCards
   
 let update message model = model
 

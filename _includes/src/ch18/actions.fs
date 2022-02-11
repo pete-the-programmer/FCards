@@ -92,6 +92,7 @@ let private moveCardsBetweenStacks sourceStack numCards targetStack game =
         |> List.updateAt (targetStack - 1) target 
   }
 
+// The _external_ arguments for "MoveCards"
 type MoveArgs = { sourceStack: int; numCards: int; targetStack: int; }
 
 type SolitaireCommands = 

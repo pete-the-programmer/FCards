@@ -13,6 +13,14 @@ type StackCard = {
       else 
         "###"
 
+
+type Game = {
+  deck: Card list
+  table: Card list
+  stacks: StackCard list list
+  aces: Card list list
+}
+
 type Phase = 
   | General
   | SelectingSourceStack
@@ -20,10 +28,7 @@ type Phase =
   | SelectingTargetStack of int * int
   | SelectingAceSource
 
-type Game = {
-  deck: Card list
-  table: Card list
-  stacks: StackCard list list
-  aces: Card list list
+type MultiPhaseGame = {
+  game: Game
   phase: Phase
 }

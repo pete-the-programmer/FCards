@@ -10,7 +10,6 @@ let deal shuffledDeck =
     table = []
     stacks = []
     aces = List.init 4 (fun _ -> [])
-    phase = General
   }
   [6..-1..1] 
   |>  List.fold (fun game i -> 
@@ -30,7 +29,7 @@ let (|Number|_|) (ch:Char) =
   | -1.0 -> None
   | a -> a |> int |> Some
 
-let drawCards game =
+let private drawCards game =
   let withEnoughCardsToDraw =
     match game.deck.Length with
     | n when n < 3 -> 
@@ -49,11 +48,11 @@ let drawCards game =
   }
 
 // a helper to add a card to a numbered stack
-let addToStack (stackNum:int) (card:Card) (stacks: StackCard list list) =
+let private addToStack (stackNum:int) (card:Card) (stacks: StackCard list list) =
   let updatedStack = stacks[stackNum] @ [ { isFaceUp=true; card=card} ]
   stacks |> List.updateAt stackNum updatedStack
 
-let tableToStack stackNum game =
+let private tableToStack stackNum game =
   match game.table with 
   | [] -> game // do nothing
   | [a] -> 
@@ -67,7 +66,7 @@ let tableToStack stackNum game =
       stacks = game.stacks |> addToStack stackNum a 
     }
 
-let flipNext stack =
+let private flipNext stack =
   let numFaceUp =
     stack 
     |> List.filter (fun a -> a.isFaceUp)
@@ -81,7 +80,7 @@ let flipNext stack =
         {stack[n - 1] with isFaceUp=true}
   | _, _ -> stack //anything else
 
-let moveCardsBetweenStacks sourceStack numCards targetStack game =
+let private moveCardsBetweenStacks sourceStack numCards targetStack game =
   // remember - on screen we start at one, but lists start at zero
   let numCardsInStack = game.stacks[sourceStack - 1].Length
   // do the move
@@ -98,7 +97,7 @@ let moveCardsBetweenStacks sourceStack numCards targetStack game =
         |> List.updateAt (targetStack - 1) target 
   }
 
-let addToAce card game =
+let private addToAce card game =
   let acesStackNum =
     match card with 
     | Hearts _ -> 0
@@ -113,7 +112,7 @@ let addToAce card game =
       |> List.updateAt acesStackNum target
   }
 
-let moveToAceFromStack sourceStack game =
+let private moveToAceFromStack sourceStack game =
   match game.stacks[sourceStack - 1] with 
   | [] -> game
   | [a] -> 
@@ -137,7 +136,7 @@ let moveToAceFromStack sourceStack game =
     }
 
 
-let moveToAceFromTable game =
+let private moveToAceFromTable game =
   match game.table with 
   | [] -> game
   | [a] -> 
@@ -147,69 +146,21 @@ let moveToAceFromTable game =
     let addedToAce = addToAce a game
     {addedToAce with table = rest }
 
-let updateGameGeneral game command =
-  match command with 
-  | 'd' -> drawCards game
-  | Number a when (a >= 1 && a <= 6) -> tableToStack (a - 1) game
-  | 'm' -> 
-      { game with phase = SelectingSourceStack }
-  | 'a' -> 
-      { game with phase = SelectingAceSource }        
-  | _ -> game
 
-let updateGameSourceStack game command =
-  match command with 
-  | Number stack when (stack >= 1 && stack <= 6) -> 
-      { game with phase = SelectingNumCards stack }
-  | '\x1B' -> // [esc] key
-      { game with phase = General }    
-  | _ -> game
+// The _external_ arguments for "MoveCards"
+type MoveArgs = { sourceStack: int; numCards: int; targetStack: int; }
 
-let updateGameNumCards sourceStack game command =
-  let numCardsInStack = 
-    game.stacks[sourceStack - 1] 
-    |> List.filter (fun a -> a.isFaceUp ) 
-    |> List.length
-  match command with 
-  | Number card when (card >= 1 && card <= numCardsInStack) -> 
-      { game with phase = SelectingTargetStack (sourceStack, card) }
-  | 'a' ->
-      { game with phase = SelectingTargetStack (sourceStack, numCardsInStack) }
-  | '\x1B' -> // [esc] key
-      { game with phase = SelectingSourceStack }    
-  | _ -> game
+type SolitaireCommands = 
+  | DrawCards
+  | TableToStack of int
+  | MoveCards of MoveArgs
+  | TableToAce
+  | StackToAce of int
 
-let updateGameTargetStack sourceStack numCards game command =
-  match command with 
-  | Number targetStack when (targetStack >= 1 && targetStack <= 6) -> 
-      let updatedGame = 
-        moveCardsBetweenStacks sourceStack numCards targetStack game
-      { updatedGame with phase = General }
-  | '\x1B' -> // [esc] key
-      { game with phase = SelectingNumCards sourceStack }    
-  | _ -> game  
-
-let updateAceSourceStack game command =
-  match command with 
-  | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) -> 
-      let updatedGame = moveToAceFromStack sourceStack game
-      { updatedGame with phase = General }
-  | 't' ->
-      let updatedGame = moveToAceFromTable game
-      { updatedGame with phase = General }
-  | '\x1B' -> // [esc] key
-      { game with phase = General }    
-  | _ -> game  
-
-let updateGame game command =
-  match game.phase with 
-  | General -> 
-      updateGameGeneral game command
-  | SelectingSourceStack -> 
-      updateGameSourceStack game command
-  | SelectingNumCards sourceStack -> 
-      updateGameNumCards sourceStack game command
-  | SelectingTargetStack (sourceStack, numCards) -> 
-      updateGameTargetStack sourceStack numCards game command
-  | SelectingAceSource -> 
-      updateAceSourceStack game command
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
+  | DrawCards      -> game |> drawCards
+  | TableToStack a -> game |> tableToStack (a - 1)
+  | MoveCards args -> game |> moveCardsBetweenStacks args.sourceStack args.numCards args.targetStack
+  | TableToAce     -> game |> moveToAceFromTable
+  | StackToAce a   -> game |> moveToAceFromStack a

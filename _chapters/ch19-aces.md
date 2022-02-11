@@ -79,36 +79,33 @@ Change the code that prints the screen to include the Ace Stacks
 
 {:class="collapsible" id="showingAces"}
 ```fsharp
-let printStacks game = 
+let printStacks multiGame = 
   printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |===|  %s  |  %s  |  %s  |  %s  |" 
     clearLine SYMBOL_HEART SYMBOL_DIAMOND SYMBOL_CLUB SYMBOL_SPADE
-  [0..(maxCardInAnyStack game) - 1]
-    |> List.iter (fun cardNum ->
-      let stackline =                                      //
-        [0..5]                                             //|
-        |> List.map (fun stackNum ->                       //| original
-            if game.stacks[stackNum].Length > cardNum then //|  line
-              game.stacks[stackNum][cardNum]               //|  by 
-              |> sprintf "[%O]"                            //|  line
-            else                                           //| 
-              "     "                                      //|
-        )                                                  //|
-        |> fun strings -> String.Join (" ", strings)       //
-
-      let aceline =                                       //
-        [0..3]                                            //|
-        |> List.map (fun stackNum ->                      //|
-            if game.aces[stackNum].Length > cardNum then  //| Create
-              game.aces[stackNum][cardNum]                //|  Ace
-              |> sprintf "[%O]"                           //|  line
-            else                                          //|  part
-              "     "                                     //|
-        )                                                 //|
-        |> fun strings -> String.Join (" ", strings)      //  
-
-      printfn "%s%s     %s" clearLine stackline aceline   // print one after the other
+  [0..19] |> List.iter (fun cardNum ->
+    let stackline = 
+      [0..5] |> List.map (fun stackNum ->
+        if multiGame.game.stacks[stackNum].Length > cardNum then 
+          multiGame.game.stacks[stackNum][cardNum]
+          |> sprintf "[%O]"
+        else
+          // the stack is out of cards
+            "     "         
+      )
+      |> fun strings -> String.Join (" ", strings)
+    let aceline =
+      [0..3] |> List.map (fun stackNum ->
+        if multiGame.game.aces[stackNum].Length > cardNum then 
+          multiGame.game.aces[stackNum][cardNum]
+          |> sprintf "[%O]"
+        else
+          // the ace stack is out of cards
+          "     "         
+        )
+        |> fun strings -> String.Join (" ", strings)          
+    printfn "%s%s     %s" clearLine stackline aceline   // print stacks then aces on the same line
   )
-  game
+  multiGame //pass it on to the next function
 ```
 
 
@@ -136,11 +133,11 @@ let printCommands game =
         clearLine    
 ```
 
-[See an answer doe moving to Ace stacks]({{ site.baseurl }}{{ page.url }}#movingAces)
+[See an answer for moving to Ace stacks]({{ site.baseurl }}{{ page.url }}#movingAces)
 
 {:class="collapsible" id="movingAces"}
 ```fsharp
-let addToAce card game =
+let private addToAce card game =
   let acesStackNum =
     match card with 
     | Hearts _ -> 0
@@ -155,7 +152,7 @@ let addToAce card game =
       |> List.updateAt acesStackNum target
   }
 
-let moveToAceFromStack sourceStack game =
+let private moveToAceFromStack sourceStack game =
   match game.stacks[sourceStack - 1] with 
   | [] -> game
   | [a] -> 
@@ -178,7 +175,7 @@ let moveToAceFromStack sourceStack game =
         |> List.updateAt (sourceStack - 1) sourceFlipped 
     }
 
-let moveToAceFromTable game =
+let private moveToAceFromTable game =
   match game.table with 
   | [] -> game
   | [a] -> 
@@ -188,23 +185,21 @@ let moveToAceFromTable game =
     let addedToAce = addToAce a game
     {addedToAce with table = rest }
 
-let updateAceSourceStack game command =
-  match command with 
-  | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) -> 
-      let updatedGame = moveToAceFromStack sourceStack game
-      { updatedGame with 
-          phase = General
-      }
-  | 't' ->
-      let updatedGame = moveToAceFromTable game
-      { updatedGame with 
-          phase = General
-      }
-  | '\x1B' -> // [esc] key
-      { game with 
-          phase = General
-      }    
-  | _ -> game  
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
+  ...
+  | TableToAce     -> game |> moveToAceFromTable
+  | StackToAce a   -> game |> moveToAceFromStack a
+
+... 
+
+let updateAceSourceStack game keystroke =
+  match keystroke with 
+  | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) 
+            -> game |> applyUpdate (StackToAce sourceStack)
+  | 't'     -> game |> applyUpdate TableToAce
+  | '\x1B'  -> game |> nextPhase General
+  | _       -> game   
 
 ```
 

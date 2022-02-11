@@ -17,12 +17,6 @@ So far we've concentrated on the mechanics of enabling the player interaction.
 
 Now it's time to actually implement some rules of the game.  In order to do this we may have to tell the player (gasp!) __NO__.
 
-When the player makes a move that is not allowed we can make a beeping sound by printing the code:
-```fsharp
-  let bell = "\x07" //  The common ascii code for a "bell" sound (i.e. beep)
-  ...
-  printf "%s" bell
-```
 
 ### Rule: Stacked Cards
 
@@ -31,53 +25,24 @@ When the player makes a move that is not allowed we can make a beeping sound by 
 
 One of the important decisions we need to make is _where_ in the in process do we enforce the rules.
 
-I prefer to leave the functions that actually _do_ the activities (e.g. `moveCardsBetweenStacks`, `moveToAceFromStack`, etc) to be completely ignorant of higher-level rules.  That pushes the rule logic up a level to the various `updateGame...` functions.  These are the functions that deal with the input from the player and decide what to do with it. So let's update these functions to be a bit more sophisticated:
+I prefer to leave the functions that actually _do_ the activities (e.g. `moveCardsBetweenStacks`, `moveToAceFromStack`, etc) to be completely ignorant of higher-level rules.  That pushes the rule logic up a level to the various `applyCommand` function. This is the function that deals with the intended actions and decide what to do with it. So let's update this function to be a bit more sophisticated:
 
 ```fsharp
-let updateGameGeneral game command =
-  match command with 
-  | Number a 
-      when (a >= 1 && a <= 6) 
-      &&   canAddToStack (game.stacks[a - 1]) (game.table.Head)
-      -> 
-        tableToStack (a - 1) game
-  ...     
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game
-
-let updateGameTargetStack sourceStack numCards game command =
-  match command with 
-  | Number targetStack 
-      when (targetStack >= 1 && targetStack <= 6) 
-      &&   canMoveCardsBetweenStacks sourceStack numCards targetStack game
-      -> 
-        let updatedGame = 
-          moveCardsBetweenStacks sourceStack numCards targetStack game
-        { updatedGame with phase = General }
-  ...  
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game
-
-let updateAceSourceStack game command =
-  match command with 
-  | Number sourceStack 
-      when (sourceStack >= 1 && sourceStack <= 6) 
-      &&   canAddToAceFromStack sourceStack game
-      -> 
-        let updatedGame = moveToAceFromStack sourceStack game
-        { updatedGame with phase = General }
-  | 't' when canAddToAce game.table game ->
-      let updatedGame = moveToAceFromTable game
-      { updatedGame with phase = General }
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
   ...
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game    
+  | TableToStack a
+      when (a >= 1 && a <= 6)
+      &&   canAddToStack (game.stacks[a - 1]) (game.table.Head)
+      -> game |> tableToStack (a - 1)
+  | MoveCards args 
+      when (args.targetStack >= 1 && args.targetStack <= 6) 
+      &&   canMoveCardsBetweenStacks args.sourceStack args.numCards args.targetStack game
+      -> game |> moveCardsBetweenStacks args.sourceStack args.numCards args.targetStack
+  ...
 ```
 
-Note the new functions `canAddToAceFromStack`, `canAddToAce`, `canAddToStack`, and `canMoveCardsBetweenStacks` are used as part of the matcher's _when_ clause.  We've also added a beep/bell if nothing matches.
+Note the new functions `canAddToAceFromStack`, `canAddToAce`, `canAddToStack`, and `canMoveCardsBetweenStacks` are used as part of the matcher's _when_ clause. 
 
 
 #### Making life easy for ourselves
@@ -166,21 +131,17 @@ let canMoveCardsBetweenStacks sourceStack numCards targetStack game =
 We can update the update functions for Ace stacks in a similar way
 
 ```fsharp
-let updateAceSourceStack game command =
-  match command with 
-  | Number sourceStack 
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
+  ...
+  | TableToAce
+      when canAddToAce game.table game  
+      -> game |> moveToAceFromTable
+  | StackToAce sourceStack 
       when (sourceStack >= 1 && sourceStack <= 6) 
       &&   canAddToAceFromStack sourceStack game
-      -> 
-        let updatedGame = moveToAceFromStack sourceStack game
-        { updatedGame with phase = General }
-  | 't' when canAddToAce game.table game ->
-      let updatedGame = moveToAceFromTable game
-      { updatedGame with phase = General }
-  ...
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game  
+      -> game |> moveToAceFromStack sourceStack
+  | _ -> game
 ```
 
 #### Exercise: Rules for adding to ace stacks

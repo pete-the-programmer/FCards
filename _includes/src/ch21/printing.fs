@@ -5,48 +5,19 @@ open Cards
 open Solitaire.Model
 
 let clearLine = "\x1B[K"
-let COLOR_DEFAULT = "\x1B[0m"
-let COLOR_RED = "\x1B[91m"
-let COLOR_BLACK = "\x1B[90m"
 
-let colouredCard card =
-  match card with 
-  | Hearts _ -> $"{COLOR_RED}{card}{COLOR_DEFAULT}"
-  | Diamonds _ -> $"{COLOR_RED}{card}{COLOR_DEFAULT}"
-  | Clubs _ ->  $"{COLOR_BLACK}{card}{COLOR_DEFAULT}"
-  | Spades _ ->  $"{COLOR_BLACK}{card}{COLOR_DEFAULT}"
-  | Joker -> "Jok"
-
-let colouredStackCard stackcard = 
-  if stackcard.isFaceUp then
-    colouredCard stackcard.card
-  else
-    stackcard.ToString()
-
-let printHeader game =
+let printHeader multiGame =
   printfn "%s========================== Solitaire ===========================" clearLine
-  game
+  multiGame
 
-let maxCardInAnyStack game = 
-  let maxCardInStacks = 
-    game.stacks 
-    |> List.map (fun stack -> stack.Length )
-    |> List.max
-  let maxCardInAces = 
-    game.aces 
-    |> List.map (fun stack -> stack.Length )
-    |> List.max
-  Math.Max(maxCardInAces, maxCardInStacks)
-
-let printStacks game = 
+let printStacks multiGame = 
   printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |===|  %s  |  %s  |  %s  |  %s  |" 
     clearLine SYMBOL_HEART SYMBOL_DIAMOND SYMBOL_CLUB SYMBOL_SPADE
   [0..19] |> List.iter (fun cardNum ->
     let stackline = 
       [0..5] |> List.map (fun stackNum ->
-        if game.stacks[stackNum].Length > cardNum then 
-          game.stacks[stackNum][cardNum]
-          |> colouredStackCard
+        if multiGame.game.stacks[stackNum].Length > cardNum then 
+          multiGame.game.stacks[stackNum][cardNum]
           |> sprintf "[%O]"
         else
           // the stack is out of cards
@@ -55,9 +26,8 @@ let printStacks game =
       |> fun strings -> String.Join (" ", strings)
     let aceline =
       [0..3] |> List.map (fun stackNum ->
-        if game.aces[stackNum].Length > cardNum then 
-          game.aces[stackNum][cardNum]
-          |> colouredCard
+        if multiGame.game.aces[stackNum].Length > cardNum then 
+          multiGame.game.aces[stackNum][cardNum]
           |> sprintf "[%O]"
         else
           // the ace stack is out of cards
@@ -66,30 +36,30 @@ let printStacks game =
         |> fun strings -> String.Join (" ", strings)          
     printfn "%s%s     %s" clearLine stackline aceline
   )
-  game //pass it on to the next function
+  multiGame //pass it on to the next function
 
-let printTable game =
+let printTable multiGame =
   let tableLine = 
-    match game.table with 
+    match multiGame.game.table with 
     | []  -> ""
     | a -> 
       String.init a.Length (fun _ -> "[")
-      + (colouredCard a.Head)
+      + a.Head.ToString()
       + "]"
   printfn "%s" clearLine //spacer
   printfn "%sTable: %s" clearLine tableLine
-  game
+  multiGame
 
-let printDeck game =
-  let deckLine = String.init game.deck.Length (fun _ -> "[") 
+let printDeck multiGame =
+  let deckLine = String.init multiGame.game.deck.Length (fun _ -> "[") 
   printfn "%sDeck:  %s###]" clearLine deckLine
-  game
+  multiGame
 
-let printCommands game =
-  match game.phase with
+let printCommands multiGame =
+  match multiGame.phase with
   | General -> 
       printfn 
-        "%s<d>raw cards, <1-6> put on stack, <m>ove cards between stacks, <a>ce cards, <q>uit" 
+        "%s<d>raw cards, <1-6> put on stack, <m>ove cards between stacks <q>uit" 
         clearLine
   | SelectingSourceStack -> 
       printfn 
@@ -97,7 +67,7 @@ let printCommands game =
         clearLine
   | SelectingNumCards stack-> 
       let numCardsInStack = 
-        game.stacks[stack - 1] 
+        multiGame.game.stacks[stack - 1] 
         |> List.filter (fun a -> a.isFaceUp ) 
         |> List.length
       printfn 
@@ -110,31 +80,34 @@ let printCommands game =
   | SelectingAceSource ->
       printfn 
         "%sMove to ACE stack from stack ___(1-6) or <t>able, <esc> Go back, <q>uit" 
-        clearLine          
+        clearLine   
   | PlayerHasWon ->
       printfn 
         "%sYou have won!  Play again (y), <q>uit" 
-        clearLine      
-  game
+        clearLine       
+  multiGame
 
-let printMoveToTop game =
+let printMoveToTop multiGame =
+  let maxCardInAnyStack = 
+    multiGame.game.stacks 
+    |> List.map (fun stack -> stack.Length )
+    |> List.max
   let n = 
     1 //header
     + 1 //stack numbers
-    + 21 //stacks & aces
+    + 21 //stacks
     + 1 //table
     + 1 //deck
     + 1 //commands
     + 1 //current line
   moveUpLines n
-  game
+  multiGame
 
-let printScreen game = 
-  game 
+let printScreen multiGame = 
+  multiGame 
   |> printMoveToTop
   |> printHeader
   |> printStacks
   |> printTable
   |> printDeck
   |> printCommands
-

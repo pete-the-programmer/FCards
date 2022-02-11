@@ -9,6 +9,7 @@
     <Compile Include="cards.fs" />
     <Compile Include="model.fs" />
     <Compile Include="actions.fs" />
+    <Compile Include="update.fs" />
     <Compile Include="printing.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

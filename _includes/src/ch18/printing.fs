@@ -6,16 +6,16 @@ open Solitaire.Model
 
 let clearLine = "\x1B[K"
 
-let printHeader game =
+let printHeader multiGame =
   printfn "%s============ Solitaire =============" clearLine
-  game
+  multiGame
 
-let printStacks game = 
+let printStacks multiGame = 
   printfn "%s| 1  |  2  |  3  |  4  |  5  |  6  |" clearLine
   [0..19] |> List.iter (fun cardNum ->
     [0..5] |> List.map (fun stackNum ->
-      if game.game.stacks[stackNum].Length > cardNum then 
-        game.game.stacks[stackNum][cardNum]
+      if multiGame.game.stacks[stackNum].Length > cardNum then 
+        multiGame.game.stacks[stackNum][cardNum]
         |> sprintf "[%O]"
       else
         // the stack is out of cards
@@ -24,11 +24,11 @@ let printStacks game =
     |> fun strings -> String.Join (" ", strings)
     |> printfn "%s%s" clearLine
   )
-  game //pass it on to the next function
+  multiGame //pass it on to the next function
 
-let printTable game =
+let printTable multiGame =
   let tableLine = 
-    match game.game.table with 
+    match multiGame.game.table with 
     | []  -> ""
     | a -> 
       String.init a.Length (fun _ -> "[")
@@ -36,15 +36,15 @@ let printTable game =
       + "]"
   printfn "%s" clearLine //spacer
   printfn "%sTable: %s" clearLine tableLine
-  game
+  multiGame
 
-let printDeck game =
-  let deckLine = String.init game.game.deck.Length (fun _ -> "[") 
+let printDeck multiGame =
+  let deckLine = String.init multiGame.game.deck.Length (fun _ -> "[") 
   printfn "%sDeck:  %s###]" clearLine deckLine
-  game
+  multiGame
 
-let printCommands game =
-  match game.phase with
+let printCommands multiGame =
+  match multiGame.phase with
   | General -> 
       printfn 
         "%s<d>raw cards, <1-6> put on stack, <m>ove cards between stacks <q>uit" 
@@ -55,7 +55,7 @@ let printCommands game =
         clearLine
   | SelectingNumCards stack-> 
       let numCardsInStack = 
-        game.game.stacks[stack - 1] 
+        multiGame.game.stacks[stack - 1] 
         |> List.filter (fun a -> a.isFaceUp ) 
         |> List.length
       printfn 
@@ -65,11 +65,11 @@ let printCommands game =
       printfn 
         "%sMove %d cards from stack %d to stack ___, <esc> Go back, <q>uit" 
         clearLine card stack
-  game
+  multiGame
 
-let printMoveToTop game =
+let printMoveToTop multiGame =
   let maxCardInAnyStack = 
-    game.game.stacks 
+    multiGame.game.stacks 
     |> List.map (fun stack -> stack.Length )
     |> List.max
   let n = 
@@ -81,10 +81,10 @@ let printMoveToTop game =
     + 1 //commands
     + 1 //current line
   moveUpLines n
-  game
+  multiGame
 
-let printScreen game = 
-  game 
+let printScreen multiGame = 
+  multiGame 
   |> printMoveToTop
   |> printHeader
   |> printStacks

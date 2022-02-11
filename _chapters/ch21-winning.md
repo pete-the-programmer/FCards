@@ -21,25 +21,16 @@ From this rule we can say that we can only win after the action to move a card i
 Therefore, we only need to check if the player has won in this single place.
 
 ```fsharp
-let updateAceSourceStack game command =
+let updateAceSourceStack game keystroke =
   let updatedGame = 
-    match command with 
-    | Number sourceStack 
-        when (sourceStack >= 1 && sourceStack <= 6) 
-        &&   canAddToAceFromStack sourceStack game
-        -> 
-          let updatedGame = moveToAceFromStack sourceStack game
-          { updatedGame with phase = General }
-    | 't' when canAddToAce game.table game ->
-        let updatedGame = moveToAceFromTable game
-        { updatedGame with phase = General }
-    | '\x1B' -> // [esc] key
-        { game with phase = General }    
-    | _ -> 
-      printf "%s" bell // make a noise for an unacceptable input
-      game
+    match keystroke with 
+    | Number sourceStack when (sourceStack >= 1 && sourceStack <= 6) 
+              -> game |> applyUpdate (StackToAce sourceStack)
+    | 't'     -> game |> applyUpdate TableToAce
+    | '\x1B'  -> game |> nextPhase General
+    | _       -> game  
   // check if the player has won the game after this update
-  { updatedGame with phase = if hasWon updatedGame then PlayerHasWon else updatedGame.phase }
+  { updatedGame with phase = if hasWon updatedGame then PlayerHasWon else updatedGame.phase }  
 ```
 
 As you can see, we will need a new state `PlayerHasWon`, which will need the associated `updateGame...` function and a matched line in the `printCommands` function.  An advantage of use a _DU_ is that the compiler can immediately tell you where you're not handling one of the cases.

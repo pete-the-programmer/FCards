@@ -4,8 +4,6 @@ open System
 open Cards
 open Solitaire.Model
 
-let bell = "\x07"
-
 let (|Number|_|) (ch:Char) =
   match Char.GetNumericValue(ch) with
   | -1.0 -> None
@@ -17,7 +15,6 @@ let deal shuffledDeck =
     table = []
     stacks = []
     aces = List.init 4 (fun _ -> [])
-    phase = General
   }
   [6..-1..1] 
   |>  List.fold (fun game i -> 
@@ -233,89 +230,36 @@ let moveToAceFromTable game =
     let addedToAce = addToAce a game
     {addedToAce with table = rest }
 
-let updateGameGeneral game command =
-  match command with 
-  | 'd' -> drawCards game
-  | Number a 
-      when (a >= 1 && a <= 6) 
+
+
+// The _external_ arguments for "MoveCards"
+type MoveArgs = { sourceStack: int; numCards: int; targetStack: int; }
+
+type SolitaireCommands = 
+  | DrawCards
+  | TableToStack of int
+  | MoveCards of MoveArgs
+  | TableToAce
+  | StackToAce of int
+
+let applyCommand (cmd: SolitaireCommands) (game: Game) =
+  match cmd with 
+  | DrawCards      
+      -> game |> drawCards
+  | TableToStack a
+      when (a >= 1 && a <= 6)
       &&   canAddToStack (game.stacks[a - 1]) (game.table.Head)
-      -> 
-        tableToStack (a - 1) game
-  | 'm' -> 
-      { game with phase = SelectingSourceStack }
-  | 'a' -> 
-      { game with phase = SelectingAceSource }        
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game
-
-let updateGameSourceStack game command =
-  match command with 
-  | Number stack when (stack >= 1 && stack <= 6) -> 
-      { game with phase = SelectingNumCards stack }
-  | '\x1B' -> // [esc] key
-      { game with phase = General }    
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game
-
-let updateGameNumCards sourceStack game command =
-  let numCardsInStack = 
-    game.stacks[sourceStack - 1] 
-    |> List.filter (fun a -> a.isFaceUp ) 
-    |> List.length
-  match command with 
-  | Number card when (card >= 1 && card <= numCardsInStack) -> 
-      { game with phase = SelectingTargetStack (sourceStack, card) }
-  | 'a' ->
-      { game with phase = SelectingTargetStack (sourceStack, numCardsInStack) }
-  | '\x1B' -> // [esc] key
-      { game with phase = SelectingSourceStack }    
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game
-
-let updateGameTargetStack sourceStack numCards game command =
-  match command with 
-  | Number targetStack 
-      when (targetStack >= 1 && targetStack <= 6) 
-      &&   canMoveCardsBetweenStacks sourceStack numCards targetStack game
-      -> 
-        let updatedGame = 
-          moveCardsBetweenStacks sourceStack numCards targetStack game
-        { updatedGame with phase = General }
-  | '\x1B' -> // [esc] key
-      { game with phase = SelectingNumCards sourceStack }    
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game
-
-let updateAceSourceStack game command =
-  match command with 
-  | Number sourceStack 
+      -> game |> tableToStack (a - 1)
+  | MoveCards args 
+      when (args.targetStack >= 1 && args.targetStack <= 6) 
+      &&   canMoveCardsBetweenStacks args.sourceStack args.numCards args.targetStack game
+      -> game |> moveCardsBetweenStacks args.sourceStack args.numCards args.targetStack
+  | TableToAce
+      when canAddToAce game.table game  
+      -> game |> moveToAceFromTable
+  | StackToAce sourceStack 
       when (sourceStack >= 1 && sourceStack <= 6) 
       &&   canAddToAceFromStack sourceStack game
-      -> 
-        let updatedGame = moveToAceFromStack sourceStack game
-        { updatedGame with phase = General }
-  | 't' when canAddToAce game.table game ->
-      let updatedGame = moveToAceFromTable game
-      { updatedGame with phase = General }
-  | '\x1B' -> // [esc] key
-      { game with phase = General }    
-  | _ -> 
-    printf "%s" bell // make a noise for an unacceptable input
-    game
+      -> game |> moveToAceFromStack sourceStack
+  | _ -> game
 
-let updateGame game command =
-  match game.phase with 
-  | General -> 
-      updateGameGeneral game command
-  | SelectingSourceStack -> 
-      updateGameSourceStack game command
-  | SelectingNumCards sourceStack -> 
-      updateGameNumCards sourceStack game command
-  | SelectingTargetStack (sourceStack, numCards) -> 
-      updateGameTargetStack sourceStack numCards game command
-  | SelectingAceSource -> 
-      updateAceSourceStack game command

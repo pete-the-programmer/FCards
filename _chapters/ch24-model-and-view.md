@@ -42,6 +42,7 @@ let initialise args =
   newDeck 
   |> shuffle 
   |> deal
+  |> applyCommand DrawCards   //  just so we can see something on the table in our view
 ```
 
 ### The Game View
