@@ -1,4 +1,4 @@
-### Code so far {{page.chapter}}
+### Code so far
 
 {% assign parts = include.parts | default: 'cards.fs,model.fs,printing.fs,actions.fs,update.fs,Program.fs' | split: ',' %}
 

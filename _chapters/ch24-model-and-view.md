@@ -1,11 +1,12 @@
 ---
 slug: Display the game on the Web
-concept: MVu
+concept: MVU
 chapter: "24"
 part: "On the Web"
 feature: 
   - MVU (Model-View-Update)
   - Making HTML elements
+  - Deconstructing types into their parts
 keyword:
   - bolero
 
@@ -97,34 +98,45 @@ let viewMain game dispatch =
 ```
 ... and use some CSS to shape them up using classes.  I won't go into the CSS as that's a whole other topic, but I will include it at the bottom of the chapter.
 
-### Excerise: Sub-views
+### Exercise: Sub-views
 
 To create the sub-view for printing out the table we can do something similar to below
 ```fsharp
-let viewCard card =
-  let txt = text $"[{card}]"
-  let colorAttr = 
-    match card with 
-    | IsRed _ -> ["red"]
-    | IsBlack _ -> ["black"]
-    | _ -> []
-    |> Attr.Classes
-  span [ colorAttr ] [txt]
-  
-let viewCardBack card = span [ ] [ text "[###]"] 
+type CardDisplay = {
+  card: Card
+  isFaceUp: bool
+}
+
+let viewCardBack = span [ ] [ text "[###]"] 
+
+let viewCard (cardDisplay: CardDisplay) =
+  match cardDisplay with 
+  | {isFaceUp=false} -> viewCardBack
+  | {card=card} -> 
+    let txt = text $"[{card}]"
+    let colorAttr = 
+      match card with 
+      | IsRed _ -> ["red"]
+      | IsBlack _ -> ["black"]
+      | _ -> []
+      |> Attr.Classes
+    span [ colorAttr ] [txt]
 
 let viewTable game =
   match game.table with 
     | [] -> []
-    | [a] -> [viewCard a]
+    | [a] -> [viewCard {card=a; isFaceUp=true}]
     | topcard::rest -> 
-        let facedowns = rest |> List.map viewCardBack
-        facedowns @ [viewCard topcard]
+        let facedowns = List.init rest.Length (fun _ -> viewCardBack)
+        facedowns @ [viewCard {card=topcard;isFaceUp=true}]
   |> List.map ( fun a -> li [] [a])
   |> ul []
   |> fun a -> [ h3 [] [text "Table"]; a]
   |> div [ Attr.Classes ["table"] ]
 ```
+
+> TIP: You can `match` on just _part_ or a record.  
+> Notice that in `viewCard()` we match on _isFaceUp_ being false, and then on the second line we can __deconstruct__ just the part of the record that we're interested in (the _card_ part)
 
 Write the sub-view functions for `viewDeck`, `viewAces`, and `viewStacks`.
 

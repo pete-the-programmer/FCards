@@ -9,31 +9,31 @@ let suits = [SYMBOL_HEART; SYMBOL_DIAMOND; SYMBOL_CLUB; SYMBOL_SPADE]
 
 let wrap = List.singleton  // shortcut to wrap a thing in a list
 
-let viewCard card =
-  let txt = text $"[{card}]"
-  let colorAttr = 
-    match card with 
-    | IsRed _ -> ["red"]
-    | IsBlack _ -> ["black"]
-    | _ -> []
-    |> Attr.Classes
-  span [ colorAttr ] [txt]
-  
-let viewCardBack card = span [ ] [ text "[###]"] 
-    
-let viewStackCard stackCard = 
-  if stackCard.isFaceUp then  
-    viewCard stackCard.card
-  else
-    viewCardBack stackCard.card
+type CardDisplay = {
+  card: Card
+  isFaceUp: bool
+}
 
-let viewCoveredCard card = [ span [ ] [ text "[#"] ]  
+let viewCardBack = span [ ] [ text "[###]"] 
+
+let viewCard (cardDisplay: CardDisplay) =
+  match cardDisplay with 
+  | {isFaceUp=false} -> viewCardBack
+  | {card=card} -> 
+    let txt = text $"[{card}]"
+    let colorAttr = 
+      match card with 
+      | IsRed _ -> ["red"]
+      | IsBlack _ -> ["black"]
+      | _ -> []
+      |> Attr.Classes
+    span [ colorAttr ] [txt]
 
 let viewStacks game =
   game.stacks
   |> List.mapi (fun i stack -> 
     stack
-    |> List.map ( fun card -> card |> viewStackCard |> wrap |> li [] )
+    |> List.map ( fun card -> { card=card.card; isFaceUp=card.isFaceUp } |> viewCard |> wrap |> li [] )
     |> ul []
     |> fun x -> [h4 [] [(i + 1).ToString() |> text]; x]
     |> div []
@@ -44,7 +44,7 @@ let viewAces game =
   game.aces
   |> List.mapi (fun i stack -> 
     stack
-    |> List.map ( fun card -> card |> viewCard |> wrap |> li [] )
+    |> List.map ( fun card -> {card=card; isFaceUp=true} |> viewCard |> wrap |> li [] )
     |> ul []
     |> fun x -> [h4 [] [suits[i] |> text]; x]
     |> div []
@@ -54,18 +54,17 @@ let viewAces game =
 let viewTable game =
   match game.table with 
     | [] -> []
-    | [a] -> [viewCard a]
+    | [a] -> [viewCard {card=a; isFaceUp=true}]
     | topcard::rest -> 
-        let facedowns = rest |> List.map viewCardBack
-        facedowns @ [viewCard topcard]
+        let facedowns = List.init rest.Length (fun _ -> viewCardBack)
+        facedowns @ [viewCard {card=topcard;isFaceUp=true}]
   |> List.map ( fun a -> li [] [a])
   |> ul []
   |> fun a -> [ h3 [] [text "Table"]; a]
   |> div [ Attr.Classes ["table"] ]
 
 let viewDeck game =
-  game.deck
-  |> List.map ( fun card -> card |> viewCardBack |> wrap |> li [] )
+  List.init game.deck.Length ( fun _ -> viewCardBack |> wrap |> li [] )
   |> ul []
   |> fun a -> [ h3 [] [text "Deck"]; a]
   |> div [ Attr.Classes ["deck"] ]
