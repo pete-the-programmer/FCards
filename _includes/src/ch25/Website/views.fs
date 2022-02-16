@@ -33,11 +33,6 @@ let viewCard dispatch cardDisplay =
     let classAttr = colorAttr @ selectionAttr |> Attr.Classes
     span [ classAttr; on.click( fun _ -> selection |> SelectCard |> dispatch ) ] [txt]
 
-let viewSelected (cardView:Node) = 
-  match cardView with 
-  | Elt (name, attrs, children) -> Elt (name, attrs @ [ Classes ["selected"] ], children)
-  | _ -> cardView
-
 let viewStacks dispatch webgame =
   webgame.game.stacks
   |> List.mapi (fun stacknum stack -> 
@@ -95,7 +90,17 @@ let viewTable dispatch webgame =
           |> viewCard dispatch
         ]
     | topcard::rest -> 
-        let facedowns = List.init (rest.Length) (fun _ -> viewCardBack)
+        let facedowns = 
+          rest
+          |> List.map (fun card -> 
+            {
+              card=card
+              isFaceUp=false
+              isSelected=false
+              selection=NoSelection
+            }
+            |> viewCard dispatch
+          )
         let faceup = 
           {
             card=topcard

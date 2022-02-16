@@ -38,6 +38,11 @@ let initialise args =
 let update message webgame =
   printfn "%A" message
   match message with
+  | DrawCards -> 
+      {webgame with 
+        game = applyCommand Solitaire.Actions.DrawCards webgame.game
+        selectedCard = NoSelection
+      }
   | SelectCard selection -> 
       {webgame with selectedCard = selection}
   | PlaceCard target -> 
@@ -71,8 +76,3 @@ let update message webgame =
               ) webgame.game
             selectedCard = NoSelection 
           } 
-  | DrawCards -> 
-      {webgame with 
-        game = applyCommand Solitaire.Actions.DrawCards webgame.game
-        selectedCard = NoSelection
-      }
