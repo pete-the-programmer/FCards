@@ -1,1 +1,2 @@
-{% link _chapters/ch{{include.chapter}}-functions.md %}
+{% assign chapterLinked = site.chapters | where: "chapter", include.chapter | first %}
+[chapter {{chapterLinked.chapter}}]({{site.baseurl}}{{chapterLinked.url}})
