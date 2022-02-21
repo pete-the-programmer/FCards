@@ -6,6 +6,7 @@ part: "Defining Cards"
 feature: Constants
 keyword: let
 ---
+To create any program we need to be able to define some values
 
 > Define values with names using the __let__ keyword
 > 
@@ -13,7 +14,13 @@ keyword: let
 
 ### Exercise:
 
-Define the cards in a deck
+Define the cards in a standard deck, including the four suits and the number 2 up to Ace.
+
+We can define a a couple of simple string values like...
+```fsharp
+let Spades_2 = "Spades 2"
+let Spades_3 = "Spades 3"
+``` 
 
 [See an answer]({{ site.baseurl }}{{ page.url }}#constants)
 
@@ -82,6 +89,6 @@ On your command line (assuming you have the [dotnet cli](https://dotnet.microsof
 2. copy and paste the code sample into the prompt that appears
 3. and voila!
 
-> TIP: the FSI uses double semi-colons (;;) to finish and execute code.  You may need to type _;;_ and _enter_ to execute the code sample.
+> TIP: the FSI uses double semi-colons (;;) to finish and execute code.  You may need to type _;;_ and _enter_ after pasting to execute the code sample.
 
 {% include sofar.md %}
