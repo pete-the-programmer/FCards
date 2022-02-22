@@ -1,0 +1,47 @@
+<div class="game ${SelectionMode}">
+  <div class="topHalf">
+    <div class="stacks">
+      ${Stacks}
+      <template id="Stack">
+        <div>
+          <h4>${StackNum}</h4>
+          <ul>
+            ${StackCards}
+            <li onclick="${DropClicked}"><span class="dropTarget">[___]</span></li>
+          </ul>
+        </div>
+      </template>
+    </div>
+    <div class="aces">
+      ${Aces}
+      <template id="AceStack">
+        <div>
+          <h4>${Symbol}</h4>
+          <ul>
+            ${AceCards}
+            <li onclick="${DropClicked}"><a class="dropTarget">[___]</a></li>
+          </ul>
+        </div>
+      </template>      
+    </div>
+  </div>
+  <div class="table">
+    <h3>Table</h3>
+    <ul>
+      ${Table}
+    </ul>
+  </div>
+  <div class="deck">
+    <h3>Deck</h3>
+    <ul onclick="${DrawSomeCards}">
+      ${Deck}
+    </ul>
+  </div>
+
+  <template id="CardBack">
+    <li><span>[###]</span></li>
+  </template>
+  <template id="Card">
+    <li onclick="${CardClicked}" class=""><span class="${CardColour} ${Selected}">[${CardText}]</span></li>
+  </template>
+</div>
