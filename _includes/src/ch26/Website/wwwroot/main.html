@@ -7,7 +7,9 @@
           <h4>${StackNum}</h4>
           <ul>
             ${StackCards}
-            <li onclick="${DropClicked}"><span class="dropTarget">[___]</span></li>
+            <li onclick="${DropClicked}">
+              <div class="card dropTarget" style="background-position-x: -45px; background-position-y: -252px"></div>
+            </li>
           </ul>
         </div>
       </template>
@@ -19,7 +21,9 @@
           <h4>${Symbol}</h4>
           <ul>
             ${AceCards}
-            <li onclick="${DropClicked}"><a class="dropTarget">[___]</a></li>
+            <li onclick="${DropClicked}">
+              <div class="card dropTarget" style="background-position-x: -45px; background-position-y: -252px"></div>
+            </li>
           </ul>
         </div>
       </template>      
@@ -39,9 +43,13 @@
   </div>
 
   <template id="CardBack">
-    <li><span>[###]</span></li>
+    <li>
+      <div class="card" style="background-position-x: 0px; background-position-y: -252px"></div>
+    </li>
   </template>
   <template id="Card">
-    <li onclick="${CardClicked}" class=""><span class="${CardColour} ${Selected}">[${CardText}]</span></li>
+    <li onclick="${CardClicked}" class="">
+      <div class="card ${Selected}" title="${CardText}" alt="${CardText}" style="background-position-x: ${NumberOffset}px; background-position-y: ${SuitOffset}px"></div>
+    </li>
   </template>
 </div>

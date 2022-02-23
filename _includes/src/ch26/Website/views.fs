@@ -20,18 +20,22 @@ type CardDisplay = {
 type Main = Template<"wwwroot/main.html">
 let main = Main()
 
+let SuitNumber card =
+  match card with 
+  | Hearts _ -> 1
+  | Diamonds _ -> 3
+  | Clubs _ -> 0
+  | Spades _ -> 2
+  | Joker -> 4
+
 let viewCard dispatch cardDisplay =
   match cardDisplay with 
   | { CardDisplay.isFaceUp=false } -> Main.CardBack().Elt()
   | { card=card; isSelected=isSelected; selection=selection } -> 
-    let colorAttr = 
-      match card with 
-      | IsRed _ -> "red"
-      | IsBlack _ -> "black"
-      | _ -> ""
     Main
       .Card()
-      .CardColour(colorAttr)
+      .NumberOffset(-45 * (card.Number.Ordinal - 1) |> string)
+      .SuitOffset(-63 * (SuitNumber card) |> string)
       .CardText(card.ToString())
       .Selected(if isSelected then "selected" else "notselected")
       .CardClicked(fun _ -> selection |> SelectCard |> dispatch )
@@ -122,12 +126,10 @@ let private viewTable dispatch webgame =
         facedowns @ [ faceup ]
         |> concat
 
-
 let private viewDeck dispatch webgame : Node =
   webgame.game.deck
   |> List.map (fun _ -> Main.CardBack().Elt() )
   |> concat
-
 
 let mainPage webgame dispatch = 
   main
@@ -138,4 +140,3 @@ let mainPage webgame dispatch =
     .Stacks(viewStacks dispatch webgame)
     .DrawSomeCards(fun _ -> DrawCards |> dispatch)
     .Elt()
-
