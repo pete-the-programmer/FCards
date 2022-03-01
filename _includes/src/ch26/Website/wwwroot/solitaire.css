@@ -44,10 +44,19 @@ li{
 
 .deck ul, .table ul{
   margin-left: 1.2em;
+  height: 70px;
+  width: 90%;
+  background-color: green;
+  border: 1px solid darkgreen;
+  border-radius: 10px;
+  padding: 20px 20px 20px 40px;
+}
+.deck ul {
+  cursor: pointer;
 }
 .deck li, .table li {
   margin-left: -1.2em;
-  background: white;
+
 }
 
 
@@ -71,11 +80,14 @@ li{
 }
 
 .dropTarget{
-  opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 0.5s, width 0.5s;
+}
+.mode_unselected .dropTarget {
   cursor:default;
   color: transparent;
-  display: none;
+  opacity: 0;
+  width: 0;
+  border: 0; 
 }
 .mode_selected .dropTarget{
   opacity: 0.2;

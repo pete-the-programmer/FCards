@@ -8,7 +8,7 @@
           <ul>
             ${StackCards}
             <li onclick="${DropClicked}">
-              <div class="card dropTarget" style="background-position-x: -45px; background-position-y: -252px"></div>
+              <div class="card dropTarget" title="Place card here" style="background-position-x: -45px; background-position-y: -252px"></div>
             </li>
           </ul>
         </div>
@@ -22,7 +22,7 @@
           <ul>
             ${AceCards}
             <li onclick="${DropClicked}">
-              <div class="card dropTarget" style="background-position-x: -45px; background-position-y: -252px"></div>
+              <div class="card dropTarget" title="Place card here" style="background-position-x: -45px; background-position-y: -252px"></div>
             </li>
           </ul>
         </div>
@@ -37,7 +37,7 @@
   </div>
   <div class="deck">
     <h3>Deck</h3>
-    <ul onclick="${DrawSomeCards}">
+    <ul onclick="${DrawSomeCards}" title="Deal 3 cards">
       ${Deck}
     </ul>
   </div>
