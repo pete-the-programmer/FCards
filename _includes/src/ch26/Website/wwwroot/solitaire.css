@@ -80,7 +80,7 @@ li{
 }
 
 .dropTarget{
-  transition: opacity 0.5s, width 0.5s;
+  transition: opacity 0.5s, width 0.1s;
 }
 .mode_unselected .dropTarget {
   cursor:default;

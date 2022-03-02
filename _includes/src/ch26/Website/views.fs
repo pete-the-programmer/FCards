@@ -32,18 +32,16 @@ let viewCard dispatch cardDisplay =
   match cardDisplay with 
   | { CardDisplay.isFaceUp=false } -> Main.CardBack().Elt()
   | { card=card; isSelected=isSelected; selection=selection } -> 
-    Main
-      .Card()
-      .NumberOffset(-45 * (card.Number.Ordinal - 1) |> string)
-      .SuitOffset(-63 * (SuitNumber card) |> string)
+    Main.Card()
+      .NumberOffset(card.Number.Ordinal - 1 |> string)
+      .SuitOffset(SuitNumber card |> string)
       .CardText(card.ToString())
       .Selected(if isSelected then "selected" else "notselected")
       .CardClicked(fun _ -> selection |> SelectCard |> dispatch )
       .Elt()
 
 let viewStack dispatch webgame stackNum =
-  Main
-    .Stack()
+  Main.Stack()
     .StackNum(stackNum.ToString())
     .StackCards(
       webgame.game.stacks[stackNum - 1]
@@ -68,8 +66,7 @@ let viewStacks dispatch webgame =
   |> concat
 
 let private viewAceStack dispatch webgame aceStackNum =
-  Main
-    .AceStack()
+  Main.AceStack()
     .Symbol(suits[aceStackNum - 1])
     .AceCards(
       webgame.game.aces[aceStackNum - 1]

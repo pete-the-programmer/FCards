@@ -116,3 +116,6 @@ ul.menu li {
 .center {
   text-align: center !important;
 }
+.markdown-body img.small {
+  max-width: 70%;
+}

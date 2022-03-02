@@ -49,7 +49,7 @@
   </template>
   <template id="Card">
     <li onclick="${CardClicked}" class="">
-      <div class="card ${Selected}" title="${CardText}" alt="${CardText}" style="background-position-x: ${NumberOffset}px; background-position-y: ${SuitOffset}px"></div>
+      <div class="card ${Selected}" title="${CardText}" alt="${CardText}" style="background-position-x: calc( ${NumberOffset} * -45px); background-position-y: calc( ${SuitOffset} * -63px)"></div>
     </li>
   </template>
 </div>
