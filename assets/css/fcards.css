@@ -119,3 +119,9 @@ ul.menu li {
 .markdown-body img.small {
   max-width: 70%;
 }
+
+.jumbo{
+  text-align: center;
+  font-size: 150%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
