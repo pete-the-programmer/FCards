@@ -5,7 +5,8 @@ open Farmer
 open Farmer.Builders
 
 // We'll pass the path to our published game in as an argument
-let pathToGame = Environment.GetCommandLineArgs().[1]
+let pathToGame = Environment.GetCommandLineArgs() |> Array.last
+printfn "THE PATH TO THE GAME IS: %s" pathToGame
 
 let storage = storageAccount {
   name "solitairestorage"
@@ -23,7 +24,7 @@ let deployment = arm {
 deployment 
 |> Writer.quickWrite "output"
 
-// // Deploy into resource group directly to Azure
+// Deploy into resource group directly to Azure
 deployment
 |> Deploy.execute "solitaire-rg" Deploy.NoParameters
 |> printfn "%A"  // (print out any results - not expecting any)

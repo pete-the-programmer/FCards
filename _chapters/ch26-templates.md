@@ -109,7 +109,7 @@ Once the template has been completed we call the function `Elt()`, which compile
 
 > TIP: The templates are _types_, and so are accessed as a sub-type of main: `Main.Card()`  (no brackets after "Main")  
 > The holes are _fields_ of a template (incl the main template) and so are accessed as: `Main().Deck` or `Main.Card().CardText()`
-> (This took me waaaay too long to figure out! &#x1F600; )
+> (This took me waaaay too long to figure out! &#x1F612; )
 
 ### Exercise: Convert to using template HTML
 

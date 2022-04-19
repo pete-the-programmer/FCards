@@ -7,7 +7,7 @@
 [{{part}}]({{ site.baseurl }}{{ page.url }}#code_{{part | slugify}})
 
 {:class="collapsible" id="code_{{part | slugify}}"}
-```{{ ext[1] | replace: 'fs', 'fsharp' }}
+```{{ ext[1] | replace: 'fsx', 'fs' | replace: 'fs', 'fsharp'  }}
 {% include src/ch{{page.chapter}}/{{part}} %}
 ```
 
