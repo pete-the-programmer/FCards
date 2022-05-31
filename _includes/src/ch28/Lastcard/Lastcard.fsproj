@@ -4,13 +4,18 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="update.fs" />
+    <Compile Include="views.fs" />
     <Compile Include="Main.fs" />
     <Compile Include="Index.fs" />
     <Compile Include="Startup.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Bolero.Server" Version="0.*" />
-    <PackageReference Include="Bolero.HotReload.Server" Version="0.*" />
+    <PackageReference Include="Bolero.Server" Version="0.18.16" />
+    <PackageReference Include="Bolero.HotReload.Server" Version="0.18.16" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Game\Game.fsproj" />
   </ItemGroup>
 </Project>

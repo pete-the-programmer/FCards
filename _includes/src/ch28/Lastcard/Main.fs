@@ -2,31 +2,12 @@ module Lastcard.Main
 
 open Elmish
 open Bolero
-open Bolero.Html
-open Bolero.Templating.Client
+open Lastcard.Views
+open Lastcard.Update
 
-type Model =
-    {
-        x: string
-    }
-
-let initModel =
-    {
-        x = ""
-    }
-
-type Message =
-    | Ping
-
-let update message model =
-    match message with
-    | Ping -> model
-
-let view model dispatch =
-    p { "Hello, world!" }
 
 type MyApp() =
-    inherit ProgramComponent<Model, Message>()
+    inherit ProgramComponent<LastcardGame, Message>()
 
     override this.Program =
         Program.mkSimple (fun _ -> initModel) update view
