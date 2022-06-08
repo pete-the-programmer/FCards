@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="fish.css">
+  </head>
+  <body>
+    <p>Hello!  Please join our game</p>
+    <h2>Actions</h2>
+    <div id="join">
+      <p ><input id="username" ><button onclick="joinGame(document.getElementById('username').value)">Join Game</button></p>
+    </div>
+    <div id="game">
+      <p><button onclick="requestDeal()">Deal (TODO)</button></p>
+    </div>
+    <h2>Activity</h2>
+    <ul id="messages">
+
+    </ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.5/signalr.min.js" integrity="sha512-Wj6cUe+56vJ4FtfeF4QqPHy4VGO9gZ2iU8GFlLRjawhx1f4sW3BezJLU1ewaZl3bZV8iya0EJOmRY5SD9XTwvw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="fish.js"></script>
+  </body>
+</html>
